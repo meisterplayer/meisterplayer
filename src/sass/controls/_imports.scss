@@ -1,0 +1,20 @@
+.pf-controls-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+// New styles
+@import "pf-over-preview";
+@import "pf-control-bars";
+@import "pf-ui-elements";
+@import "pf-title";
+@import "pf-time-display";
+@import "pf-seek-bar";
+@import "pf-seek-bar-preview";
+@import "pf-volume-bar";
+@import "pf-quality-button";
+@import "pf-ad-controls";
+@import "pf-internal-plugin";
+@import "pf-spinner";
+@import "pf-audio-image";

@@ -1,0 +1,71 @@
+@import "variables";
+@import "../lib/mixins";
+
+.pf-control-bar {
+    position: absolute;
+
+    height: $pf-control-bar-height;
+    width: 100%;
+
+    @include animation('show-bars-animation 0.4s forwards');
+
+    &.top {
+        top: 0;
+        background: linear-gradient(to bottom, $control-bar-gradient-colour, transparentize($control-bar-gradient-colour, 1));
+
+        &.hidden {
+            @include animation('hide-bars-animation 0.4s forwards');
+        }
+    }
+
+    &.bottom {
+        bottom: 0;
+        background: linear-gradient(to top, $control-bar-gradient-colour, transparentize($control-bar-gradient-colour, 1));
+
+        &.hidden {
+            @include animation('hide-bars-animation 0.4s forwards');
+        }
+    }
+
+    &.pf-mobile {
+        height: $pf-control-bar-height-mobile;
+    }
+}
+
+@include fullscreen(".pf-control-bar") {
+    height: 45px;
+}
+
+@include keyframes(show-bars-animation) {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+
+    1% {
+        width: 100%;
+        opacity: 0.01;
+    }
+
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+@include keyframes(hide-bars-animation) {
+    0% {
+        width: 100%;
+        opacity: 1;
+    }
+
+    99% {
+        width: 100%;
+        opacity: 0.01;
+    }
+
+    100% {
+        width: 0;
+        opacity: 0;
+    }
+}

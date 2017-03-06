@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="213px" height="225px" viewBox="0 0 213 225" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>Meister TV</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0.3 107 170.7 107 170.7 0.75 0.3 0.75"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Meister-TV">
+            <g id="Group-2">
+                <g id="tv">
+                    <g id="Layer_1" fill="#1E354B">
+                        <g id="Group">
+                            <path d="M202.35,191.25 L10.65,191.25 C4.26,191.25 0,187 0,180.625 L0,53.125 C0,46.75 4.26,42.5 10.65,42.5 L202.35,42.5 C208.74,42.5 213,46.75 213,53.125 L213,180.625 C213,187 208.74,191.25 202.35,191.25 L202.35,191.25 Z M21.3,170 L191.7,170 L191.7,63.75 L21.3,63.75 L21.3,170 L21.3,170 Z" id="Shape"></path>
+                            <path d="M106.5,63.75 C103.305,63.75 101.175,62.6875 99.045,60.5625 C94.785,56.3125 94.785,49.9375 99.045,45.6875 L141.645,3.1875 C145.905,-1.0625 152.295,-1.0625 156.555,3.1875 C160.815,7.4375 160.815,13.8125 156.555,18.0625 L113.955,60.5625 C111.825,62.6875 109.695,63.75 106.5,63.75 L106.5,63.75 Z" id="Shape"></path>
+                            <path d="M66.5,63.75 C63.305,63.75 61.175,62.6875 59.045,60.5625 C54.785,56.3125 54.785,49.9375 59.045,45.6875 L101.645,3.1875 C105.905,-1.0625 112.295,-1.0625 116.555,3.1875 C120.815,7.4375 120.815,13.8125 116.555,18.0625 L73.955,60.5625 C71.825,62.6875 69.695,63.75 66.5,63.75 L66.5,63.75 Z" id="Shape-Copy" transform="translate(87.800000, 31.875000) scale(-1, 1) translate(-87.800000, -31.875000) "></path>
+                            <path d="M42.6,225 C36.21,225 31.95,220.75 31.95,214.375 L31.95,193.125 C31.95,186.75 36.21,182.5 42.6,182.5 C48.99,182.5 53.25,186.75 53.25,193.125 L53.25,214.375 C53.25,220.75 48.99,225 42.6,225 L42.6,225 Z" id="Shape"></path>
+                            <path d="M170.4,225 C164.01,225 159.75,220.75 159.75,214.375 L159.75,193.125 C159.75,186.75 164.01,182.5 170.4,182.5 C176.79,182.5 181.05,186.75 181.05,193.125 L181.05,214.375 C181.05,220.75 176.79,225 170.4,225 L170.4,225 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                    <g id="Path-7-+-Path-7-+-Path-7-Mask" transform="translate(21.000000, 63.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <polyline id="Path-7" stroke="#1E354B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="-6 39 19.7142857 17 45.4285714 39 71.1428571 17 96.8571429 39 122.571429 17 148.285714 39 174 17"></polyline>
+                        <polyline id="Path-7" stroke="#1E354B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="-6 65 19.7142857 43 45.4285714 65 71.1428571 43 96.8571429 65 122.571429 43 148.285714 65 174 43"></polyline>
+                        <polyline id="Path-7" stroke="#1E354B" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="-6 92 19.7142857 70 45.4285714 92 71.1428571 70 96.8571429 92 122.571429 70 148.285714 92 174 70"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

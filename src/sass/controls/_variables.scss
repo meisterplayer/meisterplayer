@@ -1,0 +1,54 @@
+// Sizes
+$pf-large-font-size: 23px;
+$pf-large-font-size-mobile: 40px;
+$pf-large-font-size-mobile-fs: 30px;
+
+$pf-medium-font-size: 15px;
+
+$pf-small-font-size: 10px;
+$pf-small-font-size-mobile: 20px;
+$pf-small-font-size-mobile-fs: 15px;
+
+$pf-control-bar-height: 36px;
+$pf-control-bar-height-mobile: 55px;
+
+$pf-seek-bar-height: 5px;
+
+// Colours
+$control-bar-gradient-colour: black;
+
+$pf-ui-element-colour: white;
+$pf-ui-element-active-color: rgb(240, 240, 240);
+$pf-ui-element-active-hover-color: white;
+$pf-ui-element-inactive-color: grey;
+
+$pf-spinner-colour: white;
+
+$pf-preview-info-font-colour: white;
+$pf-preview-info-background-colour: transparentize(black, 0.5);
+$pf-preview-play-button-background-colour: transparentize(black, 0.5);
+
+$pf-quality-selector-colour: transparentize(#252525, 0.3);
+$pf-quality-option-border-colour: transparentize(white, 0.3);
+$pf-quality-option-hover-colour: transparentize(#252525, 0);
+
+$pf-volume-slider-fill: white;
+$pf-volume-slider-figure: white;
+
+$pf-seek-bar-duration-colour: transparentize(grey, 0.4);
+$pf-seek-bar-fill-colour: transparentize(white, 0.2);
+$pf-seek-bar-buffered-colour: transparentize(white, 0.8);;
+$pf-seek-bar-highlight-colour: transparentize(white, 0.4);
+$pf-seek-bar-figure-colour: white;
+
+$pf-seek-bar-preview-background-colour: black;
+$pf-seek-bar-preview-time-background-colour: transparentize(black, 0.3);
+
+$pf-plugin-overlay-close-button-colour: white;
+$pf-plugin-overlay-open-button-colour: rgba(25, 35, 35, 0.70);
+$pf-plugin-space-background-colour: transparentize(black, 0.3);
+
+$pf-ad-controls-duration-colour: transparentize(grey, 0.7);
+$pf-ad-controls-fill-colour: white;
+$pf-ad-controls-text-colour: white;
+$pf-ad-point-colour: orange;

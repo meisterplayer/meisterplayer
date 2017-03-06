@@ -1,0 +1,61 @@
+@import "colours";
+@import "../lib/mixins";
+
+// For the demo
+.ticker-feed-location {
+    //width: 400px;
+    height: 400px;
+    //position: absolute;
+    //right: 10px;
+    //top: 10px;
+    overflow-y: scroll;
+}
+
+.ticker-feed-point {
+    //height: 50px;
+    font-size: 1em;
+    cursor: pointer;
+    color:$ticker-feed-point-font;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border: solid;
+    background-color: $ticker-feed-point-background;
+    border-color: $ticker-feed-point-border;
+    @include border-radius(4px);
+    @include transition(all, 0.2s);
+    @include box-shadow(0, 2px, 4px, rgba(0, 0, 0, 1));
+
+    &:hover {
+        border-color: $ticker-feed-point-highlight-border;
+        background-color: $ticker-feed-point-highlight-background;
+    }
+
+    &.selected {
+        border-color: $ticker-feed-point-selected-border;
+        background-color: $ticker-feed-point-selected-background;
+        color:$ticker-feed-point-selected-font;
+    }
+}
+
+.ticker-feed-date {
+    pointer-events: none;
+    display: inline-block;
+    margin-right: 1.5em;
+    font-size: .8em;
+    float:right;
+}
+
+.ticker-feed-title {
+    pointer-events: none;
+    display: inline-block;
+    font-weight: 500;
+    margin-right: 5px;
+    font-size: .9em;
+}
+
+.ticker-feed-description {
+    pointer-events: none;
+    font-size: .8em;
+    line-height: 1.2em;
+    display: inline-block;
+}

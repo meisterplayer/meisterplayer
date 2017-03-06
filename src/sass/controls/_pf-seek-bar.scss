@@ -1,0 +1,86 @@
+@import "variables";
+@import "../lib/mixins";
+
+.pf-seek-bar-wrapper {
+    width: 100%;
+    position: absolute;
+    height: $pf-seek-bar-height;
+
+    &.pf-mobile {
+        height: 10px;
+        top: -5px;
+    }
+}
+
+.pf-seek-bar-padding {
+    width: 96%;
+    height: $pf-seek-bar-height;
+    margin-left: 2%;
+    position: absolute;
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+        height: 15px;
+        top: -7px;
+    }
+
+    &.pf-mobile {
+        height: 30px;
+        top: -10px;
+    }
+}
+
+.pf-seek-bar {
+    width: 96%;
+    height: $pf-seek-bar-height;
+    position: absolute;
+    margin-left: 2%;
+    @include border-radius(10px);
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    border-radius: 10px;
+    pointer-events: none;
+
+    &.duration {
+        background-color: $pf-seek-bar-duration-colour;
+    }
+
+    &.buffered {
+        background-color: $pf-seek-bar-buffered-colour;
+    }
+
+    &.highlight {
+        background-color: $pf-seek-bar-highlight-colour;
+
+        &.pf-mobile {
+            display: none;
+        }
+    }
+
+    &.fill {
+        background-color: $pf-seek-bar-fill-colour;
+    }
+}
+
+.pf-seek-bar-figure {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    margin-top: -3px;
+    margin-left: -5px;
+    background-color: $pf-seek-bar-figure-colour;
+    @include border-radius(50%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.pf-seek-bar-point {
+    width: 5px;
+    height: 5px;
+    margin-left: -3px;
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}

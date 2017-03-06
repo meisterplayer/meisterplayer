@@ -1,0 +1,122 @@
+@import "variables";
+
+.pf-ad-controls {
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    bottom: 0;
+    background-color: $pf-ad-controls-duration-colour;
+    box-shadow: 0px 0px 4px #252525;
+    z-index: 2;
+}
+
+.pf-extra-ad-controls {
+    height: 36px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-top:10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0));
+}
+
+.pf-ad-progress-bar-fill {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+    background-color: $pf-ad-controls-fill-colour;
+    pointer-events: none;
+}
+
+.pf-ad-info-view {
+    position: absolute;
+    bottom:10px;
+    left: 5px;
+    font-size: $pf-small-font-size;
+    font-weight: 200;
+    color: $pf-ad-controls-text-colour;
+}
+
+.pf-ad-count {
+    display: inline-block;
+    padding-right: 5px;
+    text-shadow: 1px 1px 1px #252525;
+}
+
+.pf-ad-countdown {
+    display: inline-block;
+    text-shadow: 1px 1px 1px #252525;
+}
+
+.pf-ad-point {
+    background-color: $pf-ad-point-colour;
+}
+
+.pf-ad-fullscreen {
+    padding-right: 6px;
+}
+
+.pf-ad-controls-shown-animation {
+    display: block;
+    @include animation('show-ad-controls 0.4s forwards');
+}
+
+.pf-ad-controls-hide-animation {
+    display: block;
+    @include animation('hide-ad-controls 0.4s forwards');
+}
+
+.pf-ad-controls-move-up {
+    @include animation('controls-move-up 0.4s forwards');
+}
+
+.pf-ad-controls-move-down {
+    @include animation('controls-move-down 0.4s forwards');
+}
+
+@include keyframes(controls-move-up) {
+    0% {
+        box-shadow: 0px 0px 4px #252525;
+        margin-bottom: 0px;
+    }
+
+    100% {
+        box-shadow: 0px 0px 0px #252525;
+        margin-bottom: 30px;
+    }
+}
+
+@include keyframes(controls-move-down) {
+    0% {
+        box-shadow: 0px 0px 0px #252525;
+        margin-bottom: 30px;
+    }
+    
+    80% {
+        box-shadow: 0px 0px 2px #252525;
+        margin-bottom: 0px;
+    }
+
+    100% {
+        box-shadow: 0px 0px 4px #252525;    
+    }
+}
+
+@include keyframes(show-ad-controls) {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(hide-ad-controls) {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

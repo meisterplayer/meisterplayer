@@ -1,0 +1,94 @@
+@import "variables";
+@import "../lib/mixins";
+
+.pf-quality-selector {
+
+    font-family: 'Arial';
+    font-size: $pf-small-font-size;
+    position: absolute;
+    bottom: $pf-control-bar-height + 4;
+    right: 10px;
+    width: auto;
+    @include border-radius(3px);
+    background-color: $pf-quality-selector-colour;
+    max-height: calc(100% - 50px);
+    height: auto;
+    overflow-y:auto;
+    overflow-x: hidden;
+
+    @include animation('open-menu-animation 0.4s forwards');
+
+    &.hidden {
+        @include animation('close-menu-animation 0.4s forwards');
+    }
+
+    &.pf-mobile {
+        font-size: $pf-small-font-size-mobile;
+    }
+    z-index: 2000;
+}
+
+
+.pf-quality-option {
+
+    color: #fff;
+    padding: 10px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: $pf-quality-option-border-colour;
+    width: 100%;
+
+    &:first-child {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    &:last-child {
+        border: none;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    &:hover {
+        background-color: $pf-quality-option-hover-colour;
+    }
+}
+
+.pf-quality-option-select {
+    float: right;
+    font-size: 20px;
+    margin-top: -5px;
+    line-height: 1em;
+    margin-right: 15px;
+
+    &.pf-mobile {
+        margin-top: 5px;
+        font-size: 30px;
+        margin-top: -4px;
+    }
+}
+
+@include fullscreen(".pf-quality-option-select.pf-mobile") {
+    margin-top: 0px;
+}
+
+@include keyframes(open-menu-animation) {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@include keyframes(close-menu-animation) {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        height: 0px;
+        opacity: 0;
+    }
+}

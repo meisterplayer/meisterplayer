@@ -1,0 +1,25 @@
+const PlayerEvents = [
+    'playerCreated',
+    'playerDestroyed',
+    '_playerTimeUpdate',
+    'playerTimeUpdate',
+    'playerPlay',
+    'playerPlaying',
+    'playerPause',
+    '_playerSeek',
+    'playerSeek',
+    'playerNudge',
+    'playerEnd',
+    'playerError',
+    'playerVolumeChange',
+    'playerFullscreen',
+    'playerSwitchBitrate',
+    'playerAutoSwitchBitrate',
+    'playerProgress',
+    'playerLoadedMetadata',
+    'playerDurationChange',
+    'playerBuffering',
+    'playerBufferedEnough',
+];
+
+export default PlayerEvents;

@@ -1,0 +1,37 @@
+@import "variables";
+
+.pf-seek-bar-preview {
+    width: 120px;
+    height: 69px;
+    position: absolute;
+    color:white;
+    background-color: $pf-seek-bar-preview-background-colour;
+    margin-top: -75px;
+    left: 0;
+    display: block;
+    pointer-events: none;
+
+    &.no-preview {
+        background-color: transparent;
+    }
+}
+
+.pf-seek-bar-preview-image {
+    width: 100%;
+    position: absolute;
+    padding: 1px;
+
+    &[src=""] {
+        display: none;
+    }
+}
+
+.pf-seek-bar-preview-time {
+    background-color: $pf-seek-bar-preview-time-background-colour;
+    font-size: $pf-small-font-size;
+    padding: 4px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+}

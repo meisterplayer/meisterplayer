@@ -1,0 +1,32 @@
+.pf-control-bar.bottom {
+    height: 50px;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+}
+
+.pf-ui-wrapper-left:first-child {
+    margin-top: 10px;
+}
+
+.pf-seek-bar-wrapper {
+    top: 8px;
+}
+
+.pf-ui-wrapper-right {
+    margin-top: 10px;
+}
+
+// Volume slider
+.pf-volume-slider-fill {
+    background-color: #007dc3;
+}
+
+// Seek bar
+.pf-seek-bar.fill {
+    background-color: #007dc3;
+}
+
+.pf-seek-bar.highlight {
+    background-color: #007dc3;
+    opacity: 0.5;
+}

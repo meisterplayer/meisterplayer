@@ -1,0 +1,86 @@
+@import "colours";
+@import "../lib/mixins";
+
+// Example values for external channel selector.
+#channel-selector-wrap {
+    background-color:#333;
+     padding: 20px 0;
+}
+.channel-selector-external-wrapper {
+    //width: 640px;
+    height: 160px;
+}
+
+// Actual channel selector css.
+.channel-selector-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.channel-selector {
+    //@include box-shadow(0, 2px, 4px, rgba(0, 0, 0, .8));
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+    position: relative;
+    bottom: 50%;
+    @include transform-translate(0,50%);
+    font-size: .9em;
+    @include transition(all, 0.2s);
+    @include border-radius(10px);
+    //background-color:#555;
+    padding:10px;
+    margin:0 10px;
+
+    // Make height 1:1 with width.
+    &:before {
+        content: "";
+        padding-top: 95%;
+        display: block;
+    }
+}
+
+.channel-title {
+    //position: absolute;
+    width: 100%;
+    background-color: $title-background-colour;
+    text-align: center;
+    color: $title-text-colour;
+    bottom: 0;
+    z-index: 1;
+}
+
+.channel-thumbnail {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    padding: 5px 10px;
+}
+
+// Flickity specific css
+.is-selected {
+    //width: 30%;
+    @include box-shadow(0, 2px, 14px, rgba(0, 0, 0, .8));
+    @include transform-translate(0,50%);
+    font-size: 1.1em;
+    z-index:999999;
+    background-color:#4A90E2;
+
+    &.channel-selector-external {
+        width: 130px;
+    }
+    & .channel-thumbnail {
+        left: 15px;
+        top: 15px;
+    }
+    & .channel-title {
+        color:rgba(255,255,255,1);
+    }
+}
+
+.flickity-prev-next-button {
+    top: 55%;
+}

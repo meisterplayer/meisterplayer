@@ -1,0 +1,46 @@
+.pf-player-container {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    display: inherit;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    font-family: "Arial";
+    overflow: hidden;
+
+    &:focus {
+        border: none;
+        outline-width: 0;
+    }
+
+    .pf-default-wrapper {
+        background-color: black;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pf-player, .pf-player video {
+        width: 100%;
+        height: 100%;
+        display: inherit;
+    }
+
+    .pf-ads {
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .pf-controls {
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0px;
+    }
+}

@@ -1,0 +1,77 @@
+@import "../lib/mixins";
+@import "variables";
+
+.pf-ui-element {
+    margin-top: 10px;
+    padding-left: 3px;
+    padding-right: 3px;
+    color: $pf-ui-element-colour;
+    line-height: $pf-large-font-size;
+    font-size: $pf-large-font-size;
+
+    &-left {
+        float: left;
+    }
+
+    &-right {
+        float: right;
+    }
+
+    &.pf-mobile {
+        padding-left: 6px;
+        padding-right: 6px;
+        line-height: $pf-large-font-size-mobile;
+        font-size: $pf-large-font-size-mobile;
+    }
+}
+
+@include fullscreen(".pf-ui-element.pf-mobile") {
+    line-height: $pf-large-font-size-mobile-fs;
+    font-size: $pf-large-font-size-mobile-fs;
+}
+
+.pf-ui-element-active {
+    cursor: pointer;
+    pointer-events: all;
+    color: $pf-ui-element-active-color;
+
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+        color: $pf-ui-element-active-hover-color;
+    }
+}
+
+.pf-ui-element-inactive {
+    cursor: auto;
+    pointer-events: none;
+    color: $pf-ui-element-inactive-color;
+}
+
+.pf-ui-wrapper-left {
+    float: left;
+    height: 100%;
+
+    &:first-child {
+        padding-left: 2%;
+    }
+}
+
+.pf-ui-wrapper-right {
+    float: right;
+    height: 100%;
+
+    &:last-child {
+        padding-right: 2%;
+    }
+}
+
+.pf-ui-element-hidden {
+    visibility: hidden !important;
+    width: 0px !important;
+}
+
+.pf-ui-overlay-active {
+    visibility: hidden !important;
+    width: 0px !important;
+}

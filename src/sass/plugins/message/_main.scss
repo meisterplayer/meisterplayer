@@ -1,0 +1,54 @@
+.pf-error-message-plugin {
+    font-family: 'Biryani';
+    background-color: #011B34;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    display: none;
+
+    background-image: url('./res/images/MeisterTV.svg');
+    background-repeat: no-repeat;
+    background-position: 92% bottom;
+
+    .pf-error-wrapper {
+        padding: 3%;
+
+        h1, h2, span {
+            color: white;
+        }
+
+        h2 {
+            color:#f48c00;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 0px;
+        }
+
+        span {
+            display: block;
+        }
+
+        .pf-error-message {
+            width: 72%;
+        }
+    }
+
+
+
+    .pf-error-code-wrapper {
+        font-weight: bold;
+        position: absolute;
+        bottom: 0;
+        padding: 3% 3% 2%;
+
+        .pf-error-code-title {
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .pf-error-code {
+            color: white;
+        }
+    }
+}

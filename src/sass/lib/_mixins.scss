@@ -1,0 +1,89 @@
+@mixin border-radius($radius:10px) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin box-shadow($top:2px, $left:2px, $blur:10px, $color:rgba(0,0,0,1), $inset: false) {
+  @if $inset {
+    -webkit-box-shadow:inset $top $left $blur $color;
+    -moz-box-shadow:inset $top $left $blur $color;
+    box-shadow:inset $top $left $blur $color;
+  } @else {
+    -webkit-box-shadow: $top $left $blur $color;
+    -moz-box-shadow: $top $left $blur $color;
+    box-shadow: $top $left $blur $color;
+  }
+}
+
+@mixin transition($arguments...) {
+  -webkit-transition: $arguments;
+  transition: $arguments;
+}
+
+@mixin transform-scale($x:1, $y:1){
+    -webkit-transform: scale($x, $y);
+    -moz-transform   : scale($x, $y);
+    -o-transform     : scale($x, $y);
+    -ms-transform    : scale($x, $y);
+    transform        : scale($x, $y);
+}
+
+@mixin fullscreen($class) {
+    :-webkit-full-screen #{$class} {
+        @content;
+    }
+    :-moz-full-screen #{$class} {
+        @content;
+    }
+    :-ms-fullscreen #{$class} {
+        @content;
+    }
+    :fullscreen #{$class} {
+        @content;
+    }
+}
+
+@mixin transform-translate($x, $y){
+    @if($x != null){
+        -webkit-transform: translateX($x);
+        -moz-transform   : translateX($x);
+        -o-transform     : translateX($x);
+        -ms-transform    : translateX($x);
+        transform        : translateX($x);
+    }
+    @if($y != null){
+        -webkit-transform: translateY($y);
+        -moz-transform   : translateY($y);
+        -o-transform     : translateY($y);
+        -ms-transform    : translateY($y);
+        transform        : translateY($y);
+    }
+}
+
+@mixin animation($str) {
+    -webkit-animation: #{$str};
+    -moz-animation: #{$str};
+    -ms-animation: #{$str};
+    -o-animation: #{$str};
+    animation: #{$str};
+}
+
+@mixin keyframes($animation-name) {
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
+}

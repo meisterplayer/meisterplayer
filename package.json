@@ -1,0 +1,21 @@
+{
+  "name": "@npm-wearetriple/meister-meister",
+  "version": "4.9.3",
+  "description": "Meister Player: Video Player for HTML5",
+  "main": "dist/Meister.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "meister",
+    "video",
+    "plugin"
+  ],
+  "author": "Triple",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@npm-wearetriple/js-dev": "^2.3.3",
+    "gulp": "^3.9.1",
+    "noop2": "^2.0.0"
+  }
+}

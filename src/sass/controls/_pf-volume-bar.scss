@@ -1,0 +1,73 @@
+@import "variables";
+@import "../lib/mixins";
+
+.pf-volume-button {
+    float: left;
+    margin-right: 4px;
+}
+
+.pf-volume-slider-wrapper {
+    height: 20px;
+    float: left;
+    -webkit-tap-highlight-color: transparent;
+
+    &.pf-mobile {
+        display: none;
+    }
+}
+
+.pf-volume-slider {
+    height: 3px;
+    position: relative;
+    top: 10px;
+    pointer-events: none;
+
+    &.open {
+        @include animation('open-volume-animation 0.4s forwards');
+    }
+
+    &.close {
+        @include animation('close-volume-animation 0.4s forwards');
+    }
+}
+
+.pf-volume-slider-fill {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+    @include border-radius(10px);
+    background-color: $pf-volume-slider-fill;
+}
+
+.pf-volume-slider-figure {
+    width: 3px;
+    height: 10px;
+    position: absolute;
+    top: -3.5px;
+    margin-left: -2px;
+    background-color: $pf-volume-slider-figure;
+}
+
+@include keyframes(open-volume-animation) {
+    0% {
+        width: 0px;
+        opacity: 0;
+    }
+
+    100% {
+        width: 30px;
+        opacity: 1;
+    }
+}
+
+@include keyframes(close-volume-animation) {
+    0% {
+        width: 30px;
+        opacity: 1;
+    }
+
+    100% {
+        width: 0px;
+        opacity: 0;
+    }
+}

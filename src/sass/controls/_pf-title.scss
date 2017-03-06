@@ -1,0 +1,18 @@
+@import "variables";
+
+.pf-title {
+    width: 65%;
+    font-size: $pf-medium-font-size;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    user-select: text;
+    -ms-user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+
+    &.pf-mobile {
+        font-size: $pf-medium-font-size;
+        line-height: $pf-large-font-size-mobile;
+    }
+}

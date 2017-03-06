@@ -1,0 +1,26 @@
+.pf-debug-overlay {
+    position: absolute;
+    top: 0;
+    color:white;
+    width: 100%;
+    display: none;
+
+    .pf-debug-overlay-section {
+        width: 100%;
+
+        .pf-debug-overlay-left {
+            background-color: rgba(0,0,0,0.5);
+            float:left;
+        }
+
+        .pf-debug-overlay-right {
+            background-color: rgba(0,0,0,0.5);
+            float:right;
+        }
+    }
+
+    canvas {
+        height: 50px;
+        width: 100%;
+    }
+}

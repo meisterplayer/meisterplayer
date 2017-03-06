@@ -1,0 +1,14 @@
+{
+    "env": {
+        "browser": true
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "max-len" : 0,
+        "no-underscore-dangle" : 0
+    },
+    "globals" :{
+        "Meister" : true
+    },
+    "extends": "airbnb"
+}

@@ -1,0 +1,28 @@
+@import "../lib/mixins";
+@import "variables";
+
+.pf-time-display {
+    pointer-events: none;
+    font-size: $pf-small-font-size;
+
+    &.microsoft-hack {
+        pointer-events: auto;        
+    }
+
+    &.pf-mobile {
+        font-size: $pf-small-font-size-mobile;
+    }
+}
+
+@include fullscreen(".pf-time-display.pf-mobile") {
+    font-size: $pf-small-font-size-mobile-fs;
+}
+
+.time-display-element {
+    padding: 2px;
+
+    &.go-live {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,26 @@
+@import "variables";
+
+
+.pf-plugin-overlay-open-button {
+    font-size: $pf-medium-font-size;
+    background-color: $pf-plugin-overlay-open-button-colour;
+}
+
+.pf-plugin-overlay {
+    position: absolute;
+    top: 0;
+    background-color: $pf-plugin-space-background-colour;
+    width: 100%;
+    height: 100%;
+}
+
+.pf-plugin-overlay-close-button {
+    width: 30px;
+    height: 30px;
+    margin: 9px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    text-align: center;
+    font-size: $pf-large-font-size;
+}
