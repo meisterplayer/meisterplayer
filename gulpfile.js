@@ -1,20 +1,21 @@
 const gulp = require('gulp');
 const tripleGulp = require('@npm-wearetriple/js-dev').gulp;
+const rollupGulp = require('@npm-wearetriple/gulp-rollup-tasks');
 
 // Building tasks.
 const MODULE_NAME = 'Meister';
 
-const rollupConfig = tripleGulp.rollupModule.createRollupConfig('index.js');
-const bundleConfig = tripleGulp.rollupModule.createBundleConfig(`./build/${MODULE_NAME}.js`);
-gulp.task('build', tripleGulp.rollupModule.createRollupBundler(rollupConfig, bundleConfig));
+const rollupConfig = rollupGulp.createRollupConfig('index.js');
+const bundleConfig = rollupGulp.createBundleConfig(`./build/${MODULE_NAME}.js`);
+gulp.task('build', rollupGulp.createRollupBundler(rollupConfig, bundleConfig));
 
-const rollupConfigDist = tripleGulp.rollupModule.createRollupConfig('index.js');
-const bundleConfigDist = tripleGulp.rollupModule.createBundleConfig(`./dist/${MODULE_NAME}.js`);
-gulp.task('build:dist', tripleGulp.rollupModule.createRollupBundler(rollupConfigDist, bundleConfigDist));
+const rollupConfigDist = rollupGulp.createRollupConfig('index.js');
+const bundleConfigDist = rollupGulp.createBundleConfig(`./dist/${MODULE_NAME}.js`);
+gulp.task('build:dist', rollupGulp.createRollupBundler(rollupConfigDist, bundleConfigDist));
 
-const rollupConfigMin = tripleGulp.rollupModule.createRollupConfig('index.js', true);
-const bundleConfigMin = tripleGulp.rollupModule.createBundleConfig(`./dist/${MODULE_NAME}.min.js`, false, MODULE_NAME, 'umd');
-gulp.task('build:min', tripleGulp.rollupModule.createRollupBundler(rollupConfigMin, bundleConfigMin));
+const rollupConfigMin = rollupGulp.createRollupConfig('index.js', true);
+const bundleConfigMin = rollupGulp.createBundleConfig(`./dist/${MODULE_NAME}.min.js`, false, MODULE_NAME, 'umd');
+gulp.task('build:min', rollupGulp.createRollupBundler(rollupConfigMin, bundleConfigMin));
 
 // Documentation tasks.
 gulp.task('js-docs', tripleGulp.jsdocModule.createGenerateDocs(['./src/**/*.js'], './docs/js-docs'));

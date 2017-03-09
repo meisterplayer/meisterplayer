@@ -14,8 +14,11 @@
   "author": "Triple",
   "license": "Apache-2.0",
   "dependencies": {
-    "@npm-wearetriple/js-dev": "^2.3.3",
-    "gulp": "^3.9.1",
     "noop2": "^2.0.0"
+  },
+  "devDependencies" : {
+    "@npm-wearetriple/gulp-rollup-tasks": "1.0.0",
+    "@npm-wearetriple/js-dev": "^3.1.0",
+    "gulp": "^3.9.1"
   }
 }
