@@ -179,10 +179,20 @@ class Meister {
         this.config.debug = debug;
     }
 
+    /**
+     * Are controls enabled?
+     *
+     * @return {boolean} Returns true if controls are shown
+     */
     get showControls() {
         return this.config.controls;
     }
 
+    /**
+     * Hides/shows controls based on the given boolean.
+     *
+     * @param  {boolean} controls true to show controls, false to hide.
+     */
     set showControls(controls) {
         if (controls) {
             this.controlsWrapper.classList.remove('pf-ui-element-hidden');
@@ -288,6 +298,10 @@ class Meister {
     get isFullscreen() {
         if (!this.fullscreenController) return null;
         return this.fullscreenController.isFullscreen;
+    }
+
+    get playerType() {
+        return this.playerPlugin.type;
     }
 
     requestFullscreen() {

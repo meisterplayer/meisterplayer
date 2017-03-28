@@ -45,6 +45,9 @@ class Media extends ProtoPlugin {
     playerLoadedMetadata() {
         // when startPosition is within the duration of the current video
         if (this.startPosition > 0 && this.player.duration > this.startPosition) {
+            if (this.startPositionCompleted) return;
+            this.startPositionCompleted = true;
+
             this.meister.trigger('requestSeek', {
                 targetTime: this.startPosition,
                 forcedStart: true,
@@ -57,6 +60,7 @@ class Media extends ProtoPlugin {
      */
     unload() {
         super.unload();
+        this.startPositionCompleted = false;
         this.startPosition = null;
         this.blockSeekForward = false;
     }
