@@ -11,8 +11,8 @@ class EventHandler {
 
         // Register the default event hooks.
         this.stack = {};
-        for (let i = 0; i < eventHooks.length; i++) {
-            let eventHook = eventHooks[i];
+        for (let i = 0; i < eventHooks.length; i += 1) {
+            const eventHook = eventHooks[i];
 
             this.stack[eventHook] = [];
         }
@@ -31,20 +31,20 @@ class EventHandler {
         }
 
         // Register the handle on all hooks.
-        let newHandles = [];
-        for (let i = 0; i < hooks.length; i++) {
+        const newHandles = [];
+        for (let i = 0; i < hooks.length; i += 1) {
             let hook = hooks[i];
 
             if (!this.stack[hook]) {
                 this.stack[hook] = [];
             }
 
-            let newHandle = this._createHandler(caller, method);
+            const newHandle = this._createHandler(caller, method);
             this.stack[hook].push(newHandle);
 
             newHandles.push({
                 id: newHandle.id,
-                hook: hook,
+                hook,
             });
         }
 
@@ -74,25 +74,25 @@ class EventHandler {
             this.stack[hook].one = [];
         }
 
-        let newHandle = this._createHandler(caller, method, block);
+        const newHandle = this._createHandler(caller, method, block);
         this.stack[hook].one.push(newHandle);
 
         // Return an object that can be used to remove the handler.
         return {
             id: newHandle.id,
-            hook: hook,
+            hook,
         };
     }
 
     _createHandler(caller, method, block = false) {
-        let newHandle = {
+        const newHandle = {
             id: this.counter,
-            caller: caller,
-            method: method,
-            block: block,
+            caller,
+            method,
+            block,
         };
 
-        this.counter++;
+        this.counter += 1;
 
         return newHandle;
     }
@@ -101,14 +101,14 @@ class EventHandler {
         // Convert hooks to an array to keep flow similar.
         if (!(events instanceof Array)) events = [events];
 
-        for (let i = 0; i < events.length; i++) {
-            let eventObject = events[i];
+        for (let i = 0; i < events.length; i += 1) {
+            const eventObject = events[i];
             let removed = false;
 
             // First check the single handlers.
             if (this.stack[eventObject.hook].one) {
-                for (let i = 0; i < this.stack[eventObject.hook].one.length; i++) {
-                    let trigger = this.stack[eventObject.hook].one[i];
+                for (let i = 0; i < this.stack[eventObject.hook].one.length; i += 1) {
+                    const trigger = this.stack[eventObject.hook].one[i];
 
                     // Since ID's are unique break after finding one.
                     if (trigger.id === eventObject.id) {
@@ -128,8 +128,8 @@ class EventHandler {
             }
 
             // Now check regular handlers.
-            for (let i = 0; i < this.stack[eventObject.hook].length; i++) {
-                let trigger = this.stack[eventObject.hook][i];
+            for (let i = 0; i < this.stack[eventObject.hook].length; i += 1) {
+                const trigger = this.stack[eventObject.hook][i];
 
                 // Since ID's are unique break after finding one.
                 if (trigger.id === eventObject.id) {
@@ -142,7 +142,7 @@ class EventHandler {
 
     trigger(...args) {
         // Extract the first element as the hook.
-        let hook = args.splice(0, 1)[0];
+        const hook = args.splice(0, 1)[0];
 
         // Check whether the event exists.
         if (!this.stack[hook]) {
@@ -152,7 +152,6 @@ class EventHandler {
 
         // Check whether the event has been disabled.
         if (this.disabledHandles.indexOf(hook) !== -1) {
-
             // Check whether we have a protected handler if we do trigger that.
             if (this.protectedHandles[hook]) {
                 this.protectedHandles[hook](args);
@@ -171,8 +170,8 @@ class EventHandler {
         if (this.stack[hook].one) {
             let block = false;
 
-            for (var i = 0; i < this.stack[hook].one.length; i++) {
-                let single = this.stack[hook].one[i];
+            for (let i = 0; i < this.stack[hook].one.length; i += 1) {
+                const single = this.stack[hook].one[i];
 
                 // Only check for blocking when not already blocked.
                 if (!block) block = single.block;
@@ -191,8 +190,8 @@ class EventHandler {
         }
 
         // Trigger all regular handles associated with the hook.
-        for (let i = 0; i < this.stack[hook].length; i++) {
-            let eventHandle = this.stack[hook][i];
+        for (let i = 0; i < this.stack[hook].length; i += 1) {
+            const eventHandle = this.stack[hook][i];
 
             try {
                 eventHandle.method.apply(null, args);
@@ -213,7 +212,7 @@ class EventHandler {
     enable(hook) {
         this.protectedHandles[hook] = noop;
 
-        let hookIndex = this.disabledHandles.indexOf(hook);
+        const hookIndex = this.disabledHandles.indexOf(hook);
 
         if (hookIndex !== -1) {
             this.disabledHandles.splice(hookIndex, 1);

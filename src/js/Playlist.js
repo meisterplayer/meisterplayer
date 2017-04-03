@@ -7,7 +7,7 @@ class Playlist {
 
         this.meister.on('playlistNext', () => this.next());
         this.meister.on('playlistPrevious', () => this.previous());
-        this.meister.on('playlistGoTo', (e) => this.goTo(e.index));
+        this.meister.on('playlistGoTo', e => this.goTo(e.index));
 
         this.meister.on('playerEnd', () => {
             if (this.meister.config.autoplay && this.index < this.list.length - 1) {
@@ -41,7 +41,6 @@ class Playlist {
                     }
 
                     this.loadCurrentIndex();
-                    return;
                 })
                 .catch((err) => {
                     console.error(`Could not process item with type: ${item.type} and src: ${item.src}. \n${err}`);
@@ -55,8 +54,6 @@ class Playlist {
                     currentIndex: this.index,
                     length: this.list.length,
                 });
-
-                return;
             }
         }).catch((err) => {
             this.meister.error(`Could not find plugin to play type: '${item.type}'.`,

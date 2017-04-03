@@ -350,7 +350,7 @@ class Meister {
     }
 
     setPlaylist(list) {
-        for (let i = 0; i < list.length; i++) {
+        for (let i = 0; i < list.length; i += 1) {
             if (!list[i].type) {
                 throw new TypeError(`Item ${i}: Item must have a type attribute.`);
             } else if (list[i].type !== 'aditem'

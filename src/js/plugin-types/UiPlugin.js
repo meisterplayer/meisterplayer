@@ -12,10 +12,9 @@ class UiPlugin extends ProtoPlugin {
 
             if (!this.parentElement) {
                 console.warn(`Unable to find element with parentSelector '${querySelector}', ${this.name} is disabled.`);
-                return;
             }
         } else {
-            this.one('uiReady', (e) => this.onUiReady(e));
+            this.one('uiReady', e => this.onUiReady(e));
         }
     }
 

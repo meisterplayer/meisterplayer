@@ -58,7 +58,7 @@ class Parallel extends MediaPlugin {
                 this.bitrates.sort((a, b) => a.metadata.bitrate - b.metadata.bitrate);
 
                 const selectableBitrates = [];
-                for (let i = 0; i < this.bitrates.length; i++) {
+                for (let i = 0; i < this.bitrates.length; i += 1) {
                     const bitrate = this.bitrates[i];
 
                     // If there is a defalt bitrate specified prefer that.
@@ -91,7 +91,7 @@ class Parallel extends MediaPlugin {
                     const getPluginsPromises = [];
 
                     processPromises.push(
-                        this.plugin.process(this.bitrates[this.currentBitrateIndex])
+                        this.plugin.process(this.bitrates[this.currentBitrateIndex]),
                     );
 
                     // Get all plugins for each parallelItem
@@ -135,7 +135,7 @@ class Parallel extends MediaPlugin {
         });
 
         if (!this.plugin.onRequestBitrate) {
-            this.on('requestBitrate', (info) => this.onRequestBitrate(info.bitrateIndex));
+            this.on('requestBitrate', info => this.onRequestBitrate(info.bitrateIndex));
         }
     }
 

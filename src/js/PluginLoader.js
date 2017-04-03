@@ -63,8 +63,7 @@ class PluginLoader {
             pluginConfig = Configuration.get(key);
             pluginConfig.name = key;
 
-            const next = (item) =>
-                PluginLoader.execMiddleware(pluginConfig.middleware, instance, item);
+            const next = item => PluginLoader.execMiddleware(pluginConfig.middleware, instance, item);
 
             this.loaded.push({
                 name: plugin.name,
@@ -132,7 +131,7 @@ class PluginLoader {
         return Promise.all(isItemSupportedPromises).then((items) => {
             // Search for the plugin that returned true and map that to the loaded plugins
             let errorCode = Meister.ErrorCodes.WRONG_TYPE;
-            for (let i = 0; i < items.length; i++) {
+            for (let i = 0; i < items.length; i += 1) {
                 const supportInfo = items[i];
 
                 if (supportInfo.supported) {
