@@ -16,7 +16,8 @@
   "dependencies": {
     "noop2": "^2.0.0"
   },
-  "devDependencies" : {
+  "devDependencies": {
+    "@npm-wearetriple/gulp-webpack-tasks": "^1.0.0",
     "@npm-wearetriple/gulp-rollup-tasks": "1.0.0",
     "@npm-wearetriple/js-dev": "^3.1.0",
     "gulp": "^3.9.1"
