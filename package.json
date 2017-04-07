@@ -18,8 +18,9 @@
   },
   "devDependencies": {
     "@npm-wearetriple/gulp-webpack-tasks": "^1.0.0",
-    "@npm-wearetriple/gulp-rollup-tasks": "1.0.0",
     "@npm-wearetriple/js-dev": "^3.1.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-es2017": "^6.22.0",
     "gulp": "^3.9.1"
   }
 }
