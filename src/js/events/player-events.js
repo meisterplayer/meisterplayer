@@ -5,6 +5,8 @@ const PlayerEvents = [
     'playerTimeUpdate',
     'playerPlay',
     'playerPlaying',
+    'playerFirstPlay',
+    'playerReplay',
     'playerPause',
     '_playerSeek',
     'playerSeek',
