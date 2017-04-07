@@ -55,6 +55,7 @@ Browser.isPS4 = /PlayStation 4/i.test(userAgent);
 Browser.isSamsungBrowser = /SamsungBrowser/i.test(userAgent);
 Browser.isSamsung = /SAMSUNG/i.test(userAgent);
 Browser.isMacintosh = /Macintosh/i.test(userAgent);
+Browser.isFacebook = /FBAN/i.test(userAgent) && /FBAV/i.test(userAgent);
 
 Browser.name = info.name;
 Browser.version = info.version;
