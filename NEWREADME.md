@@ -587,3 +587,38 @@ Triggers each time an ad time update has been done.
 
 - currentTime:Number - The current time relative to the ad.
 - duration:Number - The duration of the ad.
+
+### adCuePoints -> { points:any } ###
+
+Triggers when information about the ad points are known. These points are when ad breaks are scheduled.
+
+- points:any - The schedulded ad points.
+
+### **Control events** ###
+
+
+### requestPlay -> { ?triggerByUser:Boolean } ###
+
+Triggers when a request to play has been done. 
+
+- triggerByUser:Boolean - Is this event result of an user action.
+
+### requestSeek -> { ?relativePosition:Number, ?timeOffset:Number } ###
+
+Triggers when a request to seek has been done.
+
+- ?relativePosition:Number - (optional) The position in percentage you want to seek to relative to the duration
+- ?timeOffset:Number - (optional) Amount of seconds you want to step forward (positive number)/backwards (negative number)
+
+### requestPause -> { ?triggerByUser:Boolean } ###
+
+Triggers when a request to pause has been done.
+
+- triggerByUser:Boolean - Is this event result of an user action.
+
+### requestBitrate -> { bitrateIndex:Number } ###
+
+Triggers when a request has been done to set the bitrate
+
+- bitrateIndex:Number - The index of the bitrate that is selected, -1 is auto.
+
