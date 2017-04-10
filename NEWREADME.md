@@ -530,7 +530,7 @@ Example:
 console.log(meisterInstance.playerType);
 ```
 
-### static get instances:*Array<{id:Number, instance:Meister}>* ###
+### static get instances:*Array<Object{id:Number, instance:Meister}>* ###
 
 Will return all the instances of Meister running on the page.
 
@@ -539,3 +539,51 @@ Example:
 ``` JavaScript
 console.log(Meister.instances);
 ```
+
+Events
+----
+
+The following events can be used to listen/trigger with the ```on```, ```one``` and ```trigger``` functions on Meister:
+
+### **Ad events** ###
+
+
+
+### adBreakStarted -> { ad: any, ... } ###
+
+Triggers when an ad break started playing (When you go from content to ad)
+
+returns:
+
+- ad:any - Information about the current playing ad.
+
+### adBreakEnded -> {ad: any, ... } ###
+
+Triggers when an ad break is done. (When you go from ad to content)
+
+returns:
+
+- ad:any - Information about the current playing ad.
+
+### adStarted -> {ad: any, ... } ###
+
+Triggers when an ad has started in the adbreak (This is triggered on each ad in the ad break).
+
+returns:
+
+- ad:any - Information about the current playing ad.
+
+### adEnded -> {ad: any, ... } ###
+
+Triggers when an ad has ended in the adbreak (This is triggered on each ad in the ad break).
+
+returns:
+
+- ad:any - Information about the current playing ad.
+
+### adTimeupdate -> { currentTime: Number, duration: Number }
+
+Triggers each time an ad time update has been done.
+
+- currentTime:Number - The current time relative to the ad.
+- duration:Number - The duration of the ad.
