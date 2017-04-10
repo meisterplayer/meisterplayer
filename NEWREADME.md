@@ -333,7 +333,77 @@ Removes all given listeners from the event stack.
 Example: 
 
 ``` JavaScript
+const event = meisterInstance.on( ... );
+meisterInstance.remove(event);
+```
 
+### disable(hook:String, handler:Function(event:any)) ###
+
+Disables an event so ```on()``` and ```one()``` will not be triggered with the given hook. You can use the ```handler``` parameter to still handle the event.
+
+- hook:String -  The hook you want to listen to check. For all the hooks checkout the events section. Also you can check per plugin what events are available.
+- handler:Function(event:any) : The callback for the event. What returns is different per event.
+
+Example
+
+``` JavaScript
+meisterInstance.disable('playerPlay', () => {
+    // Now only this function gets called when meister triggers 'playerPlay'.
+});
+```
+
+### enable(hook:String) ###
+
+Enables an event so it can be used again. 
+
+- hook:String -  The hook you want to listen to check. For all the hooks checkout the events section. Also you can check per plugin what events are available.
+
+Example:
+
+``` JavaScript
+meisterInstance.enable('playerPlay');
+```
+
+### error(message:String, code:String = 'ERR-9001', options:Object = {}) ###
+
+Throws an error on the meister player. This will also trigger an event so plugins can handle this (For example log the error to a server or show a different UI).
+
+- message:String - The error you want to output
+- code:String - An identifier of the error message. (ERR-9001 = unknown error)
+- options:Object - The options you want to send along the event. Can differ per plugin.
+
+Example:
+
+``` JavaScript
+meisterInstance.error('An error occured', 'TST-1234');
+```
+
+### static registerPlugin(name:*String*, plugin:*Object*) ###
+
+Registers the plugin with Meister.
+
+- name:String - The name of the plugin that is registered. Note: Will also be used as config object.
+- plugin:Object - The meister plugin object that is Meister compatible (class/object etc)
+
+Example:
+
+``` JavaScript
+class TestPlugin extends Meister.ParserPlugin {
+    constructor(config) {
+        // Will output 'hello'
+        console.log(config.param);
+    }
+    static get pluginName() { return 'testName'; }
+}
+
+Meister.registerPlugin(TestPlugin.pluginName, TestPlugin);
+
+const meisterInstance = new Meister('#player', {
+    // Notices that this is binded to the pluginName
+    testName: {
+        param: 'hello'
+    }
+});
 ```
 
 ### **Getters & Setters:** ###
@@ -362,4 +432,110 @@ meisterInstance.showControls = false;
 
 // Shows the controls
 meisterInstance.showControls = true;
+```
+
+### get playerMode:String ###
+
+Returns the current player mode this can either be 'audio' or 'video'
+
+Example:
+
+``` JavaScript
+console.log(meisterInstance.playerMode);
+```
+
+### get/set volume:Number ###
+
+Gets/Sets the current playback volume of Meister. This volume will also be rememberd by Meister so the user has the same volume on each page. 
+
+- set:Number - The volume you want it to set to between 0 and 1
+- get:Number - The current playback volume between 0 and 1
+
+Example: 
+
+``` JavaScript
+meisterInstance.volume = 0.7;
+```
+
+### get/set muted:Boolean ###
+
+Gets/Sets the current player muted mode. 
+
+- muted:Boolean - True to mute the player. false to unmute.
+
+Example:
+
+``` JavaScript
+// The player is now silent
+meisterInstance.muted = true;
+
+// The player is now playing the audio again
+meisterInstance.muted = false;
+```
+
+### get playing:Boolean ###
+
+Returns if the player is currently playing.
+
+``` JavaScript
+console.log(meisterInstance.playing);
+```
+
+### get currentItem:MediaObject ###
+
+Returns the current playing media item.
+
+``` JavaScript
+console.log(meisterInstance.currentItem);
+```
+
+### get duration:Number ###
+
+Returns the duration of the media.
+
+``` JavaScript
+console.log(meisterInstance.duration);
+```
+
+### get/set currentTime:Number ###
+
+Gets/sets the current time of the media.
+
+- currentTime:Number - The time you want to seek to.
+
+Example: 
+
+``` JavaScript
+// Seeks to the given moment.
+meisterInstance.currentTime = 10.2;
+```
+
+### get isFullscreen:Boolean ###
+
+Returns whether the player is in fullscreen mode or not.
+
+Example: 
+
+``` JavaScript
+console.log(meisterInstance.isFullscreen);
+```
+
+### get playerType:String ###
+
+Gets the current player type. This is for example 'html5'.
+
+Example:
+
+``` JavaScript
+console.log(meisterInstance.playerType);
+```
+
+### static get instances:*Array<{id:Number, instance:Meister}>* ###
+
+Will return all the instances of Meister running on the page.
+
+Example:
+
+``` JavaScript
+console.log(Meister.instances);
 ```
