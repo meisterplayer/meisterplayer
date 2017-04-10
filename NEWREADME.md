@@ -195,13 +195,84 @@ meisterInstance.switchItem({
 });
 ```
 
-### on(hook:String, handler:Function(event:any), caller?:String) ###
+### load() ###
+
+Loads the media item that has been set by ```setItem```. Or the first item in the playlist that has been set by ```setPlaylist```.
+
+Example:
+
+``` JavaScript
+meisterInstance.load();
+```
+
+### destroy() ###
+
+Destroys the meister player and it's plugins.
+
+Example: 
+
+``` JavaScript
+meisterInstsance.destroy()
+```
+
+### play(triggerByUser:Boolean = false) ###
+
+Starts playback of the media.
+
+- triggerByUser:*Boolean* (default false): Defines if the play() has been triggered by the user. (Analytics purposes).
+
+Example:
+
+``` JavaScript
+meisterInstsance.play()
+```
+
+### pause(triggerByUser:Boolean = false) ###
+
+Pauses playback of the media.
+
+- triggerByUser:*Boolean* (default false): Defines if the pause() has been triggered by the user. (Analytics purposes).
+
+Example:
+
+``` JavaScript
+meisterInstsance.pause()
+```
+
+### requestFullscreen() ###
+
+Requests the window if we can make the player full screen. This functions can only be called as a result of a user action. Otherwise browsers will decline the request.
+
+Example:
+
+``` JavaScript
+myDomElement.onclick = () => {
+    meisterInstance.requestFullscreen()
+}
+```
+
+### cancelFullscreen() ###
+
+Exits fullscreen mode.
+
+Example:
+
+``` JavaScript
+meisterInstance.cancelFullscreen();
+```
+
+### on(hook:String, handler:Function(event:any), caller?:String):EventHandle ###
 
 Listens for events happening inside of Meister. For all the hooks checkout the events section. Also you can check per plugin what events are available. 
 
 - hook:*String* : The name of the event you want to listen to.
 - handler:Function(event:any) : The callback for the event. What returns is different per event. 
 - caller?:String : The caller of the event. This is used for tracking if an exception is thrown so you can see where the exception occured.
+
+returns ```EventHandle```:
+
+- id:*Number* The id of the event.
+- hook:*String* The hook that was used for this event.
 
 Example:
 
@@ -216,9 +287,14 @@ meisterInstance.on('playerPlay', () => {
 }, 'MyScript');
 ```
 
-### one(hook: String, handler:Function(event:any), caller?:String) ###
+### one(hook: String, handler:Function(event:any), caller?:String):EventHandle ###
 
 This is the same as **on(hook:String, handler:Function(event:any), caller?:String)**. Only difference is this function only listens one time for the event. 
+
+returns ```EventHandle```:
+
+- id:*Number* The id of the event.
+- hook:*String* The hook that was used for this event.
 
 Example:
 
@@ -231,6 +307,33 @@ meisterInstance.one('playerPause', () => {
 meisterInstance.one('playerPlay', () => {
     console.log('The player triggered play');
 }, 'MyScript');
+```
+
+### trigger(hook:String, ...args) ###
+
+Triggers an event to the specified hook. 
+
+- hook:String - The hook you want to listen to check. For all the hooks checkout the events section. Also you can check per plugin what events are available.
+- ...args:any - This is given to the listener to handle.
+
+Example: 
+
+``` JavaScript
+meisterInstance.trigger('myCustomEvent', {
+    someProps: 'test'
+});
+```
+
+### remove(events:EventHandle|Array<EventHandle>) ###
+
+Removes all given listeners from the event stack. 
+
+- events:EventHandle|Array<EventHandle> - Object that is returned by ```on()``` and ```one()```
+
+Example: 
+
+``` JavaScript
+
 ```
 
 ### **Getters & Setters:** ###
