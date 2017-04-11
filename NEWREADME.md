@@ -805,5 +805,25 @@ Triggers when a new item is being loaded in the playlist.
 - item:MediaObject - The item that is loaded.
     - MediaObject:*Object<{ src:String, type:String, ... }>* - The item object
 
+### uiReady -> { pluginSpace:Element } ###
 
+Tells the player the UI is ready to be used and gives other ui plugin a chance to render their UI in the given pluginSpace.
 
+- pluginSpace:Element - The element users can use to insert nodes into.
+
+### uiPluginInserted -> { icon:String, name:String } ###
+
+Triggers when a uiPlugin has been inserted in the pluginSpace.
+
+- icon:String - The url to the icon.
+- name:String - The name of the plugin.
+
+### uiPluginOpen -> { name:String } ###
+
+Triggers when a ui plugin is opened
+
+- name:String - The name of the plugin that is opened.
+
+### uiPluginClose ###
+
+Triggers when a ui plugin is closed
