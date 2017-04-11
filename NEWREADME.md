@@ -622,3 +622,160 @@ Triggers when a request has been done to set the bitrate
 
 - bitrateIndex:Number - The index of the bitrate that is selected, -1 is auto.
 
+
+### **Item events** ###
+
+### itemLoadPrevented -> { error: String } ###
+
+Triggers when a load is trying to be done while an ad is playing (and the config option disableLoadDuringAd is set to true).
+
+- error:String - The cause of a load prevented.
+
+### itemLoaded -> { item: MediaObject } ###
+
+Triggers when the ```load()``` on a plugin has completed. This does not mean the video is capable of playback yet. 
+
+- item:MediaObject - The item that is loaded.
+    - MediaObject:*Object<{ src:String, type:String, ... }>* - The item object
+
+### itemUnloaded ###
+
+Triggers when the ```unload()``` on a plugin has completed.
+
+### itemTimeInfo -> { isLive:Boolean, hasDVR:Boolean, duration:Number } ###
+
+Triggers when additional time info is known. It's recommended to use this for a correct representation of time.
+
+- isLive:Boolean - Whether the video is live or not.
+- hasDVR:Boolean - Whether the video has a DVR window.
+- duration:Number - The duration of the video.
+
+### itemBitrates -> { bitrates:Array<Object>, currentIndex:Number } ###
+
+Triggers when the bitrates that are available are known.
+
+- bitrates:Array<Object{bitrate:Number, index:Number}> - An array of all available bitrates
+- currentIndex:Number - The current selected bitrate index.
+
+### itemImageStream -> { images:Array<Object{ src:String, start:Number, end:Number }> } ### 
+
+Triggers when a image stream is available. It can be used to show for example on a timeline.
+
+- images:Array<Object{ ... }> - All images that can be used for the ui
+    - src:String - The src of the image.
+    - start:Number - The start time relative to the duration.
+    - end:Number - The end time relative to the duration.
+
+
+### **Player events** ###
+
+### playerCreated ###
+
+Triggers when a player has been created and is available for use.
+
+### playerDestroyed ###
+
+Triggers when a player is unloaded from Meister.
+
+### playerTimeUpdate -> { currentTime:Number, duration:Number} ###
+
+Triggers when a time update has occured.
+
+- currentTime:Number - The current time of the player in the media.
+- duration:Number - The duration of the media item.
+
+### playerPlay -> { triggerByUser:Boolean } ###
+
+Triggers when playback of the media starts after having been paused; that is, when playback is resumed after a prior pause event.
+
+### playerPlaying ###
+
+Triggers when the media begins to play (either for the first time, after having been paused, or after ending and then restarting).
+
+### playerFirstPlay ###
+
+Triggers when an item starts playing for the first time.
+
+### playerReplay ###
+
+Triggers when an item has ended and the play button is hit again.
+
+### playerPause -> { ?type:String, ?triggerByUser:Boolean } ###
+
+Triggers when playback is paused.
+
+- type:String - What kind of media type paused the item
+- triggerByUser:Boolean - If the pause was caused by a user action.
+
+### playerSeek -> {relativePosition:Number, currentTime:Number, duration:Number} ###
+
+Triggers when a seek has been done
+
+- relativePosition:Number - The position relative to the duration (in percentage)
+- currentTime:Number - The new currentTime
+- duration:Number - The current duration of the media item.
+
+### playerSeeking ###
+
+Triggers when a seek operation begins.
+
+### playerNudge -> { totalNudges:Number } ###
+
+Triggers when a nudge has been done. This is usually when the player could not overcome a gap in the media item.
+
+- totalNudges:Number - The amount of nudges in total done.
+
+### playerEnd ###
+
+Triggers when playback completes.
+
+### playerError -> { mediaError:any } ###
+
+Triggers when an error occurs with playback of the current item.
+
+- mediaError:any - The media error.
+
+
+### playerVolumeChange ###
+
+Triggers when the audio volume changes (both when the volume is set and when the muted attribute is changed).
+
+### playerFullscreen ### 
+
+Triggers when the browser is switched to/out-of fullscreen mode.
+
+### playerSwitchBitrate -> { newBitrate:Number, newBitrateIndex:Number } ###
+
+Triggers when a request for a new bitrate has been completed.
+
+- newBitrate:Number - The new bitrate selected
+- newBitrateIndex:Number - The new selected bitrate index.
+
+### playerAutoSwitchBitrate -> { newBitrate:Number, newBitrateIndex:Number } ###
+
+Triggers when has automatically chosen a new bitrate. 
+
+- newBitrate:Number - The new bitrate selected
+- newBitrateIndex:Number - The new selected bitrate index.
+
+### playerProgress -> mediaElement:HTMLMediaElement|any ###
+
+Triggers periodically to inform interested parties of progress downloading the media. Information about the current amount of the media that has been downloaded is available in the media element's buffered attribute.
+
+- mediaElement:HTMLMediaElement|any - The media element itself.
+
+### playerLoadedMetadata ###
+
+Triggers when media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
+
+### playerDurationChange ###
+
+Triggers when metadata has loaded or changed, indicating a change in duration of the media.  This is sent, for example, when the media has loaded enough that the duration is known.
+
+### playerBuffering ###
+
+Triggers when the player is buffering
+
+### playerBufferedEnough ###
+
+Triggers when the player has buffered enough to continue playback.

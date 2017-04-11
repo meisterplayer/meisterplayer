@@ -10,6 +10,7 @@ const PlayerEvents = [
     'playerPause',
     '_playerSeek',
     'playerSeek',
+    'playerSeeking',
     'playerNudge',
     'playerEnd',
     'playerError',
