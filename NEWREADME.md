@@ -87,7 +87,7 @@ import StandardUi from '@npm-wearetriple/meister-plugin-standardui';
 
 // Initialize the meister player
 // Meister uses the querySelector to get the dom element.
-var meisterPlayer = new Meister('#player', {
+const meisterPlayer = new Meister('#player', {
     // Configures Meister player to use these plugin.
     // Uses pluginName as object name to be future proof.
     [BaseMedia.pluginName]: {},
@@ -105,6 +105,92 @@ meisterPlayer.setItem({
 meisterPlayer.load();
 
 ```
+
+Configuration
+----
+
+The following options can be used to configure the Meister core. All options will be inside of ```global:{}```
+
+### language *[String]* (default: 'en') ###
+
+The language you want the player to be. 
+
+Example:
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        language: 'nl' // Set the Meister player language to dutch.
+    }
+});
+```
+
+### i18nEnabled *[Boolean]* (default: false)
+
+Turns i18n on instead of the custom localization api. In future version this will be set to true by default.
+
+Example:
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        i18nEnabled: true,
+    }
+});
+```
+
+### autoplay *[Boolean]* (default: false) ###
+
+Autoplays the video instead of having to click on play
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        autoplay: true,
+    }
+});
+```
+
+### fullscreenOnDoubleClick *[Boolean]* (default: false) ###
+
+Allows the player to go fullscreen when the user double clicks on the player. This also set ```iosPlaysInline``` to true to be able to support this feature.
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        fullscreenOnDoubleClick: true,
+    }
+});
+```
+
+### controls *[Boolean]* (default: true) ###
+
+Enables/disables controls.
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        controls: false, // Now the controls are not shown.
+    }
+});
+```
+
+### debug *[Boolean]* (default: false) ###
+
+Defines if Meister will be in debug mode yes or no.
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        debug: true, // Meister is now in debug mode.
+    }
+});
+```
+
+### disableLoadDuringAd *[Boolean]* (default: false) ###
+
+Disables the ```load()``` function call when an ad is playing. So it disables switching of content during an adbreak.
+
 
 API
 ----
