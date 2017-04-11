@@ -779,3 +779,31 @@ Triggers when the player is buffering
 ### playerBufferedEnough ###
 
 Triggers when the player has buffered enough to continue playback.
+
+
+### **Playlist events** ###
+
+### playlistInfo -> { currentIndex:Number, length:Number }  ###
+
+Informars what position in the playlist we are.
+
+- currentIndex:Number - The current index in the playlist.
+- length:Number - The length of the playlist.
+
+### playlistNext ###
+
+Triggers when the next item in the playlist has been requested. This is mostly triggered by UI and not by the playlist itself.
+
+### playlistPrevious ###
+
+Triggers when the previous item in the playlist has been requested. This is mostly triggered by UI and not by the playlist itself.
+
+### playlistMetadata -> item:MediaObject ###
+
+Triggers when a new item is being loaded in the playlist. 
+
+- item:MediaObject - The item that is loaded.
+    - MediaObject:*Object<{ src:String, type:String, ... }>* - The item object
+
+
+
