@@ -1,734 +1,915 @@
-# Meister Web Player #
+Meister Web Player
+====
 
-JavaScript based web player, version v4.9.3.  
-This is a quick guide to setting up the player, for an overview of the various properties, methods, and events you can go [here](API.md).
+Plugable JavaScript web player - version v4.9.3.
 
-## Note ##
+This is the Meister core. It required additional plugins to get set up. This guide will help you get starting up and play a simple MP4 video.
 
-Previously this was the Vinson player. For backwards compatibility the Vinson namespace mirrors the Meister namespace, though we recommend moving to the new namespace.
+Getting started
+----
 
-### How do I get set up? ###
+To get started simply include the ```Meister.js``` in your page. There are two ways of setting up the Meister Player. The usage of ```<script>``` tags and the use of ES6 modules. We will explain the ```<script>``` tag version first.
 
-Simply include the `meister.bundled.js` and `meister.bundled.css` in your page and initialize the player:
+Meister on it's own can't play video's it requires at least a player plugin and a media plugin. We will show in the example below how to add these plugins to get a playing MP4 file.
+We will be using the following plugins:
 
+- [BaseMedia for Meister](https://github.com/meisterplayer/media-basemedia) (This is the plugin for MP4 playback)
+- [HTML5 Player for Meister](https://github.com/meisterplayer/player-html5player) (This is the plugin to playback using HTML5)
+- [Standard UI for Meister](https://github.com/meisterplayer/ui-standardui) (This is the plugin to get a different UI for Meister)
+
+
+### Setting up using ```<script>``` tags
+
+The following snippet can be used to initialize the Meister player:
 
 ``` HTML
-<link rel="stylesheet" href="stylesheets/meister.bundled.css">
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Meister player example</title>
+        <!-- It's important that Meister.js will be loaded before the plugins -->
+        <script src="Meister.js"></script>
+        <script src="BaseMedia.js"></script>
+        <script src="Html5Player.js"></script>
+        <script src="StandardUi.js"></script>
+    </head>
+    <body>
+        <div id="player"></div>
+        <script>
+            // Initialize the meister player
+            // Meister uses the querySelector to get the dom element.
+            var meisterPlayer = new Meister('#player', {
+                // Configures Meister player to use these plugin.
+                // We will later go in depth what these are for.
+                BaseMedia: {},
+                Html5Player: {},
+                StandardUi: {},
+            });
 
-<div id="player"></div>
+            // Configures meister to play the mp4 media item.
+            meisterPlayer.setItem({
+                src: 'INSERT_URL_TO_MP4_HERE',
+                type: 'mp4', // Tells meister we will play an mp4 item. 
+            });
 
-
-<script src="meister.bundled.js"></script>
-<script>
-    // initialize Meister and plugins.
-    var player = new Meister('#player', {
-        // Plugins can be configured
-        youboraAnalytics: {
-            url: 'tracking URL',
-            pluginVersion: '2.0.0_html5',
-            system: 'npawplug',
-            defaultPingTime: 5
-        },
-        // You can also configure the player globally
-        global: {
-            startMuted: false,   // Mute audio on page load
-            autoplay: false,     // Start playing once the player has loaded
-            controls: true,     // Do not show the controls
-            audioOnly: false,    // Always use an audio element to play the media
-            disableLoadDuringAd: false, // Disable switching of content during an adbreak
-            language : "en" // set language of interface elements to english (default) or nl (dutch)
-        }
-    });
-
-    // Tell the player you want to play an MP4.
-    player.setItem({
-        src: 'YOUR_CONTENT_URL',
-        type: 'mp4'
-    });
-
-    // Start playing once the item has loaded (will not work on mobile devices)
-    player.one('itemLoaded', function() {
-        player.play();
-    });
-
-    // Load the player.
-    player.load();
-</script>
+            // Tells meister we are ready to load the player and start playing
+            meisterPlayer.load();
+        </script>
+    </body>
+</html>
 ```
 
-This will initialize the player with the youboraAnalytics plugin. This plugin is optional, initializing without it will not affect the playing capabilities of the player. In addition to the YouBora plugin you can also configure the player globally, which will be described at the end of this document.
+This is the basic way of getting setup with Meister. We will later get in depth in what these functions exactly does and how we can configure Meister to our likings.
 
-#### Cleaning Up ####
-Once you're done playing your content you can destroy the player context by calling the `destroy` method and nulling the references you have to the player.  
+### Setting up using ES6 modules
 
-```JavaScript
-var player = new Meister('#player', {
+The following example shows how you can use ES6 modules to load in the Meister players with the plugins mentioned above.
+
+First install Meister through NPM:
+
+``` Bash
+npm install -S @npm-wearetriple/meisterplayer
+```
+
+And for the additional plugins you can also npm install them:
+
+```
+npm install -S @npm-wearetriple/meister-plugin-basemedia
+npm install -S @npm-wearetriple/meister-plugin-html5player
+npm install -S @npm-wearetriple/meister-plugin-standardui
+```
+
+``` JavaScript
+import Meister from '@npm-wearetriple/meisterplayer';
+import BaseMedia from '@npm-wearetriple/meister-plugin-basemedia';
+import Html5Player from '@npm-wearetriple/meister-plugin-html5player';
+import StandardUi from '@npm-wearetriple/meister-plugin-standardui';
+
+// Initialize the meister player
+// Meister uses the querySelector to get the dom element.
+const meisterPlayer = new Meister('#player', {
+    // Configures Meister player to use these plugin.
+    // Uses pluginName as object name to be future proof.
+    [BaseMedia.pluginName]: {},
+    [Html5Player.pluginName]: {},
+    [StandardUi.pluginName]: {},
+});
+
+// Configures meister to play the mp4 media item.
+meisterPlayer.setItem({
+    src: 'INSERT_URL_TO_MP4_HERE',
+    type: 'mp4', // Tells meister we will play an mp4 item. 
+});
+
+// Tells meister we are ready to load the player and start playing
+meisterPlayer.load();
+
+```
+
+Configuration
+----
+
+The following options can be used to configure the Meister core. All options will be inside of ```global:{}```
+
+### language *[String]* (default: 'en') ###
+
+The language you want the player to be. 
+
+Example:
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        language: 'nl' // Set the Meister player language to dutch.
+    }
+});
+```
+
+### i18nEnabled *[Boolean]* (default: false)
+
+Turns i18n on instead of the custom localization api. In future version this will be set to true by default.
+
+Example:
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        i18nEnabled: true,
+    }
+});
+```
+
+### autoplay *[Boolean]* (default: false) ###
+
+Autoplays the video instead of having to click on play
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
     global: {
         autoplay: true,
     }
 });
+```
 
-// Tell the player you want to play an MP4.
-player.setItem({
-    src: 'YOUR_CONTENT_URL',
+### fullscreenOnDoubleClick *[Boolean]* (default: false) ###
+
+Allows the player to go fullscreen when the user double clicks on the player. This also set ```iosPlaysInline``` to true to be able to support this feature.
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        fullscreenOnDoubleClick: true,
+    }
+});
+```
+
+### controls *[Boolean]* (default: true) ###
+
+Enables/disables controls.
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        controls: false, // Now the controls are not shown.
+    }
+});
+```
+
+### debug *[Boolean]* (default: false) ###
+
+Defines if Meister will be in debug mode yes or no.
+
+``` JavaScript
+var meisterInstance = new Meister('#player', {
+    global: {
+        debug: true, // Meister is now in debug mode.
+    }
+});
+```
+
+### disableLoadDuringAd *[Boolean]* (default: false) ###
+
+Disables the ```load()``` function call when an ad is playing. So it disables switching of content during an adbreak.
+
+
+API
+----
+
+We will explain the API here for all methods on Meister
+
+Meister instance properties
+----
+
+### Meister(query:*String|Element*, config:*Object*):*Meister* ###
+
+Constructor of Meister.
+
+- query:String - The dom Query to select the ```<div>``` element you want to use for Meister
+- query:Element - The dom element you want to use. This is an alternate to using query:String.
+- config:Object - The config object to initialize plugins and configure them to your liking. Check each plugin for documentation to configure a plugin.
+
+returns an instance of Meister
+
+Example:
+
+``` JavaScript
+// Using the query:String method:
+var meisterPlayer = new Meister('#player', {
+    // Configuration per plugin goes here.
+});
+
+// Using the query:Element method:
+var meisterPlayer = new Meister(document.getElementById('player'), {
+    // Configuration per plugin goes here.
+});
+
+```
+
+### **Methods:** ###
+
+### setItem(item:*Object\<MediaObject\>*); ###
+
+Sets the media item that you want to play. Configuration can differ per plugin but the basic item object has a src & type.
+
+MediaObject:
+- src:*String* : URL to the media.
+- type:*String* : The type of the media. Check the plugin documentation to see what type exactly you have to input.
+- ...:*any* : A MediaObject can have more options but this differs per plugin. Please check the plugin documentation for more options.
+
+Example (requires a mp4 plugin): 
+
+``` JavaScript
+meisterInstance.setItem({
+    src: 'https://example.com/video.mp4',
     type: 'mp4'
 });
-
-// Load the player.
-player.load();
-
-//... Some time passes
-
-// We want to clean up the player
-player.destroy(); // also removes the DOM elements
-player = null; // Make sure no references remain so the GC can clean up any remaining resources
 ```
 
+### setPlaylist(items:*Array*[*Object*:\<*MediaObject*\>]) ###
 
-### Switching Content ###
+Same as setItem(Object:*MediaObject*) only this method allows for multiple items to be set. Meister will walk through the items one by one (When the end event is triggered).
 
-Perhaps you changed your mind and would like to display a different video. This can be accomplished relatively straightforward by repeating most of the steps in the setup.
+Please see setItem(Object:*MediaObject*) for the documentation of *MediaObject*
 
-``` JavaScript
-// Tell the player what new item it should display.
-player.setItem({
-    src: 'MORE_INTERESTING_CONTENT_URL',
-    type: 'smil'
-});
-
-// Start playing the new media once it has been loaded.
-player.one('itemLoaded', function() {
-    player.play();
-});
-
-// Tell the player to process the resource and prepare for playback.
-player.load();
-```
-
-As is shown in the above example, the new item does not have to be of the same type as the previously displayed item.
-
-#### Switching Content During Ad Break ####
-
-By default the player will cancel the current ad break when another item is loaded. Optionally you can set a global configuration flag to prevent the switching of content when the player is playing an ad break. No new item will be loaded and to the user it will seem as if nothing happens. To remedy this you can listen to the `itemLoadPrevented` event and look for the `adPlaying` propertyto give appropriate feedback to the user.
+Example:
 
 ``` JavaScript
-var player = new Meister('#player', {
-    global: {
-        disableLoadDuringAd: true
-    }
-});
-
-// Set up a handler to inform the user.
-player.on('itemLoadPrevented', function (e) {
-    if (e.error === 'adPlaying') {
-        alert('Sorry, please finish watching this ad first.')
-    }
-});
-
-/* Player starts playing an ad break */
-
-// Setting a new item is still possible.
-player.setItem({
-    src: 'MORE_INTERESTING_CONTENT_URL',
-    type: 'm3u8'
-});
-
-// This will not do anything, except trigger the 'itemLoadPrevented' event.
-player.load();
-```
-
-Any `setItem` calls will still go through, even though the content won't be loaded immediately. This allows you to set up a simple queuing system that will start playing content after the ad break has completed. An example apporach is provided below:  
-
-``` JavaScript
-var player = new Meister('#player', {
-    global: {
-        disableLoadDuringAd: true,
-        autoplay: true
-    }
-});
-
-/* Start playing media  */
-
-// This indicates whether there is a queued up item or not.
-var playQueue = false;
-player.on('itemLoadPrevented', function (e) {
-    if (e.error === 'adPlaying') {
-        playQueue = true;
-    };
-});
-
-player.on('adBreakEnded', function () {
-    if (playQueue) {
-        playQueue = false;
-
-        // Player will start playing due to the global autoplay property.
-        player.load();
-    }
-});
-```
-
-### Error Messages ###
-
-Despite our best efforts it can happen that the player encounters an error. This is most often the case when you try to play an item which is not supported in a browser, or perhaps because there is no plugin present for the item in question. Should this happen the player will present the user with an error screen and give an indication of what might be wrong. It is possible to override the default error message to provide localized or more specific feedback to the user. We provided a small example below:  
-
-``` JavaScript
-window.Meister.MessageStore.setMessages({
-    code: window.Meister.ErrorCodes.WRONG_TYPE, // Unable to find a plugin for this type
-    message: 'A custom error message.',
-    options: {
-        title: 'A custom title.',
-        headTitle: 'A custom header title.',
-    }
-});
-```
-
-The above snippet will store a custom message for the error code `MSTR-0001`, so whenever the player is unable to find a plugin to play an item it will display this message instead of the default one. Below are the error codes currently in use.
-
-- **window.Meister.ErrorCodes.WRONG_TYPE**: There is no plugin present for the item type.
-- **window.Meister.ErrorCodes.NOT_SUPPORTED**: There is a plugin present for this item, but it is not supported in the current browser.
-- **window.Meister.ErrorCodes.NO_DRM**: You specified DRM info for this item but the plugin does not support DRM playback in the current browser.
-
-You can also set multiple messages at once by passing an array:  
-
-``` JavaScript
-window.Meister.MessageStore.setMessages([
+meisterInstance.setPlaylist([
     {
-        code: window.Meister.ErrorCodes.NOT_SUPPORTED, // Unable to find a plugin for this type
-        message: 'Please consider updating your browser or use another browser.',
-        options: {
-            title: 'Unable to play content.',
-            headTitle: 'Unsupported browser.',
-        }
+        src: 'https://example.com/video.mp4',
+        type: 'mp4'
     },
     {
-        code: window.Meister.ErrorCodes.NO_DRM, // Unable to find a plugin for this type
-        message: 'Please use a modern, up-to-date browser such as Chrome, Safari, or Edge.',
-        options: {
-            title: 'Unable to play content.',
-            headTitle: 'Unsupported browser.',
-        }
-    },
+        src: 'https://example.com/anotherVideo.mp4',
+        type: 'mp4'
+    }
 ]);
 ```
 
-### Fallback Sources ###
+### switchItem(item:*Object:\<MediaObject\>*) ###
 
-Not all browsers offer support for all streaming methods, as such it is not uncommon to have multiple different streams for the same content. To make this easier the player supports the `multi-source` type, in which you can configure multiple sources.
+Allows for switching items inside of Meister. This way you can load a new item while already playing a other item.
+
+Please see setItem(Object:*MediaObject*) for the documentation of *MediaObject*
+
+Example:
+
+``` JavaScript
+meisterInstance.switchItem({
+    src: 'https://example.com/video.mp4',
+    type: 'mp4'
+});
+```
+
+### load() ###
+
+Loads the media item that has been set by ```setItem```. Or the first item in the playlist that has been set by ```setPlaylist```.
+
+Example:
+
+``` JavaScript
+meisterInstance.load();
+```
+
+### destroy() ###
+
+Destroys the meister player and it's plugins.
+
+Example: 
+
+``` JavaScript
+meisterInstsance.destroy()
+```
+
+### play(triggerByUser:Boolean = false) ###
+
+Starts playback of the media.
+
+- triggerByUser:*Boolean* (default false): Defines if the play() has been triggered by the user. (Analytics purposes).
+
+Example:
+
+``` JavaScript
+meisterInstsance.play()
+```
+
+### pause(triggerByUser:Boolean = false) ###
+
+Pauses playback of the media.
+
+- triggerByUser:*Boolean* (default false): Defines if the pause() has been triggered by the user. (Analytics purposes).
+
+Example:
+
+``` JavaScript
+meisterInstsance.pause()
+```
+
+### requestFullscreen() ###
+
+Requests the window if we can make the player full screen. This functions can only be called as a result of a user action. Otherwise browsers will decline the request.
+
+Example:
+
+``` JavaScript
+myDomElement.onclick = () => {
+    meisterInstance.requestFullscreen()
+}
+```
+
+### cancelFullscreen() ###
+
+Exits fullscreen mode.
+
+Example:
+
+``` JavaScript
+meisterInstance.cancelFullscreen();
+```
+
+### on(hook:String, handler:Function(event:any), caller?:String):EventHandle ###
+
+Listens for events happening inside of Meister. For all the hooks checkout the events section. Also you can check per plugin what events are available. 
+
+- hook:*String* : The name of the event you want to listen to.
+- handler:Function(event:any) : The callback for the event. What returns is different per event. 
+- caller?:String : The caller of the event. This is used for tracking if an exception is thrown so you can see where the exception occured.
+
+returns ```EventHandle```:
+
+- id:*Number* The id of the event.
+- hook:*String* The hook that was used for this event.
+
+Example:
+
+``` JavaScript
+// Without caller set
+meisterInstance.on('playerPause', () => {
+    console.log('The player is now paused');
+});
+
+meisterInstance.on('playerPlay', () => {
+    console.log('The player triggered play');
+}, 'MyScript');
+```
+
+### one(hook: String, handler:Function(event:any), caller?:String):EventHandle ###
+
+This is the same as **on(hook:String, handler:Function(event:any), caller?:String)**. Only difference is this function only listens one time for the event. 
+
+returns ```EventHandle```:
+
+- id:*Number* The id of the event.
+- hook:*String* The hook that was used for this event.
+
+Example:
+
+``` JavaScript
+// Without caller set
+meisterInstance.one('playerPause', () => {
+    console.log('The player is now paused');
+});
+
+meisterInstance.one('playerPlay', () => {
+    console.log('The player triggered play');
+}, 'MyScript');
+```
+
+### trigger(hook:String, ...args) ###
+
+Triggers an event to the specified hook. 
+
+- hook:String - The hook you want to listen to check. For all the hooks checkout the events section. Also you can check per plugin what events are available.
+- ...args:any - This is given to the listener to handle.
+
+Example: 
+
+``` JavaScript
+meisterInstance.trigger('myCustomEvent', {
+    someProps: 'test'
+});
+```
+
+### remove(events:EventHandle|Array<EventHandle>) ###
+
+Removes all given listeners from the event stack. 
+
+- events:EventHandle|Array<EventHandle> - Object that is returned by ```on()``` and ```one()```
+
+Example: 
+
+``` JavaScript
+const event = meisterInstance.on( ... );
+meisterInstance.remove(event);
+```
+
+### disable(hook:String, handler:Function(event:any)) ###
+
+Disables an event so ```on()``` and ```one()``` will not be triggered with the given hook. You can use the ```handler``` parameter to still handle the event.
+
+- hook:String -  The hook you want to listen to check. For all the hooks checkout the events section. Also you can check per plugin what events are available.
+- handler:Function(event:any) : The callback for the event. What returns is different per event.
+
+Example
+
+``` JavaScript
+meisterInstance.disable('playerPlay', () => {
+    // Now only this function gets called when meister triggers 'playerPlay'.
+});
+```
+
+### enable(hook:String) ###
+
+Enables an event so it can be used again. 
+
+- hook:String -  The hook you want to listen to check. For all the hooks checkout the events section. Also you can check per plugin what events are available.
+
+Example:
+
+``` JavaScript
+meisterInstance.enable('playerPlay');
+```
+
+### error(message:String, code:String = 'ERR-9001', options:Object = {}) ###
+
+Throws an error on the meister player. This will also trigger an event so plugins can handle this (For example log the error to a server or show a different UI).
+
+- message:String - The error you want to output
+- code:String - An identifier of the error message. (ERR-9001 = unknown error)
+- options:Object - The options you want to send along the event. Can differ per plugin.
+
+Example:
+
+``` JavaScript
+meisterInstance.error('An error occured', 'TST-1234');
+```
+
+### static registerPlugin(name:*String*, plugin:*Object*) ###
+
+Registers the plugin with Meister.
+
+- name:String - The name of the plugin that is registered. Note: Will also be used as config object.
+- plugin:Object - The meister plugin object that is Meister compatible (class/object etc)
+
+Example:
+
+``` JavaScript
+class TestPlugin extends Meister.ParserPlugin {
+    constructor(config) {
+        // Will output 'hello'
+        console.log(config.param);
+    }
+    static get pluginName() { return 'testName'; }
+}
+
+Meister.registerPlugin(TestPlugin.pluginName, TestPlugin);
+
+const meisterInstance = new Meister('#player', {
+    // Notices that this is binded to the pluginName
+    testName: {
+        param: 'hello'
+    }
+});
+```
+
+### **Getters & Setters:** ###
+
+### get version:*String* ###
+
+Returns the current version of Meister. Yields `"vX.Y.Z"`
+
+Example:
 
 ```JavaScript
-var player = new Meister('#player', {}); // No need for any options on the player.
-
-// When setting the item provide the player with information on the various DRM options.
-player.setItem({
-    type: 'multi-source',
-    sources: [
-        {
-            // Player will first try to play the dash stream.
-            src: 'YOUR_DASH_URL',
-            type: 'dash',
-        },
-        {
-            // If dash playback is not possible, the player will try hls.
-            src: 'YOUR_HLS_URL',
-            type: 'hls',
-        }
-    ],
-});
+// Outputs v4.9.6
+console.log(meisterInstance.version);
 ```
 
-### Configuring UI ###
+### get/set showControls:*Boolean*  ###
 
-#### Disable Auto Hide Controls ####
+- set: Hides/Shows the controls.
+- get: Returns the current controls status.
 
-By default the controls will hide after 3 seconds, and show again on mouseover. The duration before the controls fade is configurable through the `timeToFade` config value:
-
-```JavaScript
-const player = new Meister('#targetDiv', {
-    ...,
-    standard: {
-        timeToFade: 3, // Time in seconds.
-    }
-});
-```
-
-In addition it is possible to completely disable the hiding of the controls. You can set the initial state through the `fixedControls` config value, and change it manually by triggering an event on the instance.
-
-```JavaScript
-const player = new Meister('#targetDiv', {
-    ...,
-    standard: {
-        fixedControls: false, // Default value
-    }
-});
-
-// Player now hides controls after 3 seconds of no mouse activity.
-
-player.trigger('standard:toggleFixedControls', {
-    fixed: true,
-});
-
-// Player now shows controls and disables the hiding mechanism.
-
-player.trigger('standard:toggleFixedControls', {
-    fixed: false,
-});
-
-// Player now hides controls after 3 seconds once again.
-```
-
-### DRM Content ###
-
-The player is capable of playing content encrypted with Apple's FairPlay, Google's WideVine, and Microsoft's PlayReady. The configuration is quite straightforward, as you can see in the example below:
+Example:
 
 ``` JavaScript
-var player = new Meister('#player', {}); // No need for any options on the player.
+// Hides the controls
+meisterInstance.showControls = false;
 
-// When setting the item provide the player with information on the various DRM options.
-player.setItem({
-    src: 'YOUR_CONTENT_URL',
-    type: 'dash',
-    // use the drmConfig property to pass the information.
-    drmConfig: {
-        // You specify the details for each drm type seperately.
-        playready: {
-            drmServerUrl: 'YOUR_PLAYREADY_DRM_SERVER_URL',
-            // Any custom headers that need to be present on the request can be specified here.
-            customHeaders: {
-                'X-HEADER-KEY-1': 'HEADER-VALUE-1',
-                'X-HEADER-KEY-2': 'HEADER-VALUE-2',
-            }
-        },
-        widevine: {
-            drmServerUrl: 'YOUR_WIDEVINE_DRM_SERVER_URL',
-            // Any custom headers that need to be present on the request can be specified here.
-            customHeaders: {
-                'X-HEADER-KEY-1': 'HEADER-VALUE-1',
-                'X-HEADER-KEY-2': 'HEADER-VALUE-2',
-            },
-            // Additionally should the DRM server require a specific scheme you can specify that too.
-            scheme: {
-                kid: '%%KID%%', // The %%KID%% will be replace with the KID of the content, regardless of the key.
-                drm_info: '%%KEY_MESSAGE%%', // Same as for the KID, the key does not matter, only the %%KEY_MESSAGE%%.
-            }
-        }
-    }
-});
-
-// For fairplay you also need to specify the certificate url.
-player.setItem({
-    src: 'YOUR_CONTENT_URL',
-    type: 'm3u8',
-    drmConfig: {
-        fairplay: {
-            drmServerUrl: 'YOUR_FAIRPLAY_DRM_SERVER_URL',
-            drmCertificateUrl: 'YOUR_FAIRPLAY_CERTIFICATE_URL',
-            customHeaders: {
-                'X-HEADER-KEY-1': 'HEADER-VALUE-1',
-                'X-HEADER-KEY-2': 'HEADER-VALUE-2',
-            }
-        },
-    }
-});
+// Shows the controls
+meisterInstance.showControls = true;
 ```
 
-As you can see there is not a lot to it, and you should be able to set it up with relative ease.  
+### get playerMode:String ###
 
-#### Fairplay ContentId ####
+Returns the current player mode this can either be 'audio' or 'video'
 
-Since it is not always possible to follow Apple's guidelines with regards to placement of the content id we provide the possibilty to configure a regular expression, or insert the content id directly. When passing the contentId as a regular expression make sure to only use a single capture group. If the regex fails it will print an error to the console and use 'CONTENT_ID_NOT_FOUND' as the content id.
-
-```JavaScript
-// For fairplay you also need to specify the certificate url.
-player.setItem({
-    src: 'YOUR_CONTENT_URL',
-    type: 'm3u8',
-    drmConfig: {
-        fairplay: {
-            drmServerUrl: 'YOUR_FAIRPLAY_DRM_SERVER_URL',
-            drmCertificateUrl: 'YOUR_FAIRPLAY_CERTIFICATE_URL',
-            contentId: /.*keyIdentifier=(.*)&/,
-            // contentId: 'CONTENT_ID_AS_A_STRING',
-            customHeaders: {
-                'X-HEADER-KEY-1': 'HEADER-VALUE-1',
-                'X-HEADER-KEY-2': 'HEADER-VALUE-2',
-            }
-        },
-    }
-});
-```
-
-#### Checking DRM Capabilities ####
-
-In order to check whether a browser supports DRM content the player exposes a function that returns a matrix with DRM namespaces and a boolean indicating if they are supported or not.
+Example:
 
 ``` JavaScript
-// It is a promise based check which passes the results through a callback.
-Meister.DRMUtils.keySystemSupport.then(function (drm) {
-    console.log('DRM support :: ', drm);
-    // On Chrome 52 on mac this will output:
-    'DRM support :: ' {
-            isFinalEME: true, // Does this browser implement the final EME spec
-            'com.adobe.primetime':  false,
-            'com.apple.fps': false,
-            'com.apple.fps.1_0': false,
-            'com.apple.fps.2_0': false,
-            'com.microsoft.playready': false,
-            'com.widevine.alpha': true,
-            'org.w3.clearkey': true, // While most browsers support this the player does not yet.
-        }
-});
+console.log(meisterInstance.playerMode);
 ```
 
-#### Multi-Source Support ####
+### get/set volume:Number ###
 
-When you load a `multi-source` item with a 'drmConfig', the player will also test for DRM playback capabilities when deciding on what source to use. In the below example the player will choose the dash stream in modern versions of Chrome, and the hls stream in modern versions of Safari.
+Gets/Sets the current playback volume of Meister. This volume will also be rememberd by Meister so the user has the same volume on each page. 
+
+- set:Number - The volume you want it to set to between 0 and 1
+- get:Number - The current playback volume between 0 and 1
+
+Example: 
 
 ``` JavaScript
-var player = new Meister('#player', {});
-
-player.setItem({
-    type: 'multi-source',
-    sources: [
-        {
-            src: 'YOUR_DASH_URL',
-            type: 'dash',
-        },
-        {
-            src: 'YOUR_HLS_URL',
-            type: 'hls',
-        },
-    ],
-    drmConfig: {
-        playready: {
-            drmServerUrl: 'YOUR_PLAYREADY_DRM_SERVER_URL',
-        },
-        widevine: {
-            drmServerUrl: 'YOUR_WIDEVINE_DRM_SERVER_URL',
-        },
-        fairplay: {
-            drmServerUrl: 'YOUR_FAIRPLAY_DRM_SERVER_URL',
-            drmCertificateUrl: 'YOUR_FAIRPLAY_CERTIFICATE_URL',
-        },
-    }
-});
+meisterInstance.volume = 0.7;
 ```
 
-#### Notes ####
+### get/set muted:Boolean ###
 
-This feature of the player is still in development and as such some parts might be lacking or too verbose. There are plans to support  a 'general' custom headers option, so you do not have to repeat the same headers for all DRM providers.  
+Gets/Sets the current player muted mode. 
 
-The scheme property only supports the setting of the key message and the kid for now, but this can be expanded should the need arise.  
+- muted:Boolean - True to mute the player. false to unmute.
 
-While most browsers will indicate they can play content encrypted with clearkey the player does not provide support for this yet.
-
-
-### Content Types ###
-
-#### aditem ####
-
-This type allows you to play a preroll before a arbitrary media item. *Currently it only supports Vast ads as a preroll.* IMPORTANT: *will not work properly on iOS with all content. Known issue with IMA SDK.*
-
-```JavaScript
-player.setItem({    
-    media: {
-        src: 'HLS_LIVESTREAM_URL',
-        type: 'm3u8',
-    },
-    preroll: {
-        src: 'VAST_URL',
-        type: 'vast', // Currently the only option.
-        tags: 'preroll' // Currently the only option.
-    },
-    type: 'aditem',
-});
-
-```
-
-### Playing Audio Only ###
-
-You can choose to let the media play in an audio element, either by default or on a per item basis. The main benefit of this is that an audio element allows for inline and background playback on mobile devices.  
-
-#### Player Default ####
-
-By setting the `audioOnly` config flag when instantiating a player you can force the player to play all content in an audio tag. This will also play video content, albeit without the visuals. You can also configure a default image to be used as the background image through the `defaultAudioImage` option. The player will then use this image when you don't specify one in the item.
+Example:
 
 ``` JavaScript
-var audioPlayer = new Meister('#player', {
-    global: {
-        audioOnly: true,
-        defaultAudioImage: 'DEFAULT_IMG_URL',
-    }
-});
+// The player is now silent
+meisterInstance.muted = true;
 
-// Player will use 'DEFAULT_IMG_URL' as the image source when playing items.
-
-audioPlayer.setItem({
-    src: 'CONTENT_URL',
-    type: 'm3u8',
-    backgroundImage: 'CUSTOM_IMG_URL'
-});
-
-audioPlayer.load();
-
-// Player will use 'CUSTOM_IMG_URL' as the image source for the duration of this item.
+// The player is now playing the audio again
+meisterInstance.muted = false;
 ```
 
-#### Per Media Item ####
+### get playing:Boolean ###
 
-By including the `mediaType: 'audio'` property in an item you can signal to the player it should use an audio element to play the content.
+Returns if the player is currently playing.
 
 ``` JavaScript
-// Here we set the optional mediaType property to audio.
-player.setItem({
-    src: 'HLS_STREAM_WITH_AUDIO_ONLY_URL',
-    type: 'm3u8',
-    // Optionally tell the player this should be treated as audio only.
-    mediaType: 'audio'
-});
-```  
-**Important Note:** Do note that the player will not resize automatically, you will have to manually resize the container.  
-**Important Note 2:** Audio only support for HLS streams containing both video and audio is experimental. It will NOT work when the manifest comes from a smil file.
-
-#### Condensed UI ####
-
-For a more mobile-friendly audio UI you can pass the `condensedUi` config flag to the standard UI plugin. This will disable the top bar, which makes lower player height values possible. In addition, this option removes the full screen button and replaces it with the cast button.
-
-```JavaScript
-const player = new Meister('#targetDiv', {
-    // other options...,
-    standard: {
-        condensedUi: true,
-    }
-});
-
+console.log(meisterInstance.playing);
 ```
 
-### Player Events ###
+### get currentItem:MediaObject ###
 
-In the previous examples we already used the event system of the player to listen for the moment where the player is ready for playback. First we'll explain how to set up event listeners and how to destry them, before providing a list of the numerous events available.
-
-#### Listener Basics ####
-
-The basic syntax for registering events is `player.on("nameOfEvent", handle, [name])`, where `nameOfEvent` is a string, `handle` a function, and `name` is an optional string specifying the origin of the `handle`.
-
-##### (optional) Handler Name #####
-
-This argument is mainly used internally to better pinpoint where errors occur in event handlers. When you pass a string this will be used in logging error messages that occur in the event handler callback.
+Returns the current playing media item.
 
 ``` JavaScript
-player.on("playerPlay", function() {
-    // This will throw an error "undeclaredVariable is not defined".
-    console.log(undeclaredVariable.length);
-}, "ourIdentifier")
-
-// *Player starts playing*
-    Output: "EventHandler: Handle from 'ourIdentifier' for 'playerPlay' failed. Error: TypeError: undeclaredVariable is not defined"
+console.log(meisterInstance.currentItem);
 ```
 
-##### Handler Scope #####
+### get duration:Number ###
 
-IMPORTANT: The optional `scope` parameter has been removed in favour of native scope binding.
-
-There are multiple ways to go about in ensuring the handle you pass to the event handler will have the correct scope. Consider the following example:
+Returns the duration of the media.
 
 ``` JavaScript
-// Simple object with a property and a method.
-var person = {
-    name: "John",
-    greet: function() {
-        console.log("Hello, my name is " + this.name);
-    }
-};
-
-person.greet();
-    Output: "Hello, my name is John"
-
-// Now try this through the event handler.
-player.on("playerPlay", person.greet);
-
-// *Player starts playing*
-    Output: "Hello, my name is"
+console.log(meisterInstance.duration);
 ```
 
-The output through the event handler misses the name from the object because the scope of the handler is not the same as it was in `person.greet()`. To remedy this you can explicitly bind the function to a scope:
+### get/set currentTime:Number ###
+
+Gets/sets the current time of the media.
+
+- currentTime:Number - The time you want to seek to.
+
+Example: 
 
 ``` JavaScript
-// Bind the scope to the function before passing it as the handle.
-player.on("playerPlay", person.greet.bind(person));
-
-// *Player starts playing*
-    Output: "Hello, my name is John"
+// Seeks to the given moment.
+meisterInstance.currentTime = 10.2;
 ```
 
-#### Persistent Listeners ####
+### get isFullscreen:Boolean ###
 
-Say we want to track how often the player starts playing, the code below will help us accomplish that.
+Returns whether the player is in fullscreen mode or not.
+
+Example: 
 
 ``` JavaScript
-var numberOfPlays = 0;
-player.on("playerPlay", function() {
-    numberOfPlays += 1;
-});
+console.log(meisterInstance.isFullscreen);
 ```
 
-Since we used `player.on()` the handler will trigger every time the player fires the 'playerPlay' event, which happens every time the player starts playing. You can also pass an array of eventNames that should all trigger the handle.
+### get playerType:String ###
 
-Maybe we're not so interested in the number of times the player starts playing after all and would like to stop listening to the event. To facilitate this the eventhandler returns an array of handler references that we can later use to stop listening to these events.
+Gets the current player type. This is for example 'html5'.
+
+Example:
 
 ``` JavaScript
-// First make sure to store the event references somewhere.
-var eventReferences = player.on(["playerPlay", "playerPause"], function() {
-    console.log("The player did something.");
-});
-
-// For demonstration purposes only.
-console.log(eventReferences);
-    Output: [Object { id: 0, hook: "playerPlay" }, Object { id: 1, hook: "playerPause" }]
-
-// You can remove multiple events at once by passing an array of references.
-player.remove(eventReferences);
-
-// Or you can pass a single reference to remove just one
-var singleReference = player.on("itemLoaded", function() {
-    console.log("The item loaded");
-});
-
-// Even though we only registered a single event it still returns an array!
-console.log(singleReference);
-    Output: [Object { id: 2, hook: "itemLoaded" }]
-
-// So we would first need to isolate it before removing, or pass the array with a single element in it, both ways work
-var singleReferenceObject = singleReference[0];
-player.remove(singleReferenceObject);
+console.log(meisterInstance.playerType);
 ```
 
-#### Single Time Listeners ####
+### static get instances:*Array<Object{id:Number, instance:Meister}>* ###
 
-Some events are only useful the first time they fire, like in the intial example where we wanted the player to start once it had loaded the item. Rather than keeping track of this yourself the player provides a method for this: `player.one()`. It works exactly like `player.on()`, except that it removes the handler after the first trigger.
+Will return all the instances of Meister running on the page.
+
+Example:
 
 ``` JavaScript
-// We just want to know when the first playback has started.
-player.one("playerPlay", function() {
-    console.log("First playback.");
-});
-
-// *Player starts playing*
-    Output: "First playback."
-
-// *Pause the player*
-
-// *Player starts playing again*
-    No output
+console.log(Meister.instances);
 ```
 
-#### Plugin Configuration ####
+Events
+----
 
-### Note ###
+The following events can be used to listen/trigger with the ```on```, ```one``` and ```trigger``` functions on Meister:
 
-Plugins are not included by default. Depending on the package you have certain plugins may or may not be available. In the future plugins will come with their own seperate documentation to prevent confusion.
+### **Ad events** ###
 
----
 
-**hls**
 
-This plugin offers some options to customize the splash screen before a stream starts.
+### adBreakStarted -> { ad: any, ... } ###
 
-* *splashTitle : String* The title you would like be displayed when stream has loaded but not yet started.
-* *splashDescription : String* Displayed just below the title on the splash screen.
-* *splashThumbnail : String* Path to an image you would like to use as background on the splash screen.
+Triggers when an ad break started playing (When you go from content to ad)
 
-``` JavaScript
-var player = new Meister("#querySelector", {
-    hls: {
-        splashTitle: "AWESOME_STREAM",
-        splashDescription: "MUST_WATCH",
-        splashThumbnail: "stream_splash_image_url"
-    }
-});
-```
+returns:
 
-**youboraAnalytics**
+- ad:any - Information about the current playing ad.
 
-Track events using YouBora. The plugin was developed and tested with version 5.3.0. The plugin supports setting default option values through the config, as well as overriding options through the setItem call.
+### adBreakEnded -> {ad: any, ... } ###
 
-* *scriptUrl : String* Either the path to the Youbora plugin library or the string 'none' to indicate you have already loaded the library yourself
-* *libVersion : String* Version of the Youbora library that's being used
-* *pluginVersion : String* The version of the plugin
-* *pluginName : String* The name of the plugin
-* *trackUIUserEventsOnly : Boolean* makes the player report onPlayerPlay and onPlayerPause ONLY when triggered by user (not by ads etc)
-* *defaultOptions: Object* Object containing the default options the plugin should use. The following options are currently supported:
-    * *code : String* Your youbora code
-    * *transactionCode : String* Transaction code to identify the tracking sessions
-    * *live : Boolean* Indicates that the media to be played is going to be live or VOD
-    * *title : String* The title to be used in the tracking for the media
-    * *hashTitle: Boolean* Whether to use the hashTitle functionality of youbora or not
-    * *user : String* An identifier for the current user
-    * *properties : Object* Custom properties you want the player to track. The object will be stringified and as such supports nesting
-    * *extraParams : Object* Any extra parameters that should be tracked. This object does not support nesting
+Triggers when an ad break is done. (When you go from ad to content)
 
-``` JavaScript
-var player = new Meister("#querySelector", {
-    youboraAnalytics: {
-        scriptUrl: 'http://smartplugin.youbora.com/v5/javascript/libs/5.3.03/youboralib.js',
-        libVersion: '5.3.0',
-        pluginVersion: '1.0',
-        pluginName: 'MeisterYoubora',
-        trackUIUserEventsOnly : true,
-        defaultOptions: {
-            code: 'CODE_GOES_HERE',
-            transactionCode: 'myTransCode',
-            live: true,
-            title: 'MyTitle'
-            hashTitle: true,
-            user: 'YOUR_USER_STRING',
-            properties: {
-                'additional_metadata': {
-                    'additional_information',
-                },
-            },
-            extraParams: {
-                param1: 'value1',
-                param2: 'value2',
-            },
-        }
-    },
-});
-```
+returns:
 
-To override options add those to the item passed to the setMedia call as can be seen in the example below:
+- ad:any - Information about the current playing ad.
 
-``` JavaScript
-// Assuming we used the same setup code as in the previous example.
+### adStarted -> {ad: any, ... } ###
 
-player.setItem({
-    src: 'CONTENT_URL',
-    type: 'm3u8',
-    youboraOptions: {
-        title: 'MyNewTitle', // will override the 'MyTitle' from the default.
-        user: null, // null will override the default value of the property and remove it.
-    }
-})
+Triggers when an ad has started in the adbreak (This is triggered on each ad in the ad break).
 
-// For the values we didn't specify the plugin will fallback to the default values.
-```
+returns:
 
-**Platform Preview**
+- ad:any - Information about the current playing ad.
 
-If you serve content from the Platform that supports the 'format=preview' request you can indicate this by flagging the particular item. To keep the player flexible this config is not located in a plugin, so you can load both content that supports the Platform Preview and content that does not in the same player instance.
+### adEnded -> {ad: any, ... } ###
 
-``` JavaScript
-// Assume we have a player instantiated.
-player.setItem({
-    src: 'PLATFORM_CONTENT_URL?format=smil',
-    type: 'smil',
-    "thePlatform:Preview": true
-});
+Triggers when an ad has ended in the adbreak (This is triggered on each ad in the ad break).
 
-// ...
+returns:
 
-// We can later load content without this flag without breaking the player.
-player.setItem({
-    src: 'OTHER_CONTENT_URL',
-    type: 'smil'
-});
-```
+- ad:any - Information about the current playing ad.
+
+### adTimeupdate -> { currentTime: Number, duration: Number }
+
+Triggers each time an ad time update has been done.
+
+- currentTime:Number - The current time relative to the ad.
+- duration:Number - The duration of the ad.
+
+### adCuePoints -> { points:any } ###
+
+Triggers when information about the ad points are known. These points are when ad breaks are scheduled.
+
+- points:any - The schedulded ad points.
+
+### **Control events** ###
+
+
+### requestPlay -> { ?triggerByUser:Boolean } ###
+
+Triggers when a request to play has been done. 
+
+- triggerByUser:Boolean - Is this event result of an user action.
+
+### requestSeek -> { ?relativePosition:Number, ?timeOffset:Number } ###
+
+Triggers when a request to seek has been done.
+
+- ?relativePosition:Number - (optional) The position in percentage you want to seek to relative to the duration
+- ?timeOffset:Number - (optional) Amount of seconds you want to step forward (positive number)/backwards (negative number)
+
+### requestPause -> { ?triggerByUser:Boolean } ###
+
+Triggers when a request to pause has been done.
+
+- triggerByUser:Boolean - Is this event result of an user action.
+
+### requestBitrate -> { bitrateIndex:Number } ###
+
+Triggers when a request has been done to set the bitrate
+
+- bitrateIndex:Number - The index of the bitrate that is selected, -1 is auto.
+
+
+### **Item events** ###
+
+### itemLoadPrevented -> { error: String } ###
+
+Triggers when a load is trying to be done while an ad is playing (and the config option disableLoadDuringAd is set to true).
+
+- error:String - The cause of a load prevented.
+
+### itemLoaded -> { item: MediaObject } ###
+
+Triggers when the ```load()``` on a plugin has completed. This does not mean the video is capable of playback yet. 
+
+- item:MediaObject - The item that is loaded.
+    - MediaObject:*Object<{ src:String, type:String, ... }>* - The item object
+
+### itemUnloaded ###
+
+Triggers when the ```unload()``` on a plugin has completed.
+
+### itemTimeInfo -> { isLive:Boolean, hasDVR:Boolean, duration:Number } ###
+
+Triggers when additional time info is known. It's recommended to use this for a correct representation of time.
+
+- isLive:Boolean - Whether the video is live or not.
+- hasDVR:Boolean - Whether the video has a DVR window.
+- duration:Number - The duration of the video.
+
+### itemBitrates -> { bitrates:Array<Object>, currentIndex:Number } ###
+
+Triggers when the bitrates that are available are known.
+
+- bitrates:Array<Object{bitrate:Number, index:Number}> - An array of all available bitrates
+- currentIndex:Number - The current selected bitrate index.
+
+### itemImageStream -> { images:Array<Object{ src:String, start:Number, end:Number }> } ### 
+
+Triggers when a image stream is available. It can be used to show for example on a timeline.
+
+- images:Array<Object{ ... }> - All images that can be used for the ui
+    - src:String - The src of the image.
+    - start:Number - The start time relative to the duration.
+    - end:Number - The end time relative to the duration.
+
+
+### **Player events** ###
+
+### playerCreated ###
+
+Triggers when a player has been created and is available for use.
+
+### playerDestroyed ###
+
+Triggers when a player is unloaded from Meister.
+
+### playerTimeUpdate -> { currentTime:Number, duration:Number} ###
+
+Triggers when a time update has occured.
+
+- currentTime:Number - The current time of the player in the media.
+- duration:Number - The duration of the media item.
+
+### playerPlay -> { triggerByUser:Boolean } ###
+
+Triggers when playback of the media starts after having been paused; that is, when playback is resumed after a prior pause event.
+
+### playerPlaying ###
+
+Triggers when the media begins to play (either for the first time, after having been paused, or after ending and then restarting).
+
+### playerFirstPlay ###
+
+Triggers when an item starts playing for the first time.
+
+### playerReplay ###
+
+Triggers when an item has ended and the play button is hit again.
+
+### playerPause -> { ?type:String, ?triggerByUser:Boolean } ###
+
+Triggers when playback is paused.
+
+- type:String - What kind of media type paused the item
+- triggerByUser:Boolean - If the pause was caused by a user action.
+
+### playerSeek -> {relativePosition:Number, currentTime:Number, duration:Number} ###
+
+Triggers when a seek has been done
+
+- relativePosition:Number - The position relative to the duration (in percentage)
+- currentTime:Number - The new currentTime
+- duration:Number - The current duration of the media item.
+
+### playerSeeking ###
+
+Triggers when a seek operation begins.
+
+### playerNudge -> { totalNudges:Number } ###
+
+Triggers when a nudge has been done. This is usually when the player could not overcome a gap in the media item.
+
+- totalNudges:Number - The amount of nudges in total done.
+
+### playerEnd ###
+
+Triggers when playback completes.
+
+### playerError -> { mediaError:any } ###
+
+Triggers when an error occurs with playback of the current item.
+
+- mediaError:any - The media error.
+
+
+### playerVolumeChange ###
+
+Triggers when the audio volume changes (both when the volume is set and when the muted attribute is changed).
+
+### playerFullscreen ### 
+
+Triggers when the browser is switched to/out-of fullscreen mode.
+
+### playerSwitchBitrate -> { newBitrate:Number, newBitrateIndex:Number } ###
+
+Triggers when a request for a new bitrate has been completed.
+
+- newBitrate:Number - The new bitrate selected
+- newBitrateIndex:Number - The new selected bitrate index.
+
+### playerAutoSwitchBitrate -> { newBitrate:Number, newBitrateIndex:Number } ###
+
+Triggers when has automatically chosen a new bitrate. 
+
+- newBitrate:Number - The new bitrate selected
+- newBitrateIndex:Number - The new selected bitrate index.
+
+### playerProgress -> mediaElement:HTMLMediaElement|any ###
+
+Triggers periodically to inform interested parties of progress downloading the media. Information about the current amount of the media that has been downloaded is available in the media element's buffered attribute.
+
+- mediaElement:HTMLMediaElement|any - The media element itself.
+
+### playerLoadedMetadata ###
+
+Triggers when media's metadata has finished loading; all attributes now contain as much useful information as they're going to.
+
+### playerDurationChange ###
+
+Triggers when metadata has loaded or changed, indicating a change in duration of the media.  This is sent, for example, when the media has loaded enough that the duration is known.
+
+### playerBuffering ###
+
+Triggers when the player is buffering
+
+### playerBufferedEnough ###
+
+Triggers when the player has buffered enough to continue playback.
+
+
+### **Playlist events** ###
+
+### playlistInfo -> { currentIndex:Number, length:Number }  ###
+
+Informars what position in the playlist we are.
+
+- currentIndex:Number - The current index in the playlist.
+- length:Number - The length of the playlist.
+
+### playlistNext ###
+
+Triggers when the next item in the playlist has been requested. This is mostly triggered by UI and not by the playlist itself.
+
+### playlistPrevious ###
+
+Triggers when the previous item in the playlist has been requested. This is mostly triggered by UI and not by the playlist itself.
+
+### playlistMetadata -> item:MediaObject ###
+
+Triggers when a new item is being loaded in the playlist. 
+
+- item:MediaObject - The item that is loaded.
+    - MediaObject:*Object<{ src:String, type:String, ... }>* - The item object
+
+### uiReady -> { pluginSpace:Element } ###
+
+Tells the player the UI is ready to be used and gives other ui plugin a chance to render their UI in the given pluginSpace.
+
+- pluginSpace:Element - The element users can use to insert nodes into.
+
+### uiPluginInserted -> { icon:String, name:String } ###
+
+Triggers when a uiPlugin has been inserted in the pluginSpace.
+
+- icon:String - The url to the icon.
+- name:String - The name of the plugin.
+
+### uiPluginOpen -> { name:String } ###
+
+Triggers when a ui plugin is opened
+
+- name:String - The name of the plugin that is opened.
+
+### uiPluginClose ###
+
+Triggers when a ui plugin is closed
