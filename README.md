@@ -5,6 +5,27 @@ Plugable JavaScript web player - version v4.9.3.
 
 This is the Meister core. It required additional plugins to get set up. This guide will help you get starting up and play a simple MP4 video.
 
+Installation
+----
+
+To install using npm:
+
+```
+npm install meisterplayer
+```
+
+And then import them:
+
+```
+import Meister from 'meisterplayer'
+```
+
+To install using ```<script>``` tags:
+
+``` html
+<script src="Meister.min.js">
+```
+
 Getting started
 ----
 

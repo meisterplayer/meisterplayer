@@ -1,6 +1,6 @@
 {
-  "name": "@npm-wearetriple/meisterplayer",
-  "version": "4.9.3",
+  "name": "meisterplayer",
+  "version": "5.0.0",
   "description": "Meister Player: Video Player for HTML5",
   "main": "dist/Meister.js",
   "scripts": {
