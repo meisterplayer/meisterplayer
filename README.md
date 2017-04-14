@@ -913,3 +913,278 @@ Triggers when a ui plugin is opened
 ### uiPluginClose ###
 
 Triggers when a ui plugin is closed
+
+
+Creating plugins
+----
+
+Plugins are a way for Meister to play different media types and add different functionality to the player. Plugins are used by Meister internally so it's very flexible in what it can do.
+
+There are a few types of plugins Meister supports. These are the following:
+
+- Meister.MediaPlugin - Allows media types to be played ex. hls, dash, mp4, etc
+- Meister.ParserPlugin - Allows plugins to parse manifests or other playlist formats. ex. smil, webvtt, etc
+- Meister.PlayerPlugin - Allows using different players to be used within Meister, ex. HTML5, Flash, Silverlight, etc.
+- Meister.Ui - Allows for Ui creation. ex. Message Overlay, StandardUi, etc.
+- Meister.AnalyticsPlugin - Allows plugins to track data of the video. ex. GoogleAnalytics, Conviva, etc.
+- Meister.Middleware - Allows to sit between plugins and modify their items. ex. conversion of URLs
+- Meister.ProtoPlugin - Anything that doesn't fall between these spaces. For example Utility's (DRM, etc).
+
+### **Simple plugin example:** ###
+
+``` JavaScript
+
+// We need to extend from the Meister.MediaPlugin
+// So meister knows what lifecycle functions are available.
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    // Each plugin type gets a config and the meister instance object.
+    // config is determined through 'new Meister('#player', config)'
+    // It maps the pluginName with the config.
+    constructor(config, meister) {
+        // Super must be called to initialise the plugin
+        super(config, meister);
+    }
+
+    // We recommend setting a statoc pluginName getter on the class to be able to allow users to know what plugin name to configure with.
+    static get pluginName() {
+        return 'MyAwesomePlugin';
+    }
+
+    // This will be called when Meister is searching for a plugin that can play the item
+    // that is set by setItem();
+    // isItemSupported is a promise function so you can do async checks.
+    isItemSupported(item) {
+        return new Promise((resolve) => {
+            if (item.type === 'mp4') {
+                resolve({
+                    supported: true,
+                });
+            } else {
+                // A non supported item should resolve but with a support:false.
+                resolve({
+                    supported: false,
+                });
+            }
+        });
+    }
+
+    // Do some processing for the item, such as getting tokens from the server.
+    process(item) {
+        return new Promise((resolve) => {
+            // We want to play our media in HTML5 so we save the instance here.
+            this.player = this.meister.getPlayerByType('html5');
+
+            // Resolve with item, We didn't need to process anything.
+            resolve(item);
+        });
+    }
+
+    // Start loading the player.
+    // This doesn't have to play automaticly, it only has to be able to play.
+    load(item) {
+        // The super handles things like startPositions so we need to make sure to call it.
+        super.load(item);
+
+        // Mp4 can be directly set as src
+        this.player.currentSrc = item.src;
+    }
+
+    // Reset all the values for the next item.
+    unload() {
+        super.unload();
+
+        this.player = null;
+    }
+
+    // This will be called after a meisterInstance.destroy()
+    // For example kept variables, or states.
+    destroy() {
+        // We don't have anything to destroy..
+    }
+}
+
+// Register the plugin in Meister so it's ready for use.
+// To start the plugin you must add the plugin to the config
+// So to init this plugin you can do:
+// var meister = new Meister('#player', { MyAwesomePlugin: {} });
+
+Meister.registerPlugin(MyAwesomePlugin.pluginName, MyAwesomePlugin);
+```
+
+Now you've created a minimal media plugin to start playing MP4's. 
+
+### **Lifecycle** ###
+
+Meister plugins have a certain lifecycle functions. Meister calls these lifecycle function upon need. 
+
+### constructor(config:Object, meister:Meister) ###
+
+Constructs the plugin. Here can you init variables that you may need in the future.
+
+- config:Object - Config directly passed from new Meister. these will be mapped to whatever name you gave you'r plugin. So if you did ```Meister.registerPlugin('test', MyPlugin);``` then you need to do ```new Meister('#player', { test: { foo: 'bar' } })```. config will then contain a object with ```{ foo: 'bar' }```.
+- meister:Meister - The current instance of meister.
+
+Example: 
+
+``` JavaScript
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    constructor(config, meister) {
+        // Do stuff here with the config.
+    }
+}
+```
+
+### isItemSupported(item:MediaObject):Promise ###
+
+Is called when Meister wants to know if the plugin can play the item.
+
+**NOTE:** This will only be called on plugins that extend from ```Meister.MediaPlugin```, ```Meister.ParserPlugin``` and ```Meister.Middleware```.
+
+- item:MediaObject - The object that is given with setItem or setPlaylist. It contains atleast the properties ```type``` and ```src```
+
+returns
+
+- Promise - A promise that does not reject.
+    - resolve({ supported:Boolean, errorCode: String }) - What is excpeted to resolve
+        - supported:Boolean - Whether the plugins supports the item
+        - errorCode:String - The error code to show. ex. TST-0001
+
+Example:
+
+``` JavaScript
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    ...
+
+    isItemSupported(item) {
+        return new Promise((resolve) => {
+            if (item.type === 'mp4') {
+                resolve({
+                    supported: true,
+                });
+            } else {
+                resolve({
+                    supported: false,
+                    errorCode: 'SPRT-0001'
+                });
+            }
+        });
+    }
+}
+```
+
+### process(item:MediaObject):Promise ###
+
+Is called once the plugin has been chosen for playback/parsing. Here you can do preperation for playback such as getting the manfist or do some authorization.
+
+**NOTE:** This will only be called on plugins that extend from ```Meister.MediaPlugin```, ```Meister.ParserPlugin``` and ```Meister.Middleware```.
+
+- item:MediaObject - The object that is given with setItem or setPlaylist. It contains atleast the properties ```type``` and ```src```
+
+returns
+
+- Promise - A promise that can resolve or reject
+    - resolve(item:MediaObject) - The processed item.
+    - reject(error:String) - An error message
+
+Example:
+
+``` JavaScript
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    ...
+
+    process(item) {
+        return new Promise((resolve, reject) => {
+            try {
+                doSomeTask();
+
+                // We do not need to modify the item so we keep it like this.
+                resolve(item);
+            } catch(err) {
+                reject(err);
+            }
+        });
+    }
+}
+```
+
+### load(item:MediaObject) ###
+
+Allows the plugin to load the media item into the player. This is the last step to be able to play the item. It does not mean that the item should be playing, just be ready to be played.
+
+**NOTE:** This will only be called on plugins that extend from ```Meister.MediaPlugin```, ```Meister.ParserPlugin```,  ```Meister.Middleware```, ```Meister.AnalyticsPlugin``` and ```Meister.PlayerPlugin```.
+
+- item:MediaObject - The object that is given with setItem or setPlaylist. It contains atleast the properties ```type``` and ```src```
+
+Example:
+
+``` JavaScript
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    ...
+
+    load(item) {
+        // This allows for startPosition functionality.
+        super.load(item);
+
+        // Do something with loading the item in the player.
+    }
+}
+```
+### unload() ###
+
+Allows the plugin to unload the item and clean up some variables.
+
+Example:
+
+``` JavaScript
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    ...
+
+    unload(item) {
+        // For example:
+        this.player = null;
+        
+        ...
+    }
+}
+```
+
+### destroy() ###
+
+This is called when meisterInstance.destroy() is called. This allows a plugin to fully cleanup any listeners active and clean up all variables.
+
+``` JavaScript
+class MyAwesomePlugin extends Meister.MediaPlugin {
+    ...
+
+    destroy() {
+        // Destroy all events and variables
+    }
+}
+
+```
+
+### **Analytics plugin** ###
+
+Analytics plugins are a special kind since they have a special feature that allows not having to listen to standard events. These will be mapped to the class functions.
+To start using this feature you must start the function with ```on``` and have the first letter of the event name in caps.
+
+So for example if you want to listen for ```playerPlay``` you use the function ```onPlayerPlay``` and for the event ```itemLoaded``` you use the function ```onItemLoaded``` and so on.
+
+NOTICE: This only works for the type ```Meister.AnalyticsPlugin``` and only events that are documented in this README.
+
+Example:
+
+``` JavaScript
+class MyAwesomeAnalyticsPlugin extends Meister.AnalyticsPlugin {
+
+    // Functions will be automaticly mapped to events
+    onPlayerPlay() {
+        doSomeTracking( ... );
+    }
+
+    // It also returns all event properties
+    itemLoaded(item) {
+        doSomeMoreTracking( ... );
+    }
+}
+```
