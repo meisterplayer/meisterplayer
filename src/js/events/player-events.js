@@ -23,6 +23,9 @@ const PlayerEvents = [
     'playerDurationChange',
     'playerBuffering',
     'playerBufferedEnough',
+    'playerRemoteConnecting',
+    'playerRemoteConnected',
+    'playerRemoteDisconnected',
 ];
 
 export default PlayerEvents;
