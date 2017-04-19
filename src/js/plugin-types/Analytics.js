@@ -21,6 +21,14 @@ class Analytics extends ProtoPlugin {
     unload() {
         super.unload();
     }
+
+    onPlayerRemoteConnected() {
+        this.deferLogging = true;
+    }
+
+    onPlayerRemoteDisconnected() {
+        this.deferLogging = false;
+    }
 }
 
 export default Analytics;
