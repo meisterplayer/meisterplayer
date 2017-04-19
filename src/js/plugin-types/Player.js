@@ -83,6 +83,14 @@ class Player extends ProtoPlugin {
     set currentSrc(url) {
         console.warn(`currentSrc setter is not defined. Can't process ${url}.`);
     }
+
+    get type() {
+        return this.playerType;
+    }
+
+    set type(playerType) {
+        this.playerType = playerType;
+    }
 }
 
 export default Player;
