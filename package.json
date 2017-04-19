@@ -1,6 +1,6 @@
 {
   "name": "meisterplayer",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Meister Player: Video Player for HTML5",
   "main": "dist/Meister.js",
   "scripts": {
@@ -17,8 +17,8 @@
     "noop2": "^2.0.0"
   },
   "devDependencies": {
-    "@npm-wearetriple/gulp-webpack-tasks": "^1.0.0",
-    "@npm-wearetriple/js-dev": "^3.1.0",
+    "meister-gulp-webpack-tasks": "^1.0.6",
+    "meister-js-dev": "^3.1.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-es2017": "^6.22.0",
     "gulp": "^3.9.1"

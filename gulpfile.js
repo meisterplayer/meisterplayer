@@ -1,21 +1,30 @@
 const gulp = require('gulp');
-const tripleGulp = require('@npm-wearetriple/js-dev').gulp;
-const webpackTask = require('@npm-wearetriple/gulp-webpack-tasks');
+const tripleGulp = require('meister-js-dev').gulp;
+const webpackTask = require('meister-gulp-webpack-tasks');
 
 // Building tasks.
 const MODULE_NAME = 'Meister';
 
-const bundleConfig = webpackTask.createConfig('./index.js', `build/${MODULE_NAME}.js`);
-const bundleCompiler = webpackTask.createCompiler(bundleConfig);
-gulp.task('build', webpackTask.createBuildTask(bundleCompiler));
+gulp.task('build', (done) => {
+    const bundleConfig = webpackTask.createConfig('./index.js', `build/${MODULE_NAME}.js`, false);
+    const bundleCompiler = webpackTask.createCompiler(bundleConfig);
 
-const bundleConfigDist = webpackTask.createConfig('./index.js', `dist/${MODULE_NAME}.js`);
-const bundleCompilerDist = webpackTask.createCompiler(bundleConfigDist);
-gulp.task('build:dist', webpackTask.createBuildTask(bundleCompilerDist));
+    webpackTask.createBuildTask(bundleCompiler)(done);
+});
 
-const bundleConfigMin = webpackTask.createConfig('./index.js', `dist/${MODULE_NAME}.min.js`, true);
-const bundleCompilerMin = webpackTask.createCompiler(bundleConfigMin);
-gulp.task('build:min', webpackTask.createBuildTask(bundleCompilerMin));
+gulp.task('build:dist', (done) => {
+    const bundleConfigDist = webpackTask.createConfig('./index.js', `dist/${MODULE_NAME}.js`, false);
+    const bundleCompilerDist = webpackTask.createCompiler(bundleConfigDist);
+
+    webpackTask.createBuildTask(bundleCompilerDist)(done);
+});
+
+gulp.task('build:min', (done) => {
+    const bundleConfigMin = webpackTask.createConfig('./index.js', `dist/${MODULE_NAME}.min.js`, true);
+    const bundleCompilerMin = webpackTask.createCompiler(bundleConfigMin);
+
+    webpackTask.createBuildTask(bundleCompilerMin)(done);
+});
 
 // Documentation tasks.
 gulp.task('js-docs', tripleGulp.jsdocModule.createGenerateDocs(['./src/**/*.js'], './docs/js-docs'));
