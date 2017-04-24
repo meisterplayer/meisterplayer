@@ -140,6 +140,16 @@ class EventHandler {
         }
     }
 
+    // Removes all events from eventhandler.
+    // This can be used to release memory when the application is finished.
+    destroy() {
+        Object.keys(this.stack).forEach((key) => {
+            this.stack[key].forEach((event) => {
+                this.remove({ id: event.id, hook: key });
+            });
+        });
+    }
+
     trigger(...args) {
         // Extract the first element as the hook.
         const hook = args.splice(0, 1)[0];

@@ -223,6 +223,8 @@ class Meister {
             this.mediaController = null;
             this.fullscreenController = null;
 
+            this.eventHandler.destroy();
+
             instances = instances.filter(instance => instance.id === this.id);
         }, 0);
     }
