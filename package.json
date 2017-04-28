@@ -1,5 +1,5 @@
 {
-  "name": "meisterplayer",
+  "name": "@meisterplayer/meisterplayer",
   "version": "5.0.1",
   "description": "Meister Player: Video Player for HTML5",
   "main": "dist/Meister.js",

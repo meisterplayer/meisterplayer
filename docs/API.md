@@ -1,6 +1,6 @@
 # Meister Web Player #
 
-JavaScript based web player, version v4.9.3.
+JavaScript based web player, version v5.0.1.
 
 ### Configuration ###
 
