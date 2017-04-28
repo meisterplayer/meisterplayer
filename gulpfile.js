@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const tripleGulp = require('meister-js-dev').gulp;
 const webpackTask = require('meister-gulp-webpack-tasks');
+const argv = require('yargs').argv;
 
 // Building tasks.
 const MODULE_NAME = 'Meister';
@@ -30,7 +31,20 @@ gulp.task('build:min', (done) => {
 gulp.task('js-docs', tripleGulp.jsdocModule.createGenerateDocs(['./src/**/*.js'], './docs/js-docs'));
 
 // Versioning tasks.
-gulp.task('bump-version', tripleGulp.versioningModule.createBumpVersion('./package.json'));
+let type = 'patch';
+const userType = argv.type ? argv.type.toLowerCase() : null;
+if (userType && (userType === 'major' || userType === 'minor')) {
+    type = userType;
+}
+gulp.task('bump-package', tripleGulp.versioningModule.createBumpVersion('./package.json', type));
+
+
+gulp.task('bump-version', ['bump-package'], () => {
+    // Update other files with the new version number.
+    const newVersion = tripleGulp.versioningModule.extractPackageVersion('./package.json');
+    return tripleGulp.versioningModule.createReplaceVersion(['./README.md', './docs/*.md', './src/js/Meister.js'], newVersion)();
+});
+
 
 // Changelog tasks.
 gulp.task('changelog', tripleGulp.changelogModule.createGenerateLog('./CHANGELOG.md'));
