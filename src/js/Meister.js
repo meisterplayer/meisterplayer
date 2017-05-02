@@ -215,8 +215,8 @@ class Meister {
         this.wrapper.innerHTML = '';
 
         this.trigger('requestDestroy');
-        // HACK: fix this hack! Because requestDestroy refers to this.playerPlugin (via get playing) it throws an error when playerPlugin is nulled.. By using setTimeout 0 we effectively added nullifying on the eventstack
-        setTimeout(() => {
+        // // HACK: fix this hack! Because requestDestroy refers to this.playerPlugin (via get playing) it throws an error when playerPlugin is nulled.. By using setTimeout 0 we effectively added nullifying on the eventstack
+        // setTimeout(() => {
             this.pluginLoader = null;
             this.playerPlugin = null;
             this.playlist = null;
@@ -226,7 +226,7 @@ class Meister {
             this.eventHandler.destroy();
 
             instances = instances.filter(instance => instance.id === this.id);
-        }, 0);
+        // }, 0);
     }
 
     play(triggerByUser = false) {
