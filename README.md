@@ -11,13 +11,13 @@ Installation
 To install using npm:
 
 ```
-npm install meisterplayer
+npm install @meisterplayer/meisterplayer
 ```
 
 And then import them:
 
 ```
-import Meister from 'meisterplayer'
+import Meister from '@meisterplayer/meisterplayer'
 ```
 
 To install using ```<script>``` tags:
