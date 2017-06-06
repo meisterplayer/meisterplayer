@@ -9,11 +9,11 @@ const store = {
             debug: false,
             audioOnly: false,
         },
-        dash: {
+        Dash: {
             dvrThreshold: 300,
             dvrEnabled: true,
         },
-        hls: {
+        Hls: {
             dvrEnabled: true,
         },
     },
@@ -26,11 +26,11 @@ const store = {
             debug: false,
             audioOnly: false,
         },
-        dash: {
+        Dash: {
             dvrThreshold: 300,
             dvrEnabled: true,
         },
-        hls: {
+        Hls: {
             dvrEnabled: true,
         },
     },
