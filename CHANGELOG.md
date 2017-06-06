@@ -1,3 +1,13 @@
+<a name="5.0.3"></a>
+## [5.0.3](https://github.com/meisterplayer/meisterplayer/compare/v5.0.2...v5.0.3) (2017-06-06)
+
+
+### Bug Fixes
+
+* **configuration:** Fix configuration for Meister 5 ([be1d5fc](https://github.com/meisterplayer/meisterplayer/commit/be1d5fc))
+
+
+
 <a name="4.9.3"></a>
 ## [4.9.3](http://git.triple-it.nl/javascript/player-framework/compare/v4.9.2...v4.9.3) (2017-02-28)
 

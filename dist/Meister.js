@@ -154,11 +154,11 @@ var store = {
             debug: false,
             audioOnly: false
         },
-        dash: {
+        Dash: {
             dvrThreshold: 300,
             dvrEnabled: true
         },
-        hls: {
+        Hls: {
             dvrEnabled: true
         }
     },
@@ -171,11 +171,11 @@ var store = {
             debug: false,
             audioOnly: false
         },
-        dash: {
+        Dash: {
             dvrThreshold: 300,
             dvrEnabled: true
         },
-        hls: {
+        Hls: {
             dvrEnabled: true
         }
     }
@@ -926,14 +926,18 @@ var MediaController = function () {
                     if (promise) {
                         promise.then(function () {
                             _this2.meister.trigger('itemLoaded', { item: processedItem });
+                        }).catch(function (err) {
+                            console.error('@' + _this2.plugin.name + ': Could not load item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.', err); //eslint-disable-line
                         });
                     } else {
                         _this2.meister.trigger('itemLoaded', { item: processedItem });
                     }
                 }).catch(function (err) {
                     _this2.meister.error('Could not find plugin to play type: \'' + item.type + '\'.', err.errorCode, { title: 'Unable to play content.' });
-                    console.error('@' + _this2.plugin.name + ': Could not load item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.'); //eslint-disable-line
+                    console.error('@' + _this2.plugin.name + ': Could not process item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.', err); //eslint-disable-line
                 });
+            }).catch(function (err) {
+                console.error('@' + _this2.plugin.name + ': Could not getPluginFor item with type: \'' + item.type + '\' and src: \'' + item.src + ' \'.', err); //eslint-disable-line
             });
         }
     }, {
@@ -1253,6 +1257,8 @@ var Meister = function () {
                 _this2.mediaController = null;
                 _this2.fullscreenController = null;
 
+                _this2.eventHandler.destroy();
+
                 instances = instances.filter(function (instance) {
                     return instance.id === _this2.id;
                 });
@@ -1531,7 +1537,7 @@ var Meister = function () {
     }, {
         key: 'version',
         get: function get() {
-            return 'v4.9.3';
+            return 'v5.0.3';
         }
     }, {
         key: 'instances',
@@ -2280,7 +2286,7 @@ exports.default = ItemEvents;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var PlayerEvents = ['playerCreated', 'playerDestroyed', '_playerTimeUpdate', 'playerTimeUpdate', 'playerPlay', 'playerPlaying', 'playerFirstPlay', 'playerReplay', 'playerPause', '_playerSeek', 'playerSeek', 'playerSeeking', 'playerNudge', 'playerEnd', 'playerError', 'playerVolumeChange', 'playerFullscreen', 'playerSwitchBitrate', 'playerAutoSwitchBitrate', 'playerProgress', 'playerLoadedMetadata', 'playerDurationChange', 'playerBuffering', 'playerBufferedEnough'];
+var PlayerEvents = ['playerCreated', 'playerDestroyed', '_playerTimeUpdate', 'playerTimeUpdate', 'playerPlay', 'playerPlaying', 'playerFirstPlay', 'playerReplay', 'playerPause', '_playerSeek', 'playerSeek', 'playerSeeking', 'playerNudge', 'playerEnd', 'playerError', 'playerVolumeChange', 'playerFullscreen', 'playerSwitchBitrate', 'playerAutoSwitchBitrate', 'playerProgress', 'playerLoadedMetadata', 'playerDurationChange', 'playerBuffering', 'playerBufferedEnough', 'playerRemoteConnecting', 'playerRemoteConnected', 'playerRemoteDisconnected'];
 
 exports.default = PlayerEvents;
 
@@ -2484,6 +2490,21 @@ var EventHandler = function () {
                     }
                 }
             }
+        }
+
+        // Removes all events from eventhandler.
+        // This can be used to release memory when the application is finished.
+
+    }, {
+        key: 'destroy',
+        value: function destroy() {
+            var _this = this;
+
+            Object.keys(this.stack).forEach(function (key) {
+                _this.stack[key].forEach(function (event) {
+                    _this.remove({ id: event.id, hook: key });
+                });
+            });
         }
     }, {
         key: 'trigger',
@@ -2722,6 +2743,16 @@ var Analytics = function (_ProtoPlugin) {
         key: 'unload',
         value: function unload() {
             _get(Analytics.prototype.__proto__ || Object.getPrototypeOf(Analytics.prototype), 'unload', this).call(this);
+        }
+    }, {
+        key: 'onPlayerRemoteConnected',
+        value: function onPlayerRemoteConnected() {
+            this.deferLogging = true;
+        }
+    }, {
+        key: 'onPlayerRemoteDisconnected',
+        value: function onPlayerRemoteDisconnected() {
+            this.deferLogging = false;
         }
     }]);
 
@@ -2980,6 +3011,14 @@ var Player = function (_ProtoPlugin) {
         },
         set: function set(url) {
             console.warn('currentSrc setter is not defined. Can\'t process ' + url + '.');
+        }
+    }, {
+        key: 'type',
+        get: function get() {
+            return this.playerType;
+        },
+        set: function set(playerType) {
+            this.playerType = playerType;
         }
     }]);
 
