@@ -280,21 +280,21 @@ class Meister {
     }
 
     get duration() {
-        if (!this.playerPlugin) return null;
+        if (!this.mediaController) return null;
 
-        return this.playerPlugin.duration;
+        return this.mediaController.duration;
     }
 
     get currentTime() {
-        if (!this.playerPlugin) return null;
+        if (!this.mediaController) return null;
 
-        return this.playerPlugin.currentTime;
+        return this.mediaController.currentTime;
     }
 
     set currentTime(time) {
-        if (!this.playerPlugin) return;
+        if (!this.mediaController) return;
 
-        this.playerPlugin.currentTime = time;
+        this.mediaController.currentTime = time;
     }
 
     get isFullscreen() {

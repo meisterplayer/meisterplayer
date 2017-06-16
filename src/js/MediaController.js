@@ -72,6 +72,42 @@ class MediaController {
         return {};
     }
 
+    /**
+     * Duration of the media currently playing. Proxies the current media
+     * plugin.
+     * @readonly
+     * @memberof MediaController
+     * @returns {Number|NaN}
+     */
+    get duration() {
+        if (!this.plugin) { return NaN; }
+
+        return this.plugin.duration;
+    }
+
+    /**
+     * Current playback position in the media. Proxies the current media
+     * plugin.
+     * @memberof MediaController
+     * @returns {Number|NaN}
+     */
+    get currentTime() {
+        if (!this.plugin) { return NaN; }
+
+        return this.plugin.currentTime;
+    }
+
+    /**
+     * Set the current playback position in the media. Proxies the current
+     * media plugin.
+     * @memberof MediaController
+     */
+    set currentTime(time) {
+        if (!this.plugin) { return; }
+
+        this.plugin.currentTime = time;
+    }
+
     getPluginFor(item) {
         return this.meister.pluginLoader.getPluginByItem(item).then((result) => {
             if (result.errorCode) {

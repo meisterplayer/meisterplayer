@@ -18,6 +18,47 @@ class Media extends ProtoPlugin {
     }
 
     /**
+     * Get the duration of the media.
+     * Method should be implemented by the inheriting class.
+     * @readonly
+     * @memberof Media
+     * @returns {Number|NaN}
+     */
+    get duration() {
+        if (this.meister.debugEnabled) {
+            console.error(`${this.name} does not provide a duration getter.`);
+        }
+
+        return NaN;
+    }
+
+    /**
+     * Get the playback position in the media.
+     * Method should be implemented by the inheriting class.
+     * @readonly
+     * @memberof Media
+     * @returns {Number|NaN}
+     */
+    get currentTime() {
+        if (this.meister.debugEnabled) {
+            console.error(`${this.name} does not provide a currentTime getter.`);
+        }
+
+        return NaN;
+    }
+
+    /**
+     * Set the playback position in the media.
+     * Method should be implemented by the inheriting class.
+     * @memberof Media
+     */
+    set currentTime(time) {
+        if (this.meister.debugEnabled) {
+            console.error(`${this.name} does not provide a currentTime setter.`);
+        }
+    }
+
+    /**
      * Process is for reading metadata/parsing
      */
     process(item) {
@@ -37,7 +78,11 @@ class Media extends ProtoPlugin {
         if (Number.isFinite(item.startPosition)) {
             this.startPosition = item.startPosition;
         }
+
         this.on('playerLoadedMetadata', () => this.playerLoadedMetadata());
+        this.on('_playerTimeUpdate', this._onPlayerTimeUpdate.bind(this));
+        this.on('_playerSeek', this._onPlayerSeek.bind(this));
+        this.on('requestSeek', this.onRequestSeek.bind(this));
 
         this.blockSeekForward = !!item.blockSeekForward;
     }
@@ -53,6 +98,18 @@ class Media extends ProtoPlugin {
                 forcedStart: true,
             });
         }
+    }
+
+    _onPlayerTimeUpdate() {
+        console.error(`${this.name} does not implement '_onPlayerTimeUpdate', event ignored.`);
+    }
+
+    _onPlayerSeek() {
+        console.error(`${this.name} does not implement '_onPlayerSeek', event ignored.`);
+    }
+
+    onRequestSeek() {
+        console.error(`${this.name} does not implement 'onRequestSeek', event ignored.`);
     }
 
     /**

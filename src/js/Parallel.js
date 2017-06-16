@@ -139,6 +139,23 @@ class Parallel extends MediaPlugin {
         }
     }
 
+    get duration() {
+         if (!this.plugin) { return NaN; }
+
+         return this.plugin.duration;
+     }
+
+     get currentTime() {
+         if (!this.plugin) { return NaN; }
+
+         return this.plugin.currentTime;
+     }
+
+     set currentTime(time) {
+         if (!this.plugin) { return; }
+         this.plugin.currentTime = time;
+     }
+
     unload() {
         super.unload();
 
