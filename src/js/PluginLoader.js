@@ -176,8 +176,12 @@ class PluginLoader {
     }
 
     static register(name, plugin) {
-        if (this.get(name)) {
-            throw new Error(`Plugin ${name} is already registered. Having the same name?`);
+        const registeredPlugin = this.get(name);
+
+        if (registeredPlugin) {
+            console.warn(`Plugin ${name} is already registered. Overriding previous version.`);
+            registeredPlugin.Plugin = plugin;
+            return;
         }
 
         registered.push({
@@ -187,8 +191,12 @@ class PluginLoader {
     }
 
     static registerMiddleware(name, middleware) {
-        if (this.getMiddleware(name)) {
-            throw new Error(`Middleware ${name} is already registered. Having the same name?`);
+        const registeredMiddleware = this.getMiddleware(name);
+
+        if (registeredMiddleware) {
+            console.warn(`Middleware ${name} is already registered. Overriding previous version.`);
+            registeredMiddleware.Middleware = middleware
+            return;
         }
 
         registeredMiddleware.push({
