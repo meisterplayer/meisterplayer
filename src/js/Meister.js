@@ -157,7 +157,7 @@ class Meister {
      * @return {string} The meister version.
      */
     static get version() {
-        return 'v5.0.3';
+        return 'v5.1.0';
     }
 
     /**

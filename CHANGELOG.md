@@ -1,3 +1,14 @@
+<a name="5.1.0"></a>
+# [5.1.0](https://github.com/meisterplayer/meisterplayer/compare/v5.0.3...v5.1.0) (2017-07-12)
+
+
+### Bug Fixes
+
+* **plugins:** Allow overriding of already registered plugins ([ce00414](https://github.com/meisterplayer/meisterplayer/commit/ce00414)), closes [#26](https://github.com/meisterplayer/meisterplayer/issues/26)
+* **time:** Make time property accessors return the correct values ([dccb4b7](https://github.com/meisterplayer/meisterplayer/commit/dccb4b7)), closes [#36](https://github.com/meisterplayer/meisterplayer/issues/36)
+
+
+
 <a name="5.0.3"></a>
 ## [5.0.3](https://github.com/meisterplayer/meisterplayer/compare/v5.0.2...v5.0.3) (2017-06-06)
 

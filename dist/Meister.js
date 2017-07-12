@@ -429,9 +429,13 @@ var Media = function (_ProtoPlugin) {
             if (Number.isFinite(item.startPosition)) {
                 this.startPosition = item.startPosition;
             }
+
             this.on('playerLoadedMetadata', function () {
                 return _this2.playerLoadedMetadata();
             });
+            this.on('_playerTimeUpdate', this._onPlayerTimeUpdate.bind(this));
+            this.on('_playerSeek', this._onPlayerSeek.bind(this));
+            this.on('requestSeek', this.onRequestSeek.bind(this));
 
             this.blockSeekForward = !!item.blockSeekForward;
         }
@@ -448,6 +452,21 @@ var Media = function (_ProtoPlugin) {
                     forcedStart: true
                 });
             }
+        }
+    }, {
+        key: '_onPlayerTimeUpdate',
+        value: function _onPlayerTimeUpdate() {
+            console.error(this.name + ' does not implement \'_onPlayerTimeUpdate\', event ignored.');
+        }
+    }, {
+        key: '_onPlayerSeek',
+        value: function _onPlayerSeek() {
+            console.error(this.name + ' does not implement \'_onPlayerSeek\', event ignored.');
+        }
+    }, {
+        key: 'onRequestSeek',
+        value: function onRequestSeek() {
+            console.error(this.name + ' does not implement \'onRequestSeek\', event ignored.');
         }
 
         /**
@@ -477,6 +496,54 @@ var Media = function (_ProtoPlugin) {
         get: function get() {
             console.error(this.name + ' does not support this method.');
             return null;
+        }
+
+        /**
+         * Get the duration of the media.
+         * Method should be implemented by the inheriting class.
+         * @readonly
+         * @memberof Media
+         * @returns {Number|NaN}
+         */
+
+    }, {
+        key: 'duration',
+        get: function get() {
+            if (this.meister.debugEnabled) {
+                console.error(this.name + ' does not provide a duration getter.');
+            }
+
+            return NaN;
+        }
+
+        /**
+         * Get the playback position in the media.
+         * Method should be implemented by the inheriting class.
+         * @readonly
+         * @memberof Media
+         * @returns {Number|NaN}
+         */
+
+    }, {
+        key: 'currentTime',
+        get: function get() {
+            if (this.meister.debugEnabled) {
+                console.error(this.name + ' does not provide a currentTime getter.');
+            }
+
+            return NaN;
+        }
+
+        /**
+         * Set the playback position in the media.
+         * Method should be implemented by the inheriting class.
+         * @memberof Media
+         */
+        ,
+        set: function set(time) {
+            if (this.meister.debugEnabled) {
+                console.error(this.name + ' does not provide a currentTime setter.');
+            }
         }
     }]);
 
@@ -965,6 +1032,55 @@ var MediaController = function () {
 
             console.warn(this.plugin.name + ' does not provide metadata.');
             return {};
+        }
+
+        /**
+         * Duration of the media currently playing. Proxies the current media
+         * plugin.
+         * @readonly
+         * @memberof MediaController
+         * @returns {Number|NaN}
+         */
+
+    }, {
+        key: 'duration',
+        get: function get() {
+            if (!this.plugin) {
+                return NaN;
+            }
+
+            return this.plugin.duration;
+        }
+
+        /**
+         * Current playback position in the media. Proxies the current media
+         * plugin.
+         * @memberof MediaController
+         * @returns {Number|NaN}
+         */
+
+    }, {
+        key: 'currentTime',
+        get: function get() {
+            if (!this.plugin) {
+                return NaN;
+            }
+
+            return this.plugin.currentTime;
+        }
+
+        /**
+         * Set the current playback position in the media. Proxies the current
+         * media plugin.
+         * @memberof MediaController
+         */
+        ,
+        set: function set(time) {
+            if (!this.plugin) {
+                return;
+            }
+
+            this.plugin.currentTime = time;
         }
     }]);
 
@@ -1497,21 +1613,21 @@ var Meister = function () {
     }, {
         key: 'duration',
         get: function get() {
-            if (!this.playerPlugin) return null;
+            if (!this.mediaController) return null;
 
-            return this.playerPlugin.duration;
+            return this.mediaController.duration;
         }
     }, {
         key: 'currentTime',
         get: function get() {
-            if (!this.playerPlugin) return null;
+            if (!this.mediaController) return null;
 
-            return this.playerPlugin.currentTime;
+            return this.mediaController.currentTime;
         },
         set: function set(time) {
-            if (!this.playerPlugin) return;
+            if (!this.mediaController) return;
 
-            this.playerPlugin.currentTime = time;
+            this.mediaController.currentTime = time;
         }
     }, {
         key: 'isFullscreen',
@@ -1537,7 +1653,7 @@ var Meister = function () {
     }, {
         key: 'version',
         get: function get() {
-            return 'v5.0.3';
+            return 'v5.1.0';
         }
     }, {
         key: 'instances',
@@ -1796,6 +1912,30 @@ var Parallel = function (_MediaPlugin) {
             }
 
             return null;
+        }
+    }, {
+        key: 'duration',
+        get: function get() {
+            if (!this.plugin) {
+                return NaN;
+            }
+
+            return this.plugin.duration;
+        }
+    }, {
+        key: 'currentTime',
+        get: function get() {
+            if (!this.plugin) {
+                return NaN;
+            }
+
+            return this.plugin.currentTime;
+        },
+        set: function set(time) {
+            if (!this.plugin) {
+                return;
+            }
+            this.plugin.currentTime = time;
         }
     }]);
 
@@ -2167,8 +2307,12 @@ var PluginLoader = function () {
     }, {
         key: 'register',
         value: function register(name, plugin) {
-            if (this.get(name)) {
-                throw new Error('Plugin ' + name + ' is already registered. Having the same name?');
+            var registeredPlugin = this.get(name);
+
+            if (registeredPlugin) {
+                console.warn('Plugin ' + name + ' is already registered. Overriding previous version.');
+                registeredPlugin.Plugin = plugin;
+                return;
             }
 
             registered.push({
@@ -2179,8 +2323,12 @@ var PluginLoader = function () {
     }, {
         key: 'registerMiddleware',
         value: function registerMiddleware(name, middleware) {
-            if (this.getMiddleware(name)) {
-                throw new Error('Middleware ' + name + ' is already registered. Having the same name?');
+            var registeredMiddleware = this.getMiddleware(name);
+
+            if (registeredMiddleware) {
+                console.warn('Middleware ' + name + ' is already registered. Overriding previous version.');
+                registeredMiddleware.Middleware = middleware;
+                return;
             }
 
             registeredMiddleware.push({
