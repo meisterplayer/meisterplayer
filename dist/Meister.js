@@ -1653,7 +1653,7 @@ var Meister = function () {
     }, {
         key: 'version',
         get: function get() {
-            return 'v5.1.0';
+            return 'v5.1.1';
         }
     }, {
         key: 'instances',
@@ -2101,7 +2101,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var registered = [];
+var registeredPlugins = [];
 var loaded = [];
 
 var registeredMiddleware = [];
@@ -2246,7 +2246,7 @@ var PluginLoader = function () {
     }], [{
         key: 'getRegistered',
         value: function getRegistered() {
-            return registered;
+            return registeredPlugins;
         }
     }, {
         key: 'getLoaded',
@@ -2256,7 +2256,7 @@ var PluginLoader = function () {
     }, {
         key: 'get',
         value: function get(name) {
-            return registered.find(function (plugin) {
+            return registeredPlugins.find(function (plugin) {
                 return plugin.name === name;
             });
         }
@@ -2307,15 +2307,15 @@ var PluginLoader = function () {
     }, {
         key: 'register',
         value: function register(name, plugin) {
-            var registeredPlugin = this.get(name);
+            var alreadyRegistered = this.get(name);
 
-            if (registeredPlugin) {
+            if (alreadyRegistered) {
                 console.warn('Plugin ' + name + ' is already registered. Overriding previous version.');
-                registeredPlugin.Plugin = plugin;
+                alreadyRegistered.Plugin = plugin;
                 return;
             }
 
-            registered.push({
+            registeredPlugins.push({
                 name: name,
                 Plugin: plugin
             });
@@ -2323,11 +2323,11 @@ var PluginLoader = function () {
     }, {
         key: 'registerMiddleware',
         value: function registerMiddleware(name, middleware) {
-            var registeredMiddleware = this.getMiddleware(name);
+            var alreadyRegistered = this.getMiddleware(name);
 
-            if (registeredMiddleware) {
+            if (alreadyRegistered) {
                 console.warn('Middleware ' + name + ' is already registered. Overriding previous version.');
-                registeredMiddleware.Middleware = middleware;
+                alreadyRegistered.Middleware = middleware;
                 return;
             }
 

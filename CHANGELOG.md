@@ -1,3 +1,13 @@
+<a name="5.1.1"></a>
+## [5.1.1](https://github.com/meisterplayer/meisterplayer/compare/v5.1.0...v5.1.1) (2017-07-13)
+
+
+### Bug Fixes
+
+* **plugins:** Registering middleware no longer breaks ([f20788c](https://github.com/meisterplayer/meisterplayer/commit/f20788c))
+
+
+
 <a name="5.1.0"></a>
 # [5.1.0](https://github.com/meisterplayer/meisterplayer/compare/v5.0.3...v5.1.0) (2017-07-12)
 
