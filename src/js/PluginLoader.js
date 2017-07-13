@@ -1,7 +1,7 @@
 import Configuration from './Configuration';
 import Parallel from './Parallel';
 
-const registered = [];
+const registeredPlugins = [];
 const loaded = [];
 
 const registeredMiddleware = [];
@@ -14,7 +14,7 @@ class PluginLoader {
     }
 
     static getRegistered() {
-        return registered;
+        return registeredPlugins;
     }
 
     static getLoaded() {
@@ -22,7 +22,7 @@ class PluginLoader {
     }
 
     static get(name) {
-        return registered.find(plugin => (plugin.name === name));
+        return registeredPlugins.find(plugin => (plugin.name === name));
     }
 
     getLoadedPlugin(name) {
@@ -176,26 +176,26 @@ class PluginLoader {
     }
 
     static register(name, plugin) {
-        const registeredPlugin = this.get(name);
+        const alreadyRegistered = this.get(name);
 
-        if (registeredPlugin) {
+        if (alreadyRegistered) {
             console.warn(`Plugin ${name} is already registered. Overriding previous version.`);
-            registeredPlugin.Plugin = plugin;
+            alreadyRegistered.Plugin = plugin;
             return;
         }
 
-        registered.push({
+        registeredPlugins.push({
             name,
             Plugin: plugin,
         });
     }
 
     static registerMiddleware(name, middleware) {
-        const registeredMiddleware = this.getMiddleware(name);
+        const alreadyRegistered = this.getMiddleware(name);
 
-        if (registeredMiddleware) {
+        if (alreadyRegistered) {
             console.warn(`Middleware ${name} is already registered. Overriding previous version.`);
-            registeredMiddleware.Middleware = middleware
+            alreadyRegistered.Middleware = middleware
             return;
         }
 
