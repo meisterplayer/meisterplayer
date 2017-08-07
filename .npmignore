@@ -1,6 +1,4 @@
-.DS_Store
 node_modules/
-docs/js-docs/
 build/
+scripts/
 coverage/
-dist/
