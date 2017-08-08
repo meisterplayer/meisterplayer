@@ -161,6 +161,30 @@ class Meister {
     }
 
     /**
+     * Returns filtered and formatted list of all registered plugins and their version.
+     *
+     * @return {Array} List with plugins and their version.
+     */
+    static get pluginVersions() {
+        const registeredPlugins = PluginLoader.getRegistered();
+        const result = [];
+
+        registeredPlugins.forEach((plugin) => {
+            const pluginName = plugin.Plugin.pluginName.toLowerCase();
+            const alreadyExists = result.findIndex(resultPlugin => resultPlugin.pluginName.toLowerCase() === pluginName);
+
+            if (alreadyExists !== -1) return;
+
+            result.push({
+                pluginName: plugin.Plugin.pluginName,
+                pluginVersion: plugin.Plugin.pluginVersion,
+            });
+        });
+
+        return result;
+    }
+
+    /**
      * Is Debug mode enabled
      *
      * @return {boolean} Return true if debug is enabled.
