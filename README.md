@@ -5,6 +5,8 @@ Plugable JavaScript web player - version v5.1.1.
 
 This is the Meister core. It required additional plugins to get set up. This guide will help you get starting up and play a simple MP4 video.
 
+_Warning_ : if you don't know anything about Node, NPM and just want a Video/Audio player for your website, you should read [this](https://github.com/meisterplayer/meisterplayer/wiki/Installation-without-NPM) guide to set up.
+
 Installation
 ----
 
@@ -23,7 +25,7 @@ import Meister from '@meisterplayer/meisterplayer'
 To install using ```<script>``` tags:
 
 ``` html
-<script src="Meister.min.js">
+<script src="meister.bundled.min.js">
 ```
 
 Getting started
@@ -36,7 +38,7 @@ We will be using the following plugins:
 
 - [BaseMedia for Meister](https://github.com/meisterplayer/media-basemedia) (This is the plugin for MP4 playback)
 - [HTML5 Player for Meister](https://github.com/meisterplayer/player-html5player) (This is the plugin to playback using HTML5)
-- [Standard UI for Meister](https://github.com/meisterplayer/ui-standardui) (This is the plugin to get a different UI for Meister)
+
 
 
 ### Setting up using ```<script>``` tags
@@ -64,7 +66,6 @@ The following snippet can be used to initialize the Meister player:
                 // We will later go in depth what these are for.
                 BaseMedia: {},
                 Html5Player: {},
-                StandardUi: {},
             });
 
             // Configures meister to play the mp4 media item.
@@ -113,7 +114,6 @@ const meisterPlayer = new Meister('#player', {
     // Uses pluginName as object name to be future proof.
     [BaseMedia.pluginName]: {},
     [Html5Player.pluginName]: {},
-    [StandardUi.pluginName]: {},
 });
 
 // Configures meister to play the mp4 media item.
