@@ -8,11 +8,3 @@ describe('Meister class', () => {
         expect(Meister.version).toMatch(/\d+\.\d+\.\d+/);
     });
 });
-
-describe('The rest of the test suite', () => {
-    test('It should be written', () => {
-        const test = { testsWritten: false };
-
-        expect(test).toEqual({ testsWritten: true });
-    });
-});
