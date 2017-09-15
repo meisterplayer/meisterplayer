@@ -1,4 +1,3 @@
-// import PluginLoader from './plugin-loader';
 import MediaPlugin from './plugin-types/Media';
 
 class Parallel extends MediaPlugin {

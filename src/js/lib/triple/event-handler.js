@@ -133,7 +133,6 @@ class EventHandler {
 
         // Check whether the event exists.
         if (!this.stack[hook]) {
-            // console.warn(`EventHandler: '${hook}' is not a registered event.`);
             return;
         }
 
@@ -150,7 +149,6 @@ class EventHandler {
 
         // Check whether there are any registered handlers.
         if (this.stack[hook].length === 0 && !this.stack[hook].one) {
-            // console.debug(`EventHandler: no handlers registered for '${hook}'`);
             return;
         }
 

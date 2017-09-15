@@ -1,6 +1,5 @@
 class ExtraEvents {
     static register(meisterInstance) {
-        // windowFocusChange
         window.onfocus = () => {
             meisterInstance.eventHandler.trigger('windowFocusChange', {
                 onForeground: true,
@@ -13,7 +12,6 @@ class ExtraEvents {
             });
         };
 
-        // windowVisibilityChange
         document.addEventListener('visibilitychange', () => {
             meisterInstance.eventHandler.trigger('windowVisibilityChange', {
                 visibility: document.visibilityState,

@@ -1,5 +1,3 @@
-// import PluginLoader from './plugin-loader';
-
 class MediaController {
     constructor(meister) {
         this.meister = meister;

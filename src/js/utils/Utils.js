@@ -27,41 +27,6 @@ export function bitrateToResolution(bitrate) {
 
     const kbps = bitrate / 1000;
     return `${kbps}Kbps`;
-
-    // let bitsps = bitrate * 8;
-    // let e = Math.floor(Math.log(bitsps) / Math.log(1000));
-    // let mbits = bitsps / Math.pow(1000, Math.floor(e));
-
-    // Following what we assume the platform outputs:
-    // https://www.theplatform.com/blog/publishing-mpx-accelerate/
-    // if (mbits <= 2) {
-    //     return '240p';
-    // } else if (mbits <= 4.5) {
-    //     return '360p';
-    // } else if (mbits <= 9) {
-    //     return '480p';
-    // } else if (mbits <= 13) {
-    //     return '720p';
-    // } else {
-    //     return '1080p';
-    // }
-
-
-    // Roughly following youtube guidelines:
-    // https://support.google.com/youtube/answer/1722171?hl=en
-    // if (mbits <= 2) {
-    //     return '360p';
-    // } else if (mbits <= 5) {
-    //     return '480p';
-    // } else if (mbits <= 8) {
-    //     return '720p';
-    // } else if (mbits <= 16) {
-    //     return '1080p';
-    // } else if (mbits <= 35) {
-    //     return '1440p';
-    // } else {
-    //     return '2160p';
-    // }
 }
 
 /**

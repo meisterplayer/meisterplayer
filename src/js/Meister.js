@@ -4,7 +4,6 @@ import EventHandler from './lib/triple/event-handler';
 import EventDefaults from './events/default-events';
 import ExtraEvents from './ExtraEvents';
 import Utils, { isDOMNode } from './utils/Utils';
-// import DRMUtils from './utils/DRMUtils';
 import ElementUtils from './utils/ElementUtils';
 import Browser from './utils/Browser';
 import BrowserPolyfill from './utils/BrowserPolyfill';
@@ -14,7 +13,6 @@ import FullscreenController from './FullscreenController';
 import Cookie from './lib/triple/cookie';
 import errorCodes from './errorCodes';
 import Localization from './Localization';
-// import {setDebug} from './Debug';
 
 // Abstract Plugins
 import Analytics from './plugin-types/Analytics';
@@ -66,7 +64,6 @@ class Meister {
         this.instanceId = Math.random();
 
         this.utils = Utils;
-        // this.DRMUtils = DRMUtils;
         this.elementUtils = ElementUtils;
         this.browser = Browser;
         this.Localization = Localization;
@@ -98,8 +95,6 @@ class Meister {
         if (this.config.fullscreenOnDoubleClick) {
             this.config.iosPlaysInline = true;
         }
-        // Set logging level
-        // this.debugEnabled = this.config.debug;
 
         this.container = document.createElement('div');
         this.defaultWrapper = document.createElement('div');
@@ -125,8 +120,6 @@ class Meister {
 
         this.pluginLoader = new PluginLoader(this);
         this.pluginLoader.config(options, this);
-
-        // PluginLoader.config(options, this);
 
         this.pluginLoader.drawUiPlugins();
         this.pluginLoader.loadAnalyticsPlugins();
@@ -197,7 +190,6 @@ class Meister {
      * @param  {boolean} debug true for debug mode.
      */
     set debugEnabled(debug) {
-        // setDebug(debug);
         this.config.debug = debug;
     }
 
@@ -452,7 +444,6 @@ Meister.Middleware = Middleware;
 Meister.ProtoPlugin = ProtoPlugin;
 
 // Expose utils.
-// Meister.DRMUtils = DRMUtils;
 Meister.Browser = Browser;
 
 // Expose error codes.
