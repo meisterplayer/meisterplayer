@@ -1,5 +1,3 @@
-// import InstanceBag from './instance-bag';
-
 class ExtraEvents {
     static register(meisterInstance) {
         // windowFocusChange

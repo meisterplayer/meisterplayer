@@ -2,7 +2,6 @@ import PluginLoader from './PluginLoader';
 import Configuration from './Configuration';
 import EventHandler from './lib/triple/event-handler';
 import EventDefaults from './events/default-events';
-import InstanceBag from './InstanceBag';
 import ExtraEvents from './ExtraEvents';
 import Utils, { isDOMNode } from './utils/Utils';
 // import DRMUtils from './utils/DRMUtils';
@@ -65,7 +64,6 @@ class Meister {
         // Instantiate the event handler and utilities.
         this.eventHandler = new EventHandler(EventDefaults);
         this.instanceId = Math.random();
-        InstanceBag.add('eventHandler', this.eventHandler);
 
         this.utils = Utils;
         // this.DRMUtils = DRMUtils;
