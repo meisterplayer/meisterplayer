@@ -22,19 +22,15 @@ class EventHandler {
         // Check whether the method is a function.
         if (!(method instanceof Function)) {
             console.error('EventHandler: Provided handler is not a function.');
-            return;
+            return null;
         }
 
         // Convert hooks to an array to keep flow similar.
-        if (!(hooks instanceof Array)) {
-            hooks = [hooks];
-        }
+        const hooksArray = Array.isArray(hooks) ? hooks : [hooks];
 
         // Register the handle on all hooks.
         const newHandles = [];
-        for (let i = 0; i < hooks.length; i += 1) {
-            let hook = hooks[i];
-
+        hooksArray.forEach((hook) => {
             if (!this.stack[hook]) {
                 this.stack[hook] = [];
             }
@@ -46,15 +42,20 @@ class EventHandler {
                 id: newHandle.id,
                 hook,
             });
-        }
+        });
 
         // Return an array of objects that can be used to remove the handlers.
         return newHandles;
     }
 
-    one(hook, block, method, caller = 'Anonymous') {
+    one(hookArg, blockArg, methodArg, callerArg = 'Anonymous') {
+        const hook = hookArg;
+        let block = blockArg;
+        let method = methodArg;
+        let caller = callerArg;
+
         // Check whether block is present, if not change parameters
-        if (typeof block !== 'boolean') {
+        if (typeof blockArg !== 'boolean') {
             caller = method;
             method = block;
             block = false;
@@ -63,7 +64,7 @@ class EventHandler {
         // Check whether the method is a function.
         if (!(method instanceof Function)) {
             console.error('EventHandler: Provided handler is not a function.');
-            return;
+            return null;
         }
 
         if (!this.stack[hook]) {
@@ -99,45 +100,21 @@ class EventHandler {
 
     remove(events) {
         // Convert hooks to an array to keep flow similar.
-        if (!(events instanceof Array)) events = [events];
+        const eventsArray = Array.isArray(events) ? events : [events];
 
-        for (let i = 0; i < events.length; i += 1) {
-            const eventObject = events[i];
-            let removed = false;
-
+        eventsArray.forEach((eventObject) => {
             // First check the single handlers.
             if (this.stack[eventObject.hook].one) {
-                for (let i = 0; i < this.stack[eventObject.hook].one.length; i += 1) {
-                    const trigger = this.stack[eventObject.hook].one[i];
+                this.stack[eventObject.hook].one = this.stack[eventObject.hook].one.filter(handle => handle.id !== eventObject.id);
 
-                    // Since ID's are unique break after finding one.
-                    if (trigger.id === eventObject.id) {
-                        this.stack[eventObject.hook].one.splice(i, 1);
-                        removed = true;
-                        break;
-                    }
-                }
-
-                // No more single handlers so delete the array.
                 if (this.stack[eventObject.hook].one.length === 0) {
                     delete this.stack[eventObject.hook].one;
                 }
-
-                // Again, since ID's are unique don't bother checking the rest after removing one.
-                if (removed) continue;
             }
 
             // Now check regular handlers.
-            for (let i = 0; i < this.stack[eventObject.hook].length; i += 1) {
-                const trigger = this.stack[eventObject.hook][i];
-
-                // Since ID's are unique break after finding one.
-                if (trigger.id === eventObject.id) {
-                    this.stack[eventObject.hook].splice(i, 1);
-                    break;
-                }
-            }
-        }
+            this.stack[eventObject.hook] = this.stack[eventObject.hook].filter(handle => handle.id !== eventObject.id);
+        });
     }
 
     // Removes all events from eventhandler.
