@@ -5,7 +5,7 @@ const Browser = {};
 const userAgent = navigator.userAgent;
 
 const browserInfo = () => {
-    const uaRegEx = /\b(playstation 4|nx|opera|chrome|edge|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i; //eslint-disable-line
+    const uaRegEx = /\b(playstation 4|nx|opera|chrome|edge|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i;
     let parts = userAgent.match(uaRegEx) || [];
     let extra;
 
@@ -44,7 +44,7 @@ Browser.isLegacyIE = !!(window.ActiveXObject);
 Browser.isIE = Browser.isLegacyIE || /trident.*rv:1\d/i.test(userAgent);
 Browser.isIE11 = /trident.*rv:11/i.test(userAgent);
 Browser.isChromecast = Browser.isChrome && /CrKey/i.test(userAgent);
-Browser.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|IEMobile|Opera Mini/i.test(userAgent); //eslint-disable-line
+Browser.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|IEMobile|Opera Mini/i.test(userAgent);
 Browser.isiOS = /iPad|iPhone|iPod/i.test(userAgent);
 
 Browser.isAndroid = /Android/i.test(userAgent);

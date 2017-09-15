@@ -43,7 +43,7 @@ class MediaController {
                         promise.then(() => {
                             this.meister.trigger('itemLoaded', { item: processedItem });
                         }).catch((err) => {
-                            console.error(`@${this.plugin.name}: Could not load item with type: '${item.type}' and src: '${item.src}'.`, err); //eslint-disable-line
+                            console.error(`@${this.plugin.name}: Could not load item with type: '${item.type}' and src: '${item.src}'.`, err);
                         });
                     } else {
                         this.meister.trigger('itemLoaded', { item: processedItem });
@@ -52,10 +52,10 @@ class MediaController {
                 .catch((err) => {
                     this.meister.error(`Could not find plugin to play type: '${item.type}'.`,
                         err.errorCode, { title: 'Unable to play content.' });
-                    console.error(`@${this.plugin.name}: Could not process item with type: '${item.type}' and src: '${item.src}'.`, err); //eslint-disable-line
+                    console.error(`@${this.plugin.name}: Could not process item with type: '${item.type}' and src: '${item.src}'.`, err);
                 });
         }).catch((err) => {
-            console.error(`@${this.plugin.name}: Could not getPluginFor item with type: '${item.type}' and src: '${item.src} '.`, err); //eslint-disable-line
+            console.error(`@${this.plugin.name}: Could not getPluginFor item with type: '${item.type}' and src: '${item.src} '.`, err);
         });
     }
 

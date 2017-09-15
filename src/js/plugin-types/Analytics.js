@@ -2,20 +2,20 @@ import ProtoPlugin from './ProtoPlugin';
 import EventDefaults from '../events/default-events';
 
 class Analytics extends ProtoPlugin {
+    // eslint-disable-next-line class-methods-use-this
     isAnalytics() {
-
+        return true;
     }
 
     load() {
-        for (let i = 0; i < EventDefaults.length; i++) {
-            const eventHandle = EventDefaults[i];
+        EventDefaults.forEach((eventHandle) => {
             const uppercasedHandle = eventHandle.charAt(0).toUpperCase() + eventHandle.substring(1);
             const funcName = `on${uppercasedHandle}`;
 
             if (this[funcName]) {
-                this.on(eventHandle, (e) => this[funcName](e));
+                this.on(eventHandle, (e) => { this[funcName](e); });
             }
-        }
+        });
     }
 
     unload() {

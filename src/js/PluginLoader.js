@@ -195,7 +195,7 @@ class PluginLoader {
 
         if (alreadyRegistered) {
             console.warn(`Middleware ${name} is already registered. Overriding previous version.`);
-            alreadyRegistered.Middleware = middleware
+            alreadyRegistered.Middleware = middleware;
             return;
         }
 

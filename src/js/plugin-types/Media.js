@@ -5,6 +5,7 @@ class Media extends ProtoPlugin {
      * Checking if an item is supported by the plugin
      * @return {boolean} Default always returns false.
      */
+    // eslint-disable-next-line class-methods-use-this
     isItemSupported() {
         return new Promise(resolve => resolve({
             supported: false,
@@ -61,6 +62,7 @@ class Media extends ProtoPlugin {
     /**
      * Process is for reading metadata/parsing
      */
+    // eslint-disable-next-line class-methods-use-this
     process(item) {
         return new Promise((resolve) => {
             console.warn('Process not implemented. Player may not play correctly.');

@@ -16,6 +16,7 @@ class Parallel extends MediaPlugin {
         this.eventStore = [];
     }
 
+    // eslint-disable-next-line class-methods-use-this
     isItemSupported(item) {
         return new Promise((resolve) => {
             if (item.type !== 'media') {
@@ -81,7 +82,7 @@ class Parallel extends MediaPlugin {
             this.meister.pluginLoader.getPluginByItem(this.bitrates[this.currentBitrateIndex])
                 .then((itemPlugin) => {
                     if (itemPlugin.errorCode) {
-                        this.meister.error(`Could not find plugin to play type: '${this.bitrates[this.currentBitrateIndex].type}'.`, //eslint-disable-line
+                        this.meister.error(`Could not find plugin to play type: '${this.bitrates[this.currentBitrateIndex].type}'.`,
                             itemPlugin.errorCode, { title: 'Unable to play content.' });
                         return;
                     }
@@ -140,21 +141,21 @@ class Parallel extends MediaPlugin {
     }
 
     get duration() {
-         if (!this.plugin) { return NaN; }
+        if (!this.plugin) { return NaN; }
 
-         return this.plugin.duration;
-     }
+        return this.plugin.duration;
+    }
 
-     get currentTime() {
-         if (!this.plugin) { return NaN; }
+    get currentTime() {
+        if (!this.plugin) { return NaN; }
 
-         return this.plugin.currentTime;
-     }
+        return this.plugin.currentTime;
+    }
 
-     set currentTime(time) {
-         if (!this.plugin) { return; }
-         this.plugin.currentTime = time;
-     }
+    set currentTime(time) {
+        if (!this.plugin) { return; }
+        this.plugin.currentTime = time;
+    }
 
     unload() {
         super.unload();

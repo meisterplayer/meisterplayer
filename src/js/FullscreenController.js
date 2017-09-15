@@ -1,4 +1,3 @@
-
 export default class FullscreenController {
     constructor(meister) {
         this.meister = meister;
@@ -30,6 +29,7 @@ export default class FullscreenController {
         }
     }
 
+    // eslint-disable-next-line class-methods-use-this
     get isFullscreen() {
         if (!document.fullscreenElement && !document.mozFullScreenElement &&
             !document.webkitFullscreenElement && !document.msFullscreenElement) {

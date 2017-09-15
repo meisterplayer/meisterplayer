@@ -16,8 +16,8 @@ class Cookie {
         for (let i = 0; i < ca.length; i += 1) {
             let cookie = ca[i];
 
-            while (cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
-            if (cookie.indexOf(keyEQ) == 0) return cookie.substr(keyEQ.length, cookie.length);
+            while (cookie.charAt(0) === ' ') cookie = cookie.substring(1, cookie.length);
+            if (cookie.indexOf(keyEQ) === 0) return cookie.substr(keyEQ.length, cookie.length);
         }
 
         return null;

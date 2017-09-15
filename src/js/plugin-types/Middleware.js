@@ -1,6 +1,7 @@
 import ProtoPlugin from './ProtoPlugin';
 
 class Middleware extends ProtoPlugin {
+    // eslint-disable-next-line class-methods-use-this
     isItemSupported() {
         return new Promise(resolve => resolve({
             supported: false,
@@ -8,6 +9,7 @@ class Middleware extends ProtoPlugin {
         }));
     }
 
+    // eslint-disable-next-line class-methods-use-this
     process(item) {
         return new Promise((resolve) => {
             resolve(item);
