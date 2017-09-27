@@ -85,7 +85,7 @@ class Meister {
         // Enable autoplay
         if (this.config.autoplay) {
             // Disable the first autoplay on mobile, so that ads will display
-            if (this.browser.isMobile) {
+            if (this.browser.isMobile || (this.browser.isNonAutoPlay && !this.config.startMuted)) {
                 const wasAutoplay = this.config.autoplay;
                 this.config.autoplay = false;
                 this.one('playerPlay', () => {
