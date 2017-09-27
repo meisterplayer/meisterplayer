@@ -60,4 +60,12 @@ Browser.isFacebook = /FBAN/i.test(userAgent) && /FBAV/i.test(userAgent);
 Browser.name = info.name;
 Browser.version = info.version;
 
+Browser.isNonAutoPlay = false;
+
+if (Browser.isMobile) {
+    Browser.isNonAutoPlay = true;
+} else if (Browser.isSafari && Browser.version >= 11) {
+    Browser.isNonAutoPlay = true;
+}
+
 export default Browser;
