@@ -1270,7 +1270,7 @@ var Meister = function () {
         // Enable autoplay
         if (this.config.autoplay) {
             // Disable the first autoplay on mobile, so that ads will display
-            if (this.browser.isMobile) {
+            if (this.browser.isMobile || this.browser.isNonAutoPlay && !this.config.startMuted) {
                 var wasAutoplay = this.config.autoplay;
                 this.config.autoplay = false;
                 this.one('playerPlay', function () {
@@ -1653,7 +1653,36 @@ var Meister = function () {
     }, {
         key: 'version',
         get: function get() {
-            return 'v5.1.1';
+            return 'v5.1.2';
+        }
+
+        /**
+         * Returns filtered and formatted list of all registered plugins and their version.
+         *
+         * @return {Array} List with plugins and their version.
+         */
+
+    }, {
+        key: 'pluginVersions',
+        get: function get() {
+            var registeredPlugins = _PluginLoader2.default.getRegistered();
+            var result = [];
+
+            registeredPlugins.forEach(function (plugin) {
+                var pluginName = plugin.Plugin.pluginName.toLowerCase();
+                var alreadyExists = result.findIndex(function (resultPlugin) {
+                    return resultPlugin.pluginName.toLowerCase() === pluginName;
+                });
+
+                if (alreadyExists !== -1) return;
+
+                result.push({
+                    pluginName: plugin.Plugin.pluginName,
+                    pluginVersion: plugin.Plugin.pluginVersion
+                });
+            });
+
+            return result;
         }
     }, {
         key: 'instances',
@@ -3383,6 +3412,14 @@ Browser.isFacebook = /FBAN/i.test(userAgent) && /FBAV/i.test(userAgent);
 
 Browser.name = info.name;
 Browser.version = info.version;
+
+Browser.isNonAutoPlay = false;
+
+if (Browser.isMobile) {
+    Browser.isNonAutoPlay = true;
+} else if (Browser.isSafari && Browser.version >= 11) {
+    Browser.isNonAutoPlay = true;
+}
 
 exports.default = Browser;
 
