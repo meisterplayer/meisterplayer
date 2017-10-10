@@ -25,7 +25,7 @@ import Meister from '@meisterplayer/meisterplayer'
 To install using ```<script>``` tags:
 
 ``` html
-<script src="meister.bundled.min.js">
+<script src="Meister.js">
 ```
 
 Getting started
