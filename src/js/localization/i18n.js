@@ -23,6 +23,14 @@ const i18n = {
         en: 'Whoops.. Something went wrong..',
         nl: 'Oeps.. Iets ging mis..',
     },
+    COULD_NOT_PLAY_CONTENT: {
+        en: 'Could not play content',
+        nl: 'Kon content niet afspelen',
+    },
+    NETWORK_ERROR: {
+        en: 'Network error',
+        nl: 'Netwerk fout',
+    },
 };
 
 export default i18n;
