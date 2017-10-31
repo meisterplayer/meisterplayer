@@ -10,9 +10,7 @@ class Localization {
 
     static init(i18nOn) {
         if (i18nOn) {
-            Object.keys(i18nJson).forEach((key) => {
-                Localization.set(key, i18nJson[key], currentLanguage);
-            });
+            Localization.setFromFormattedObject(i18nJson);
         } else {
             console.warn('In future Meister versions this localization method is deprecated. Set i18nEnabled to true in the Meister global object.');
             Object.keys(English).forEach((key) => {
@@ -40,6 +38,14 @@ class Localization {
             value = valueOrObj;
         }
         languageBag[language][key] = value;
+    }
+
+    static setFromFormattedObject(i18nObject) {
+        Object.keys(i18nObject).forEach((key) => {
+            Object.keys(i18nObject[key]).forEach((languageKey) => {
+                Localization.set(key, i18nObject[key][languageKey], languageKey);
+            });
+        });
     }
 
     static get(key, language = currentLanguage) {
