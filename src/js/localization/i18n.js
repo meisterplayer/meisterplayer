@@ -19,5 +19,10 @@ const i18n = {
         en: 'None',
         nl: 'Geen',
     },
+    SOMETHING_WENT_WRONG: {
+        en: 'Whoops.. Something went wrong..',
+        nl: 'Oeps.. Iets ging mis..',
+    },
 };
+
 export default i18n;
