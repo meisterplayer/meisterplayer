@@ -1,3 +1,19 @@
+<a name="5.2.0"></a>
+# [5.2.0](https://github.com/meisterplayer/meisterplayer/compare/v5.1.2...v5.2.0) (2017-11-01)
+
+
+### Bug Fixes
+
+* **Readme:** Fix using wrong bundled example ([d0e0d58](https://github.com/meisterplayer/meisterplayer/commit/d0e0d58))
+
+
+### Features
+
+* **localization:** Add ability to add a whole template to the localization bag ([c960b57](https://github.com/meisterplayer/meisterplayer/commit/c960b57))
+* **localization:** Add more localization properties ([e6866b5](https://github.com/meisterplayer/meisterplayer/commit/e6866b5))
+
+
+
 <a name="5.1.1"></a>
 ## [5.1.1](https://github.com/meisterplayer/meisterplayer/compare/v5.1.0...v5.1.1) (2017-07-13)
 
