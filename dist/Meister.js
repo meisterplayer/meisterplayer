@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 37);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -244,31 +244,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _adEvents = __webpack_require__(17);
+var _adEvents = __webpack_require__(16);
 
 var _adEvents2 = _interopRequireDefault(_adEvents);
 
-var _controlEvents = __webpack_require__(18);
+var _controlEvents = __webpack_require__(17);
 
 var _controlEvents2 = _interopRequireDefault(_controlEvents);
 
-var _itemEvents = __webpack_require__(20);
+var _itemEvents = __webpack_require__(19);
 
 var _itemEvents2 = _interopRequireDefault(_itemEvents);
 
-var _globalEvents = __webpack_require__(19);
+var _globalEvents = __webpack_require__(18);
 
 var _globalEvents2 = _interopRequireDefault(_globalEvents);
 
-var _playerEvents = __webpack_require__(21);
+var _playerEvents = __webpack_require__(20);
 
 var _playerEvents2 = _interopRequireDefault(_playerEvents);
 
-var _playlistEvents = __webpack_require__(22);
+var _playlistEvents = __webpack_require__(21);
 
 var _playlistEvents2 = _interopRequireDefault(_playlistEvents);
 
-var _uiEvents = __webpack_require__(23);
+var _uiEvents = __webpack_require__(22);
 
 var _uiEvents2 = _interopRequireDefault(_uiEvents);
 
@@ -330,9 +330,9 @@ var Cookie = function () {
             for (var i = 0; i < ca.length; i += 1) {
                 var cookie = ca[i];
 
-                while (cookie.charAt(0) == ' ') {
+                while (cookie.charAt(0) === ' ') {
                     cookie = cookie.substring(1, cookie.length);
-                }if (cookie.indexOf(keyEQ) == 0) return cookie.substr(keyEQ.length, cookie.length);
+                }if (cookie.indexOf(keyEQ) === 0) return cookie.substr(keyEQ.length, cookie.length);
             }
 
             return null;
@@ -392,6 +392,7 @@ var Media = function (_ProtoPlugin) {
          * Checking if an item is supported by the plugin
          * @return {boolean} Default always returns false.
          */
+        // eslint-disable-next-line class-methods-use-this
         value: function isItemSupported() {
             return new Promise(function (resolve) {
                 return resolve({
@@ -407,6 +408,7 @@ var Media = function (_ProtoPlugin) {
         /**
          * Process is for reading metadata/parsing
          */
+        // eslint-disable-next-line class-methods-use-this
         value: function process(item) {
             return new Promise(function (resolve) {
                 console.warn('Process not implemented. Player may not play correctly.');
@@ -563,7 +565,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Meister = __webpack_require__(12);
+var _Meister = __webpack_require__(11);
 
 var _Meister2 = _interopRequireDefault(_Meister);
 
@@ -602,8 +604,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import InstanceBag from './instance-bag';
-
 var ExtraEvents = function () {
     function ExtraEvents() {
         _classCallCheck(this, ExtraEvents);
@@ -612,7 +612,6 @@ var ExtraEvents = function () {
     _createClass(ExtraEvents, null, [{
         key: 'register',
         value: function register(meisterInstance) {
-            // windowFocusChange
             window.onfocus = function () {
                 meisterInstance.eventHandler.trigger('windowFocusChange', {
                     onForeground: true
@@ -625,7 +624,6 @@ var ExtraEvents = function () {
                 });
             };
 
-            // windowVisibilityChange
             document.addEventListener('visibilitychange', function () {
                 meisterInstance.eventHandler.trigger('windowVisibilityChange', {
                     visibility: document.visibilityState
@@ -702,6 +700,9 @@ var FullscreenController = function () {
             }
         }
     }
+
+    // eslint-disable-next-line class-methods-use-this
+
 
     _createClass(FullscreenController, [{
         key: 'requestFullscreen',
@@ -795,58 +796,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var store = [];
-
-var InstanceBag = function () {
-    function InstanceBag() {
-        _classCallCheck(this, InstanceBag);
-    }
-
-    _createClass(InstanceBag, null, [{
-        key: "add",
-        value: function add(key, value) {
-            store[key] = value;
-        }
-    }, {
-        key: "get",
-        value: function get(key) {
-            return store[key];
-        }
-    }]);
-
-    return InstanceBag;
-}();
-
-exports.default = InstanceBag;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _defaultEn = __webpack_require__(25);
+var _defaultEn = __webpack_require__(24);
 
 var _defaultEn2 = _interopRequireDefault(_defaultEn);
 
-var _defaultNl = __webpack_require__(26);
+var _defaultNl = __webpack_require__(25);
 
 var _defaultNl2 = _interopRequireDefault(_defaultNl);
 
-var _i18n = __webpack_require__(27);
+var _i18n = __webpack_require__(26);
 
 var _i18n2 = _interopRequireDefault(_i18n);
 
@@ -867,9 +829,7 @@ var Localization = function () {
         key: 'init',
         value: function init(i18nOn) {
             if (i18nOn) {
-                Object.keys(_i18n2.default).forEach(function (key) {
-                    Localization.set(key, _i18n2.default[key], currentLanguage);
-                });
+                Localization.setFromFormattedObject(_i18n2.default);
             } else {
                 console.warn('In future Meister versions this localization method is deprecated. Set i18nEnabled to true in the Meister global object.');
                 Object.keys(_defaultEn2.default).forEach(function (key) {
@@ -902,6 +862,15 @@ var Localization = function () {
             languageBag[language][key] = value;
         }
     }, {
+        key: 'setFromFormattedObject',
+        value: function setFromFormattedObject(i18nObject) {
+            Object.keys(i18nObject).forEach(function (key) {
+                Object.keys(i18nObject[key]).forEach(function (languageKey) {
+                    Localization.set(key, i18nObject[key][languageKey], languageKey);
+                });
+            });
+        }
+    }, {
         key: 'get',
         value: function get(key) {
             var language = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : currentLanguage;
@@ -928,7 +897,7 @@ var Localization = function () {
 exports.default = Localization;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -941,8 +910,6 @@ Object.defineProperty(exports, "__esModule", {
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// import PluginLoader from './plugin-loader';
 
 var MediaController = function () {
     function MediaController(meister) {
@@ -994,17 +961,17 @@ var MediaController = function () {
                         promise.then(function () {
                             _this2.meister.trigger('itemLoaded', { item: processedItem });
                         }).catch(function (err) {
-                            console.error('@' + _this2.plugin.name + ': Could not load item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.', err); //eslint-disable-line
+                            console.error('@' + _this2.plugin.name + ': Could not load item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.', err);
                         });
                     } else {
                         _this2.meister.trigger('itemLoaded', { item: processedItem });
                     }
                 }).catch(function (err) {
                     _this2.meister.error('Could not find plugin to play type: \'' + item.type + '\'.', err.errorCode, { title: 'Unable to play content.' });
-                    console.error('@' + _this2.plugin.name + ': Could not process item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.', err); //eslint-disable-line
+                    console.error('@' + _this2.plugin.name + ': Could not process item with type: \'' + item.type + '\' and src: \'' + item.src + '\'.', err);
                 });
             }).catch(function (err) {
-                console.error('@' + _this2.plugin.name + ': Could not getPluginFor item with type: \'' + item.type + '\' and src: \'' + item.src + ' \'.', err); //eslint-disable-line
+                console.error('@' + _this2.plugin.name + ': Could not getPluginFor item with type: \'' + item.type + '\' and src: \'' + item.src + ' \'.', err);
             });
         }
     }, {
@@ -1090,7 +1057,7 @@ var MediaController = function () {
 exports.default = MediaController;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1101,14 +1068,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-// import DRMUtils from './utils/DRMUtils';
-
-// import {setDebug} from './Debug';
 
 // Abstract Plugins
 
 
-var _PluginLoader = __webpack_require__(15);
+var _PluginLoader = __webpack_require__(14);
 
 var _PluginLoader2 = _interopRequireDefault(_PluginLoader);
 
@@ -1116,7 +1080,7 @@ var _Configuration = __webpack_require__(1);
 
 var _Configuration2 = _interopRequireDefault(_Configuration);
 
-var _eventHandler2 = __webpack_require__(24);
+var _eventHandler2 = __webpack_require__(23);
 
 var _eventHandler3 = _interopRequireDefault(_eventHandler2);
 
@@ -1124,35 +1088,31 @@ var _defaultEvents = __webpack_require__(2);
 
 var _defaultEvents2 = _interopRequireDefault(_defaultEvents);
 
-var _InstanceBag = __webpack_require__(9);
-
-var _InstanceBag2 = _interopRequireDefault(_InstanceBag);
-
 var _ExtraEvents = __webpack_require__(7);
 
 var _ExtraEvents2 = _interopRequireDefault(_ExtraEvents);
 
-var _Utils = __webpack_require__(37);
+var _Utils = __webpack_require__(36);
 
 var _Utils2 = _interopRequireDefault(_Utils);
 
-var _ElementUtils = __webpack_require__(36);
+var _ElementUtils = __webpack_require__(35);
 
 var _ElementUtils2 = _interopRequireDefault(_ElementUtils);
 
-var _Browser = __webpack_require__(34);
+var _Browser = __webpack_require__(33);
 
 var _Browser2 = _interopRequireDefault(_Browser);
 
-var _BrowserPolyfill = __webpack_require__(35);
+var _BrowserPolyfill = __webpack_require__(34);
 
 var _BrowserPolyfill2 = _interopRequireDefault(_BrowserPolyfill);
 
-var _Playlist = __webpack_require__(14);
+var _Playlist = __webpack_require__(13);
 
 var _Playlist2 = _interopRequireDefault(_Playlist);
 
-var _MediaController = __webpack_require__(11);
+var _MediaController = __webpack_require__(10);
 
 var _MediaController2 = _interopRequireDefault(_MediaController);
 
@@ -1164,15 +1124,15 @@ var _cookie = __webpack_require__(3);
 
 var _cookie2 = _interopRequireDefault(_cookie);
 
-var _errorCodes = __webpack_require__(16);
+var _errorCodes = __webpack_require__(15);
 
 var _errorCodes2 = _interopRequireDefault(_errorCodes);
 
-var _Localization = __webpack_require__(10);
+var _Localization = __webpack_require__(9);
 
 var _Localization2 = _interopRequireDefault(_Localization);
 
-var _Analytics = __webpack_require__(28);
+var _Analytics = __webpack_require__(27);
 
 var _Analytics2 = _interopRequireDefault(_Analytics);
 
@@ -1180,23 +1140,23 @@ var _Media = __webpack_require__(4);
 
 var _Media2 = _interopRequireDefault(_Media);
 
-var _Parser = __webpack_require__(30);
+var _Parser = __webpack_require__(29);
 
 var _Parser2 = _interopRequireDefault(_Parser);
 
-var _Player = __webpack_require__(31);
+var _Player = __webpack_require__(30);
 
 var _Player2 = _interopRequireDefault(_Player);
 
-var _Ui = __webpack_require__(32);
+var _Ui = __webpack_require__(31);
 
 var _Ui2 = _interopRequireDefault(_Ui);
 
-var _UiPlugin = __webpack_require__(33);
+var _UiPlugin = __webpack_require__(32);
 
 var _UiPlugin2 = _interopRequireDefault(_UiPlugin);
 
-var _Middleware = __webpack_require__(29);
+var _Middleware = __webpack_require__(28);
 
 var _Middleware2 = _interopRequireDefault(_Middleware);
 
@@ -1250,10 +1210,8 @@ var Meister = function () {
         // Instantiate the event handler and utilities.
         this.eventHandler = new _eventHandler3.default(_defaultEvents2.default);
         this.instanceId = Math.random();
-        _InstanceBag2.default.add('eventHandler', this.eventHandler);
 
         this.utils = _Utils2.default;
-        // this.DRMUtils = DRMUtils;
         this.elementUtils = _ElementUtils2.default;
         this.browser = _Browser2.default;
         this.Localization = _Localization2.default;
@@ -1289,8 +1247,6 @@ var Meister = function () {
         if (this.config.fullscreenOnDoubleClick) {
             this.config.iosPlaysInline = true;
         }
-        // Set logging level
-        // this.debugEnabled = this.config.debug;
 
         this.container = document.createElement('div');
         this.defaultWrapper = document.createElement('div');
@@ -1315,8 +1271,6 @@ var Meister = function () {
 
         this.pluginLoader = new _PluginLoader2.default(this);
         this.pluginLoader.config(options, this);
-
-        // PluginLoader.config(options, this);
 
         this.pluginLoader.drawUiPlugins();
         this.pluginLoader.loadAnalyticsPlugins();
@@ -1535,7 +1489,6 @@ var Meister = function () {
          */
         ,
         set: function set(debug) {
-            // setDebug(debug);
             this.config.debug = debug;
         }
 
@@ -1707,7 +1660,6 @@ Meister.Middleware = _Middleware2.default;
 Meister.ProtoPlugin = _ProtoPlugin2.default;
 
 // Expose utils.
-// Meister.DRMUtils = DRMUtils;
 Meister.Browser = _Browser2.default;
 
 // Expose error codes.
@@ -1723,7 +1675,7 @@ window.Vinson = Meister;
 exports.default = Meister;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1747,8 +1699,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import PluginLoader from './plugin-loader';
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Parallel = function (_MediaPlugin) {
     _inherits(Parallel, _MediaPlugin);
@@ -1769,6 +1720,9 @@ var Parallel = function (_MediaPlugin) {
         _this.eventStore = [];
         return _this;
     }
+
+    // eslint-disable-next-line class-methods-use-this
+
 
     _createClass(Parallel, [{
         key: 'isItemSupported',
@@ -1828,8 +1782,7 @@ var Parallel = function (_MediaPlugin) {
 
                 _this2.meister.pluginLoader.getPluginByItem(_this2.bitrates[_this2.currentBitrateIndex]).then(function (itemPlugin) {
                     if (itemPlugin.errorCode) {
-                        _this2.meister.error('Could not find plugin to play type: \'' + _this2.bitrates[_this2.currentBitrateIndex].type + '\'.', //eslint-disable-line
-                        itemPlugin.errorCode, { title: 'Unable to play content.' });
+                        _this2.meister.error('Could not find plugin to play type: \'' + _this2.bitrates[_this2.currentBitrateIndex].type + '\'.', itemPlugin.errorCode, { title: 'Unable to play content.' });
                         return;
                     }
 
@@ -1974,7 +1927,7 @@ var Parallel = function (_MediaPlugin) {
 exports.default = Parallel;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2106,7 +2059,7 @@ var Playlist = function () {
 exports.default = Playlist;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2122,7 +2075,7 @@ var _Configuration = __webpack_require__(1);
 
 var _Configuration2 = _interopRequireDefault(_Configuration);
 
-var _Parallel = __webpack_require__(13);
+var _Parallel = __webpack_require__(12);
 
 var _Parallel2 = _interopRequireDefault(_Parallel);
 
@@ -2373,7 +2326,7 @@ var PluginLoader = function () {
 exports.default = PluginLoader;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2398,7 +2351,7 @@ var errorCodes = {
 exports.default = errorCodes;
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2412,7 +2365,7 @@ var AdEvents = ['adBreakStarted', 'adBreakEnded', 'adStarted', 'adEnded', 'adTim
 exports.default = AdEvents;
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2426,7 +2379,7 @@ var ControlEvents = ['requestPlay', 'requestSeek', 'requestPause', 'requestBitra
 exports.default = ControlEvents;
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2440,7 +2393,7 @@ var GlobalEvents = ['windowFocusChange', 'windowVisibilityChange'];
 exports.default = GlobalEvents;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2454,7 +2407,7 @@ var ItemEvents = ['itemLoadPrevented', 'itemLoaded', 'itemUnloaded', 'itemMetada
 exports.default = ItemEvents;
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2468,7 +2421,7 @@ var PlayerEvents = ['playerCreated', 'playerDestroyed', '_playerTimeUpdate', 'pl
 exports.default = PlayerEvents;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2482,7 +2435,7 @@ var PlaylistEvents = ['playlistInfo', 'playlistNext', 'playlistPrevious', 'playl
 exports.default = PlaylistEvents;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2496,7 +2449,7 @@ var UiEvents = ['uiReady', 'uiPluginInserted', 'uiPluginOpen', 'uiPluginClose'];
 exports.default = UiEvents;
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2539,47 +2492,50 @@ var EventHandler = function () {
     _createClass(EventHandler, [{
         key: 'on',
         value: function on(hooks, method) {
+            var _this = this;
+
             var caller = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Anonymous';
 
             // Check whether the method is a function.
             if (!(method instanceof Function)) {
                 console.error('EventHandler: Provided handler is not a function.');
-                return;
+                return null;
             }
 
             // Convert hooks to an array to keep flow similar.
-            if (!(hooks instanceof Array)) {
-                hooks = [hooks];
-            }
+            var hooksArray = Array.isArray(hooks) ? hooks : [hooks];
 
             // Register the handle on all hooks.
             var newHandles = [];
-            for (var i = 0; i < hooks.length; i += 1) {
-                var hook = hooks[i];
-
-                if (!this.stack[hook]) {
-                    this.stack[hook] = [];
+            hooksArray.forEach(function (hook) {
+                if (!_this.stack[hook]) {
+                    _this.stack[hook] = [];
                 }
 
-                var newHandle = this._createHandler(caller, method);
-                this.stack[hook].push(newHandle);
+                var newHandle = _this._createHandler(caller, method);
+                _this.stack[hook].push(newHandle);
 
                 newHandles.push({
                     id: newHandle.id,
                     hook: hook
                 });
-            }
+            });
 
             // Return an array of objects that can be used to remove the handlers.
             return newHandles;
         }
     }, {
         key: 'one',
-        value: function one(hook, block, method) {
-            var caller = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'Anonymous';
+        value: function one(hookArg, blockArg, methodArg) {
+            var callerArg = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'Anonymous';
+
+            var hook = hookArg;
+            var block = blockArg;
+            var method = methodArg;
+            var caller = callerArg;
 
             // Check whether block is present, if not change parameters
-            if (typeof block !== 'boolean') {
+            if (typeof blockArg !== 'boolean') {
                 caller = method;
                 method = block;
                 block = false;
@@ -2588,7 +2544,7 @@ var EventHandler = function () {
             // Check whether the method is a function.
             if (!(method instanceof Function)) {
                 console.error('EventHandler: Provided handler is not a function.');
-                return;
+                return null;
             }
 
             if (!this.stack[hook]) {
@@ -2627,46 +2583,28 @@ var EventHandler = function () {
     }, {
         key: 'remove',
         value: function remove(events) {
+            var _this2 = this;
+
             // Convert hooks to an array to keep flow similar.
-            if (!(events instanceof Array)) events = [events];
+            var eventsArray = Array.isArray(events) ? events : [events];
 
-            for (var i = 0; i < events.length; i += 1) {
-                var eventObject = events[i];
-                var removed = false;
-
+            eventsArray.forEach(function (eventObject) {
                 // First check the single handlers.
-                if (this.stack[eventObject.hook].one) {
-                    for (var _i = 0; _i < this.stack[eventObject.hook].one.length; _i += 1) {
-                        var trigger = this.stack[eventObject.hook].one[_i];
+                if (_this2.stack[eventObject.hook].one) {
+                    _this2.stack[eventObject.hook].one = _this2.stack[eventObject.hook].one.filter(function (handle) {
+                        return handle.id !== eventObject.id;
+                    });
 
-                        // Since ID's are unique break after finding one.
-                        if (trigger.id === eventObject.id) {
-                            this.stack[eventObject.hook].one.splice(_i, 1);
-                            removed = true;
-                            break;
-                        }
+                    if (_this2.stack[eventObject.hook].one.length === 0) {
+                        delete _this2.stack[eventObject.hook].one;
                     }
-
-                    // No more single handlers so delete the array.
-                    if (this.stack[eventObject.hook].one.length === 0) {
-                        delete this.stack[eventObject.hook].one;
-                    }
-
-                    // Again, since ID's are unique don't bother checking the rest after removing one.
-                    if (removed) continue;
                 }
 
                 // Now check regular handlers.
-                for (var _i2 = 0; _i2 < this.stack[eventObject.hook].length; _i2 += 1) {
-                    var _trigger = this.stack[eventObject.hook][_i2];
-
-                    // Since ID's are unique break after finding one.
-                    if (_trigger.id === eventObject.id) {
-                        this.stack[eventObject.hook].splice(_i2, 1);
-                        break;
-                    }
-                }
-            }
+                _this2.stack[eventObject.hook] = _this2.stack[eventObject.hook].filter(function (handle) {
+                    return handle.id !== eventObject.id;
+                });
+            });
         }
 
         // Removes all events from eventhandler.
@@ -2675,11 +2613,11 @@ var EventHandler = function () {
     }, {
         key: 'destroy',
         value: function destroy() {
-            var _this = this;
+            var _this3 = this;
 
             Object.keys(this.stack).forEach(function (key) {
-                _this.stack[key].forEach(function (event) {
-                    _this.remove({ id: event.id, hook: key });
+                _this3.stack[key].forEach(function (event) {
+                    _this3.remove({ id: event.id, hook: key });
                 });
             });
         }
@@ -2695,7 +2633,6 @@ var EventHandler = function () {
 
             // Check whether the event exists.
             if (!this.stack[hook]) {
-                // console.warn(`EventHandler: '${hook}' is not a registered event.`);
                 return;
             }
 
@@ -2712,7 +2649,6 @@ var EventHandler = function () {
 
             // Check whether there are any registered handlers.
             if (this.stack[hook].length === 0 && !this.stack[hook].one) {
-                // console.debug(`EventHandler: no handlers registered for '${hook}'`);
                 return;
             }
 
@@ -2739,8 +2675,8 @@ var EventHandler = function () {
             }
 
             // Trigger all regular handles associated with the hook.
-            for (var _i3 = 0; _i3 < this.stack[hook].length; _i3 += 1) {
-                var eventHandle = this.stack[hook][_i3];
+            for (var _i = 0; _i < this.stack[hook].length; _i += 1) {
+                var eventHandle = this.stack[hook][_i];
 
                 try {
                     eventHandle.method.apply(null, args);
@@ -2779,7 +2715,7 @@ var EventHandler = function () {
 exports.default = EventHandler;
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2799,7 +2735,7 @@ var English = {
 exports.default = English;
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2819,7 +2755,7 @@ var Dutch = {
 exports.default = Dutch;
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2848,12 +2784,25 @@ var i18n = {
     NONE: {
         en: 'None',
         nl: 'Geen'
+    },
+    SOMETHING_WENT_WRONG: {
+        en: 'Whoops.. Something went wrong..',
+        nl: 'Oeps.. Iets ging mis..'
+    },
+    COULD_NOT_PLAY_CONTENT: {
+        en: 'Could not play content',
+        nl: 'Kon content niet afspelen'
+    },
+    NETWORK_ERROR: {
+        en: 'Network error',
+        nl: 'Netwerk fout'
     }
 };
+
 exports.default = i18n;
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2894,27 +2843,26 @@ var Analytics = function (_ProtoPlugin) {
 
     _createClass(Analytics, [{
         key: 'isAnalytics',
-        value: function isAnalytics() {}
+
+        // eslint-disable-next-line class-methods-use-this
+        value: function isAnalytics() {
+            return true;
+        }
     }, {
         key: 'load',
         value: function load() {
             var _this2 = this;
 
-            var _loop = function _loop(i) {
-                var eventHandle = _defaultEvents2.default[i];
+            _defaultEvents2.default.forEach(function (eventHandle) {
                 var uppercasedHandle = eventHandle.charAt(0).toUpperCase() + eventHandle.substring(1);
                 var funcName = 'on' + uppercasedHandle;
 
                 if (_this2[funcName]) {
                     _this2.on(eventHandle, function (e) {
-                        return _this2[funcName](e);
+                        _this2[funcName](e);
                     });
                 }
-            };
-
-            for (var i = 0; i < _defaultEvents2.default.length; i++) {
-                _loop(i);
-            }
+            });
         }
     }, {
         key: 'unload',
@@ -2939,7 +2887,7 @@ var Analytics = function (_ProtoPlugin) {
 exports.default = Analytics;
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2974,6 +2922,8 @@ var Middleware = function (_ProtoPlugin) {
 
     _createClass(Middleware, [{
         key: 'isItemSupported',
+
+        // eslint-disable-next-line class-methods-use-this
         value: function isItemSupported() {
             return new Promise(function (resolve) {
                 return resolve({
@@ -2982,6 +2932,9 @@ var Middleware = function (_ProtoPlugin) {
                 });
             });
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'process',
         value: function process(item) {
@@ -2997,7 +2950,7 @@ var Middleware = function (_ProtoPlugin) {
 exports.default = Middleware;
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3034,6 +2987,8 @@ var Parser = function (_ProtoPlugin) {
 
     _createClass(Parser, [{
         key: 'isItemSupported',
+
+        // eslint-disable-next-line class-methods-use-this
         value: function isItemSupported() {
             return new Promise(function (resolve) {
                 return resolve({
@@ -3042,6 +2997,9 @@ var Parser = function (_ProtoPlugin) {
                 });
             });
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'process',
         value: function process(item) {
@@ -3063,7 +3021,7 @@ var Parser = function (_ProtoPlugin) {
 exports.default = Parser;
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3107,6 +3065,9 @@ var Player = function (_ProtoPlugin) {
         return _this;
     }
 
+    // eslint-disable-next-line class-methods-use-this
+
+
     _createClass(Player, [{
         key: 'isTypeSupported',
         value: function isTypeSupported() {
@@ -3144,48 +3105,81 @@ var Player = function (_ProtoPlugin) {
         value: function show() {
             this.mediaElement.style.display = 'block';
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'play',
         value: function play() {}
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'pause',
         value: function pause() {}
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'currentTime',
         get: function get() {
             console.warn('currentTime getter is not defined.');
-        },
+        }
+
+        // eslint-disable-next-line class-methods-use-this
+        ,
         set: function set(time) {
             console.warn('currentTime setter is not defined. Can\'t process ' + time + '.');
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'duration',
         get: function get() {
             console.warn('duration getter is not defined.');
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'playing',
         get: function get() {
             console.warn('playing getter is not defined.');
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'buffered',
         get: function get() {
             console.warn('bufferd getter is not defined.');
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'controls',
         get: function get() {
             console.warn('controls getter is not defined.');
-        },
+        }
+
+        // eslint-disable-next-line class-methods-use-this
+        ,
         set: function set(controls) {
             console.warn('controls setter is not defined. Can\'t process ' + controls + '.');
         }
+
+        // eslint-disable-next-line class-methods-use-this
+
     }, {
         key: 'currentSrc',
         get: function get() {
             console.warn('currentSrc getter is not defined.');
-        },
+        }
+
+        // eslint-disable-next-line class-methods-use-this
+        ,
         set: function set(url) {
             console.warn('currentSrc setter is not defined. Can\'t process ' + url + '.');
         }
@@ -3205,7 +3199,7 @@ var Player = function (_ProtoPlugin) {
 exports.default = Player;
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3247,7 +3241,7 @@ var Ui = function (_ProtoPlugin) {
 exports.default = Ui;
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3342,7 +3336,7 @@ var UiPlugin = function (_ProtoPlugin) {
 exports.default = UiPlugin;
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3358,7 +3352,7 @@ var Browser = {};
 var userAgent = navigator.userAgent;
 
 var browserInfo = function browserInfo() {
-    var uaRegEx = /\b(playstation 4|nx|opera|chrome|edge|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i; //eslint-disable-line
+    var uaRegEx = /\b(playstation 4|nx|opera|chrome|edge|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i;
     var parts = userAgent.match(uaRegEx) || [];
     var extra = void 0;
 
@@ -3397,7 +3391,7 @@ Browser.isLegacyIE = !!window.ActiveXObject;
 Browser.isIE = Browser.isLegacyIE || /trident.*rv:1\d/i.test(userAgent);
 Browser.isIE11 = /trident.*rv:11/i.test(userAgent);
 Browser.isChromecast = Browser.isChrome && /CrKey/i.test(userAgent);
-Browser.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|IEMobile|Opera Mini/i.test(userAgent); //eslint-disable-line
+Browser.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|IEMobile|Opera Mini/i.test(userAgent);
 Browser.isiOS = /iPad|iPhone|iPod/i.test(userAgent);
 
 Browser.isAndroid = /Android/i.test(userAgent);
@@ -3424,7 +3418,7 @@ if (Browser.isMobile) {
 exports.default = Browser;
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3462,7 +3456,7 @@ var BrowserPolyfill = function () {
 exports.default = BrowserPolyfill;
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3507,7 +3501,7 @@ var ElementUtils = function () {
 exports.default = ElementUtils;
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3552,41 +3546,6 @@ function bitrateToResolution(bitrate) {
 
     var kbps = bitrate / 1000;
     return kbps + 'Kbps';
-
-    // let bitsps = bitrate * 8;
-    // let e = Math.floor(Math.log(bitsps) / Math.log(1000));
-    // let mbits = bitsps / Math.pow(1000, Math.floor(e));
-
-    // Following what we assume the platform outputs:
-    // https://www.theplatform.com/blog/publishing-mpx-accelerate/
-    // if (mbits <= 2) {
-    //     return '240p';
-    // } else if (mbits <= 4.5) {
-    //     return '360p';
-    // } else if (mbits <= 9) {
-    //     return '480p';
-    // } else if (mbits <= 13) {
-    //     return '720p';
-    // } else {
-    //     return '1080p';
-    // }
-
-
-    // Roughly following youtube guidelines:
-    // https://support.google.com/youtube/answer/1722171?hl=en
-    // if (mbits <= 2) {
-    //     return '360p';
-    // } else if (mbits <= 5) {
-    //     return '480p';
-    // } else if (mbits <= 8) {
-    //     return '720p';
-    // } else if (mbits <= 16) {
-    //     return '1080p';
-    // } else if (mbits <= 35) {
-    //     return '1440p';
-    // } else {
-    //     return '2160p';
-    // }
 }
 
 /**
@@ -3651,7 +3610,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 38 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5);

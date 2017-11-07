@@ -1,3 +1,8 @@
+<a name="5.2.1"></a>
+## [5.2.1](https://github.com/meisterplayer/meisterplayer/compare/v5.2.0...v5.2.1) (2017-11-07)
+
+
+
 <a name="5.2.0"></a>
 # [5.2.0](https://github.com/meisterplayer/meisterplayer/compare/v5.1.2...v5.2.0) (2017-11-01)
 
