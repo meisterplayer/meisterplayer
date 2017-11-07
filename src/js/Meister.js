@@ -1,3 +1,4 @@
+import packageJson from '../../package.json';
 import PluginLoader from './PluginLoader';
 import Configuration from './Configuration';
 import EventHandler from './lib/triple/event-handler';
@@ -148,7 +149,7 @@ class Meister {
      * @return {string} The meister version.
      */
     static get version() {
-        return 'v5.1.2';
+        return packageJson.version;
     }
 
     /**
