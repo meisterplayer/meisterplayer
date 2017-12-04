@@ -4,6 +4,8 @@ const Dutch = {
     VIDEO_ACQUIRING_MANIFEST: 'Ophalen manifest..',
     INITIALIZING: 'Initialiseren',
     NONE: 'Geen',
+    AD_COUNT: 'advertentie',
+    OFF_COUNT: 'van',
 };
 
 export default Dutch;
