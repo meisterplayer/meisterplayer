@@ -4,6 +4,8 @@ const English = {
     VIDEO_ACQUIRING_MANIFEST: 'Retrieving manifest..',
     INITIALIZING: 'Initializing',
     NONE: 'None',
+    AD_COUNT: 'ad',
+    OFF_COUNT: 'of',
 };
 
 
