@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 37);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1072,6 +1072,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 // Abstract Plugins
 
 
+var _package = __webpack_require__(37);
+
+var _package2 = _interopRequireDefault(_package);
+
 var _PluginLoader = __webpack_require__(14);
 
 var _PluginLoader2 = _interopRequireDefault(_PluginLoader);
@@ -1606,7 +1610,7 @@ var Meister = function () {
     }, {
         key: 'version',
         get: function get() {
-            return 'v5.1.2';
+            return _package2.default.version;
         }
 
         /**
@@ -2729,7 +2733,9 @@ var English = {
     VIDEO_BUFFERING: 'Buffering...',
     VIDEO_ACQUIRING_MANIFEST: 'Retrieving manifest..',
     INITIALIZING: 'Initializing',
-    NONE: 'None'
+    NONE: 'None',
+    AD_COUNT: 'ad',
+    OF_COUNT: 'of'
 };
 
 exports.default = English;
@@ -2749,7 +2755,9 @@ var Dutch = {
     VIDEO_BUFFERING: 'Bufferen...',
     VIDEO_ACQUIRING_MANIFEST: 'Ophalen manifest..',
     INITIALIZING: 'Initialiseren',
-    NONE: 'Geen'
+    NONE: 'Geen',
+    AD_COUNT: 'advertentie',
+    OF_COUNT: 'van'
 };
 
 exports.default = Dutch;
@@ -3611,6 +3619,43 @@ exports.default = {
 
 /***/ }),
 /* 37 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"name": "@meisterplayer/meisterplayer",
+	"version": "5.2.2",
+	"description": "Meister Player: Video Player for HTML5",
+	"main": "dist/Meister.js",
+	"keywords": [
+		"meister",
+		"video",
+		"plugin"
+	],
+	"scripts": {
+		"lint": "eslint ./src/js",
+		"test": "jest",
+		"test:coverage": "jest --coverage",
+		"build": "gulp build",
+		"dist": "gulp build:min && gulp build:dist"
+	},
+	"author": "Triple",
+	"license": "Apache-2.0",
+	"dependencies": {
+		"noop2": "^2.0.0"
+	},
+	"devDependencies": {
+		"babel-preset-es2015": "^6.24.0",
+		"babel-preset-es2017": "^6.22.0",
+		"gulp": "^3.9.1",
+		"jest": "^20.0.4",
+		"meister-gulp-webpack-tasks": "^1.0.6",
+		"meister-js-dev": "^3.1.0",
+		"yargs": "^7.1.0"
+	}
+};
+
+/***/ }),
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5);
