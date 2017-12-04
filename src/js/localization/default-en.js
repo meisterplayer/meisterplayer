@@ -5,7 +5,7 @@ const English = {
     INITIALIZING: 'Initializing',
     NONE: 'None',
     AD_COUNT: 'ad',
-    OFF_COUNT: 'of',
+    OF_COUNT: 'of',
 };
 
 

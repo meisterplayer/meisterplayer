@@ -5,7 +5,7 @@ const Dutch = {
     INITIALIZING: 'Initialiseren',
     NONE: 'Geen',
     AD_COUNT: 'advertentie',
-    OFF_COUNT: 'van',
+    OF_COUNT: 'van',
 };
 
 export default Dutch;
