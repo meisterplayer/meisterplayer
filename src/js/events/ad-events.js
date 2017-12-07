@@ -5,6 +5,7 @@ const AdEvents = [
     'adEnded',
     'adTimeupdate',
     'adCuePoints',
+    'adSkip',
 ];
 
 export default AdEvents;

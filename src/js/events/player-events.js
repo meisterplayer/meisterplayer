@@ -26,6 +26,7 @@ const PlayerEvents = [
     'playerRemoteConnecting',
     'playerRemoteConnected',
     'playerRemoteDisconnected',
+    'segmentDownloaded',
 ];
 
 export default PlayerEvents;
