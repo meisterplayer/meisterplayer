@@ -5,6 +5,7 @@ import GlobalEvents from './global-events';
 import PlayerEvents from './player-events';
 import PlaylistEvents from './playlist-events';
 import UiEvents from './ui-events';
+import ChromecastReceiverEvents from './chromecastreceiver-events';
 
 const EventDefaults = [];
 
@@ -15,5 +16,6 @@ EventDefaults.push(...GlobalEvents);
 EventDefaults.push(...PlayerEvents);
 EventDefaults.push(...PlaylistEvents);
 EventDefaults.push(...UiEvents);
+EventDefaults.push(...ChromecastReceiverEvents);
 
 export default EventDefaults;
