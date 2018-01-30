@@ -31,6 +31,15 @@ const i18n = {
         en: 'Network error',
         nl: 'Netwerk fout',
     },
+    AD_COUNT: {
+        en: 'ad',
+        nl: 'advertentie',
+    },
+    OF_COUNT: {
+        en: 'of',
+        nl: 'van',
+    },
+
 };
 
 export default i18n;
