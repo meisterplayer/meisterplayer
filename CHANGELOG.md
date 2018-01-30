@@ -1,3 +1,13 @@
+<a name="5.2.3"></a>
+## [5.2.3](https://github.com/meisterplayer/meisterplayer/compare/v5.2.2...v5.2.3) (2018-01-30)
+
+
+### Bug Fixes
+
+* **translations:** moved advertisement translations from old style to i18n localisation file ([46f1144](https://github.com/meisterplayer/meisterplayer/commit/46f1144))
+
+
+
 <a name="5.2.2"></a>
 ## [5.2.2](https://github.com/meisterplayer/meisterplayer/compare/v5.2.1...v5.2.2) (2017-12-04)
 

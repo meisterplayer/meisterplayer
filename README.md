@@ -1,7 +1,7 @@
 Meister Web Player
 ====
 
-Plugable JavaScript web player - version v5.2.2.
+Plugable JavaScript web player - version v5.2.3.
 
 This is the Meister core. It required additional plugins to get set up. This guide will help you get starting up and play a simple MP4 video.
 
@@ -522,7 +522,7 @@ Returns the current version of Meister. Yields `"vX.Y.Z"`
 Example:
 
 ```JavaScript
-// Outputs v5.2.2
+// Outputs v5.2.3
 console.log(meisterInstance.version);
 ```
 

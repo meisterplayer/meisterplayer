@@ -2804,7 +2804,16 @@ var i18n = {
     NETWORK_ERROR: {
         en: 'Network error',
         nl: 'Netwerk fout'
+    },
+    AD_COUNT: {
+        en: 'ad',
+        nl: 'advertentie'
+    },
+    OF_COUNT: {
+        en: 'of',
+        nl: 'van'
     }
+
 };
 
 exports.default = i18n;
@@ -3623,7 +3632,7 @@ exports.default = {
 
 module.exports = {
 	"name": "@meisterplayer/meisterplayer",
-	"version": "5.2.2",
+	"version": "5.2.3",
 	"description": "Meister Player: Video Player for HTML5",
 	"main": "dist/Meister.js",
 	"keywords": [
