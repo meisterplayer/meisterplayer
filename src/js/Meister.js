@@ -240,7 +240,7 @@ class Meister {
 
             this.eventHandler.destroy();
 
-            instances = instances.filter(instance => instance.id === this.id);
+            instances = instances.filter(instance => instance.id !== this.instanceId);
         }, 0);
     }
 
