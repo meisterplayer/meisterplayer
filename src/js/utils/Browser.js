@@ -1,6 +1,51 @@
 // 'Inspired' by https://github.com/clappr/clappr/blob/master/src/components/browser.js
+import { canBrowserAutoplay, canBrowserAutoplayMuted } from './services/canBrowserAutoplay';
 
-const Browser = {};
+const Browser = {
+    /**
+     * Retrieves browser info in a asynchronous manner
+     * Please use this instead of accessing properties directly.
+     *
+     * @returns {Promise<object>}
+     */
+    async getInfo() {
+        const canAutoplay = await canBrowserAutoplay();
+        const canAutoplayMuted = await canBrowserAutoplayMuted();
+
+        const newBrowserInfo = {
+            isNonAutoPlay: !canAutoplay,
+            isNonAutoPlayMuted: !canAutoplayMuted,
+        };
+
+        const newBrowserInfoKeys = Object.keys(newBrowserInfo);
+
+        // Object.assign calls all variables in order to get it's value
+        // Since we have deprecation warnings this would not work, because
+        // The warnings would pop up even though the user uses the correct function now
+        // So we loop through the keys in order to avoid this issue.
+        Object.keys(Browser).forEach((key) => {
+            if (!newBrowserInfoKeys.includes(key)) {
+                newBrowserInfo[key] = Browser[key];
+            }
+        });
+
+        return newBrowserInfo;
+    },
+
+    get isNonAutoPlay() {
+        let isNonAutoPlay = false;
+
+        if (Browser.isMobile) {
+            isNonAutoPlay = true;
+        } else if (Browser.isSafari && Browser.version >= 11) {
+            isNonAutoPlay = true;
+        }
+
+        console.warn('Using synchronous getters for Meister.Browser is deperecated, please use Meister.Browser.getInfo() instead.');
+
+        return isNonAutoPlay;
+    },
+};
 
 const userAgent = navigator.userAgent;
 
@@ -60,12 +105,5 @@ Browser.isFacebook = /FBAN/i.test(userAgent) && /FBAV/i.test(userAgent);
 Browser.name = info.name;
 Browser.version = info.version;
 
-Browser.isNonAutoPlay = false;
-
-if (Browser.isMobile) {
-    Browser.isNonAutoPlay = true;
-} else if (Browser.isSafari && Browser.version >= 11) {
-    Browser.isNonAutoPlay = true;
-}
 
 export default Browser;
