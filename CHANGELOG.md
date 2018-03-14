@@ -1,3 +1,18 @@
+<a name="5.3.0"></a>
+# [5.3.0](https://github.com/meisterplayer/meisterplayer/compare/v5.2.3...v5.3.0) (2018-03-14)
+
+
+### Bug Fixes
+
+* **destroy:** Fix issue where all instances where removed ([bc376e3](https://github.com/meisterplayer/meisterplayer/commit/bc376e3))
+
+
+### Features
+
+* **browser:** Add getInfo to make browser detection async ([cf7806e](https://github.com/meisterplayer/meisterplayer/commit/cf7806e))
+
+
+
 <a name="5.2.3"></a>
 ## [5.2.3](https://github.com/meisterplayer/meisterplayer/compare/v5.2.2...v5.2.3) (2018-01-30)
 

@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1072,7 +1072,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 // Abstract Plugins
 
 
-var _package = __webpack_require__(37);
+var _package = __webpack_require__(39);
 
 var _package2 = _interopRequireDefault(_package);
 
@@ -1334,7 +1334,7 @@ var Meister = function () {
                 _this2.eventHandler.destroy();
 
                 instances = instances.filter(function (instance) {
-                    return instance.id === _this2.id;
+                    return instance.id !== _this2.instanceId;
                 });
             }, 0);
         }
@@ -3362,9 +3362,81 @@ exports.default = UiPlugin;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-// 'Inspired' by https://github.com/clappr/clappr/blob/master/src/components/browser.js
 
-var Browser = {};
+var _canBrowserAutoplay = __webpack_require__(37);
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; } // 'Inspired' by https://github.com/clappr/clappr/blob/master/src/components/browser.js
+
+
+var Browser = {
+    /**
+     * Retrieves browser info in a asynchronous manner
+     * Please use this instead of accessing properties directly.
+     *
+     * @returns {Promise<object>}
+     */
+    getInfo: function getInfo() {
+        var _this = this;
+
+        return _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
+            var canAutoplay, canAutoplayMuted, newBrowserInfo, newBrowserInfoKeys;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            _context.next = 2;
+                            return (0, _canBrowserAutoplay.canBrowserAutoplay)();
+
+                        case 2:
+                            canAutoplay = _context.sent;
+                            _context.next = 5;
+                            return (0, _canBrowserAutoplay.canBrowserAutoplayMuted)();
+
+                        case 5:
+                            canAutoplayMuted = _context.sent;
+                            newBrowserInfo = {
+                                isNonAutoPlay: !canAutoplay,
+                                isNonAutoPlayMuted: !canAutoplayMuted
+                            };
+                            newBrowserInfoKeys = Object.keys(newBrowserInfo);
+
+                            // Object.assign calls all variables in order to get it's value
+                            // Since we have deprecation warnings this would not work, because
+                            // The warnings would pop up even though the user uses the correct function now
+                            // So we loop through the keys in order to avoid this issue.
+
+                            Object.keys(Browser).forEach(function (key) {
+                                if (!newBrowserInfoKeys.includes(key)) {
+                                    newBrowserInfo[key] = Browser[key];
+                                }
+                            });
+
+                            return _context.abrupt('return', newBrowserInfo);
+
+                        case 10:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, _this);
+        }))();
+    },
+
+
+    get isNonAutoPlay() {
+        var isNonAutoPlay = false;
+
+        if (Browser.isMobile) {
+            isNonAutoPlay = true;
+        } else if (Browser.isSafari && Browser.version >= 11) {
+            isNonAutoPlay = true;
+        }
+
+        console.warn('Using synchronous getters for Meister.Browser is deperecated, please use Meister.Browser.getInfo() instead.');
+
+        return isNonAutoPlay;
+    }
+};
 
 var userAgent = navigator.userAgent;
 
@@ -3423,14 +3495,6 @@ Browser.isFacebook = /FBAN/i.test(userAgent) && /FBAV/i.test(userAgent);
 
 Browser.name = info.name;
 Browser.version = info.version;
-
-Browser.isNonAutoPlay = false;
-
-if (Browser.isMobile) {
-    Browser.isNonAutoPlay = true;
-} else if (Browser.isSafari && Browser.version >= 11) {
-    Browser.isNonAutoPlay = true;
-}
 
 exports.default = Browser;
 
@@ -3628,11 +3692,110 @@ exports.default = {
 
 /***/ }),
 /* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.canBrowserAutoplay = canBrowserAutoplay;
+exports.canBrowserAutoplayMuted = canBrowserAutoplayMuted;
+
+var _getTinyMp = __webpack_require__(38);
+
+var _getTinyMp2 = _interopRequireDefault(_getTinyMp);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Detects if a browser can autoplay or not.
+ *
+ * @export
+ * @returns {Promise<boolean>}
+ */
+function canBrowserAutoplay() {
+    return new Promise(function (resolve) {
+        var videoElement = document.createElement('video');
+        videoElement.src = 'data:video/mp4;base64,' + (0, _getTinyMp2.default)();
+        var playPromise = videoElement.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(function () {
+                resolve(true);
+            });
+
+            playPromise.catch(function () {
+                resolve(false);
+            });
+        } else {
+            resolve(true);
+        }
+    });
+}
+
+/**
+ * Detects if a browser can autoplay muted video or not.
+ *
+ * @export
+ * @returns {Promise<boolean>}
+ */
+function canBrowserAutoplayMuted() {
+    return new Promise(function (resolve) {
+        var videoElement = document.createElement('video');
+        videoElement.volume = 0;
+        videoElement.muted = true;
+        videoElement.src = 'data:video/mp4;base64,' + (0, _getTinyMp2.default)();
+        var playPromise = videoElement.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(function () {
+                resolve(true);
+            });
+
+            playPromise.catch(function () {
+                resolve(false);
+            });
+        } else {
+            resolve(true);
+        }
+    });
+}
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getTinyMp4;
+/**
+ * Gets a tiny mp4 for testing a video element.
+ * This video is syntactically correct but is so tiny that you hear and see nothing
+ * Yet video players can play these so it's perfect for testing things such as autoplay
+ *
+ * https://github.com/mathiasbynens/small
+ *
+ * @export
+ * @returns {string} Base64 encoded tiny mp4.
+ */
+function getTinyMp4() {
+  var mp4Base64 = 'AAAAHGZ0eXBpc29tAAACAGlzb21pc28ybXA0MQAAAAhmcmVlAAAC721kYXQhEAUgpBv/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3pwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcCEQBSCkG//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADengAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAsJtb292AAAAbG12aGQAAAAAAAAAAAAAAAAAAAPoAAAALwABAAABAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAB7HRyYWsAAABcdGtoZAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAALwAAAAAAAAAAAAAAAQEAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAACRlZHRzAAAAHGVsc3QAAAAAAAAAAQAAAC8AAAAAAAEAAAAAAWRtZGlhAAAAIG1kaGQAAAAAAAAAAAAAAAAAAKxEAAAIAFXEAAAAAAAtaGRscgAAAAAAAAAAc291bgAAAAAAAAAAAAAAAFNvdW5kSGFuZGxlcgAAAAEPbWluZgAAABBzbWhkAAAAAAAAAAAAAAAkZGluZgAAABxkcmVmAAAAAAAAAAEAAAAMdXJsIAAAAAEAAADTc3RibAAAAGdzdHNkAAAAAAAAAAEAAABXbXA0YQAAAAAAAAABAAAAAAAAAAAAAgAQAAAAAKxEAAAAAAAzZXNkcwAAAAADgICAIgACAASAgIAUQBUAAAAAAfQAAAHz+QWAgIACEhAGgICAAQIAAAAYc3R0cwAAAAAAAAABAAAAAgAABAAAAAAcc3RzYwAAAAAAAAABAAAAAQAAAAIAAAABAAAAHHN0c3oAAAAAAAAAAAAAAAIAAAFzAAABdAAAABRzdGNvAAAAAAAAAAEAAAAsAAAAYnVkdGEAAABabWV0YQAAAAAAAAAhaGRscgAAAAAAAAAAbWRpcmFwcGwAAAAAAAAAAAAAAAAtaWxzdAAAACWpdG9vAAAAHWRhdGEAAAABAAAAAExhdmY1Ni40MC4xMDE=';
+  return mp4Base64;
+}
+
+/***/ }),
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = {
 	"name": "@meisterplayer/meisterplayer",
-	"version": "5.2.3",
+	"version": "5.3.0",
 	"description": "Meister Player: Video Player for HTML5",
 	"main": "dist/Meister.js",
 	"keywords": [
@@ -3664,7 +3827,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5);
