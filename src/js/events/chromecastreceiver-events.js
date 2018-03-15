@@ -24,6 +24,8 @@ const ChromecastReceiverEvents = [
     'canPlay',
     'playerWaiting',
     'loadStart',
+    'connectionDrop',
+    'connectionRestored',
     // standard cast messages
 
 ];
