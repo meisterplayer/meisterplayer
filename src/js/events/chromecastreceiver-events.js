@@ -26,6 +26,16 @@ const ChromecastReceiverEvents = [
     'loadStart',
     'connectionDrop',
     'connectionRestored',
+    'castReady',
+    'castShutdown',
+    'castSenderConnected',
+    'castSenderDisconnected',
+    'castError',
+    'castVolumeChanged',
+    'castVisibilityChanged',
+    'castStandbyChanged',
+    'castMaxVideoResolutionChanged',
+    'castFeedbackStarted',
     // standard cast messages
 
 ];
