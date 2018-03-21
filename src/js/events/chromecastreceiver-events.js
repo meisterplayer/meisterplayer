@@ -27,6 +27,7 @@ const ChromecastReceiverEvents = [
     'connectionDrop',
     'connectionRestored',
     'castReady',
+    'requestShutdown',
     'castShutdown',
     'castSenderConnected',
     'castSenderDisconnected',
