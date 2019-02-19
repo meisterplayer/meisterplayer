@@ -9,6 +9,8 @@ const errorCodes = {
     NO_MEDIA_FOUND: 'MSTR-0404',
     // Custom Fairplay contentId function threw an error.
     FAIRPLAY_CONTENT_ID_FUNCTION_ERROR: 'MSTR-1001',
+    // Graphics drive is not support (HDCP)
+    HDCP_NOT_SUPPORTED: 'MSTR-1002',
 };
 
 export default errorCodes;
