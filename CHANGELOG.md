@@ -1,3 +1,23 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="5.4.0"></a>
+# [5.4.0](https://github.com/meisterplayer/meisterplayer/compare/v5.3.0...v5.4.0) (2019-05-10)
+
+
+### Bug Fixes
+
+* **autoplay:** No longer enter full player on iOS for autoplay check ([46aaf58](https://github.com/meisterplayer/meisterplayer/commit/46aaf58))
+
+
+### Features
+
+* **chromecast:** add more chromecastreceiver-events ([9b1cada](https://github.com/meisterplayer/meisterplayer/commit/9b1cada))
+* **errorCode:** Add HDCP_NOT_SUPPORTED code ([e3d18a2](https://github.com/meisterplayer/meisterplayer/commit/e3d18a2))
+
+
+
 <a name="5.3.0"></a>
 # [5.3.0](https://github.com/meisterplayer/meisterplayer/compare/v5.2.3...v5.3.0) (2018-03-14)
 
