@@ -10,6 +10,8 @@ export function canBrowserAutoplay() {
     return new Promise((resolve) => {
         const videoElement = document.createElement('video');
         videoElement.src = `data:video/mp4;base64,${getTinyMp4()}`;
+        videoElement.setAttribute('playsinline', '');
+        videoElement.setAttribute('webkit-playsinline', '');
         const playPromise = videoElement.play();
 
         if (playPromise !== undefined) {
@@ -35,6 +37,8 @@ export function canBrowserAutoplay() {
 export function canBrowserAutoplayMuted() {
     return new Promise((resolve) => {
         const videoElement = document.createElement('video');
+        videoElement.setAttribute('playsinline', '');
+        videoElement.setAttribute('webkit-playsinline', '');
         videoElement.volume = 0;
         videoElement.muted = true;
         videoElement.src = `data:video/mp4;base64,${getTinyMp4()}`;
