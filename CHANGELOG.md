@@ -1,6 +1,15 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [5.4.1](https://github.com/meisterplayer/meisterplayer/compare/v5.4.0...v5.4.1) (2019-09-27)
+
+
+### Bug Fixes
+
+* Respect browser autoplay restrictions ([e1b7653](https://github.com/meisterplayer/meisterplayer/commit/e1b7653))
+
+
 
 <a name="5.4.0"></a>
 # [5.4.0](https://github.com/meisterplayer/meisterplayer/compare/v5.3.0...v5.4.0) (2019-05-10)

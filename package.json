@@ -1,6 +1,6 @@
 {
   "name": "@meisterplayer/meisterplayer",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "description": "Meister Player: Video Player for HTML5",
   "main": "dist/Meister.js",
   "keywords": [
