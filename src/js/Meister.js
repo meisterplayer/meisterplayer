@@ -78,19 +78,38 @@ class Meister {
         }
         this.Localization.init(this.config.i18nEnabled);
 
-        // Enable autoplay
+        // Handle autoplay
         if (this.config.autoplay) {
-            // Disable the first autoplay on mobile, so that ads will display
-            if (this.browser.isMobile || (this.browser.isNonAutoPlay && !this.config.startMuted)) {
-                const wasAutoplay = this.config.autoplay;
-                this.config.autoplay = false;
-                this.one('playerPlay', () => {
-                    this.config.autoplay = wasAutoplay;
-                    this.on('itemLoaded', () => this.trigger('requestPlay'), 'meister');
-                }, 'meister');
-            } else {
-                this.on('itemLoaded', () => this.trigger('requestPlay'), 'meister');
-            }
+            // As autoplay detection is now an async operation default to false should the
+            // detection take too long.
+            this.config.autoplay = false;
+
+            const browserInfoPromise = this.browser.getInfo();
+            /*
+             * By intercepting the itemLoaded, which is used by most plugins as the starting point,
+             * we can detect the autoplay capabilities async before rebroadcasting the event with
+             * the correct settings in place.
+             */
+            this.disable('itemLoaded', (args) => {
+                const event = args[0];
+
+                browserInfoPromise.then((info) => {
+                    if (info.isNonAutoPlay) {
+                        // Wait until we have played through manual interaction before restoring
+                        // the setting.
+                        this.one('playerPlay', () => {
+                            this.config.autoplay = true;
+                            this.on('itemLoaded', () => this.trigger('requestPlay'), 'meister');
+                        }, 'meister');
+                    } else {
+                        this.config.autoplay = true;
+                        this.on('itemLoaded', () => this.trigger('requestPlay'), 'meister');
+                    }
+                });
+
+                this.enable('itemLoaded');
+                this.trigger('itemLoaded', event);
+            });
         }
 
         if (this.config.fullscreenOnDoubleClick) {
