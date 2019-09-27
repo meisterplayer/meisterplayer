@@ -105,10 +105,10 @@ class Meister {
                         this.config.autoplay = true;
                         this.on('itemLoaded', () => this.trigger('requestPlay'), 'meister');
                     }
-                });
 
-                this.enable('itemLoaded');
-                this.trigger('itemLoaded', event);
+                    this.enable('itemLoaded');
+                    this.trigger('itemLoaded', event);
+                });
             });
         }
 
