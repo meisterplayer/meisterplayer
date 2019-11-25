@@ -1,7 +1,8 @@
 import noop from 'noop2';
 
 class EventHandler {
-    constructor(eventHooks) {
+    constructor(eventHooks, debug) {
+        this.debug = debug;
         this.counter = 0;
         this.disabledHandles = [];
 
@@ -143,7 +144,10 @@ class EventHandler {
                 this.protectedHandles[hook](args);
             }
 
-            console.debug(`EventHandler: '${hook}' is disabled, skipping trigger`);
+            if (this.debug) {
+                console.debug(`EventHandler: '${hook}' is disabled, skipping trigger`);
+            }
+
             return;
         }
 

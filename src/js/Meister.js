@@ -61,7 +61,7 @@ class Meister {
         }
 
         // Instantiate the event handler and utilities.
-        this.eventHandler = new EventHandler(EventDefaults);
+        this.eventHandler = new EventHandler(EventDefaults, options.global.debug);
         this.instanceId = Math.random();
 
         this.utils = Utils;
